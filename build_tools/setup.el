@@ -187,7 +187,7 @@ Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
 (define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
-(define-key pab/teaching-mode-map (kbd "C-c m") (lambda () (pab/teaching-export-to-backend 'html)))
+(define-key pab/teaching-mode-map (kbd "C-c h") (lambda () (pab/teaching-export-to-backend 'html)))
 (define-key pab/teaching-mode-map (kbd "C-c t") (lambda () (pab/teaching-export-to-backend 'latex)))
 
 (define-minor-mode pab/teaching-mode
