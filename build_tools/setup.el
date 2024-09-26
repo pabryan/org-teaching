@@ -57,6 +57,28 @@ The function will be called after the org-export to post-process the result."
 	(setq filename (org-export-output-file-name (format ".%s" ext) t pab/teaching-export-dir)))
       (org-export-to-file backend filename nil t nil t nil post-process))))
 
+(defun prepend-hash-as-yaml-frontmatter (filename hash)
+  "Prepend HASH to  FILENAME.
+
+HASH should be a hash and FILENAME the name of a file.
+
+HASH is converted to YAML and prepended as frontmatter to FILENAME.
+The result is of the form
+
+---
+<yaml>
+---
+
+<filecontents>"
+
+  (let* ((yaml-contents (yaml-encode hash))
+	 (yaml-frontmatter (format "---\n%s\n---\n\n" yaml-contents)))
+
+    (with-temp-buffer
+      (insert yaml-frontmatter)
+      (insert-file-contents filename)
+      (write-region nil nil filename))))
+
 (defun pab/teaching-export-file-name ()
   "Construct the file-name for export.
 returns nil if EXPORT_FILE_NAME is already set
