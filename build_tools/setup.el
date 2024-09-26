@@ -31,13 +31,21 @@
 	     (make-directory (file-name-concat pab/teaching-publish-dir hashval) :parents))
 	   pab/teaching-publish-dirs))
 
-(defun pab/teaching-export-to-backend (backends &optional outfile)
+(defun pab/teaching-export-to-backend (backends &optional outfile post-process)
   "Export at point using BACKENDS.
-BACKENDS should be a list of backends to use, e.g. ('html), ('html 'tex)
+BACKENDS should be a list of backends to use.
+
+For example ('html), ('html 'tex)
+
 Currently implemented are html and tex.
+
 If OUTFILE is set, export to that file in the pab/teaching-export-dir directory
 with appropriate file extension for echo backend in BACKENDS
-Otherwise let org decide the filename"
+Otherwise let org decide the filename
+
+If provided, POST-PROCESS should be an elisp function with one mandatory
+argument containing a filename.
+The function will be called after the org-export to post-process the result."
 
 
   (dolist (backend backends)
@@ -47,7 +55,7 @@ Otherwise let org decide the filename"
       (if outfile
 	  (setq filename (file-name-concat pab/teaching-export-dir (format "%s.%s" outfile ext)))
 	(setq filename (org-export-output-file-name (format ".%s" ext) t pab/teaching-export-dir)))
-      (org-export-to-file backend filename nil t nil t))))
+      (org-export-to-file backend filename nil t nil t nil post-process))))
 
 (defun pab/teaching-export-file-name ()
   "Construct the file-name for export.
