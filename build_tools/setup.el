@@ -135,8 +135,28 @@ Saves to FILENAME if passed, otherwise let org decide the filename."
 
   (if (pab/teaching-subnote-p)
       (let ((export-filename (pab/teaching-export-subtopic-file-name filename)))
-	(pab/teaching-export-to-backend '(html) export-filename))
+	(pab/teaching-export-to-backend '(html) export-filename #'pab/teaching-export-subnote-post-process))
     (message "Not a subnote")))
+
+(defun pab/teaching-export-subnote-post-process (filename)
+  "Post process a subnote after org-export-to-file.
+
+FILENAME is the name of the file exported by org.
+
+Adds yaml frontmatter to subnote.
+Then runs python post-processing script."
+
+  ;; (let ((hash '((name . Note) (num . 2))))
+  (let* ((name (org-entry-get-with-inheritance "NAME"))
+	(week (org-entry-get-with-inheritance "WEEK"))
+	(lec (org-entry-get-with-inheritance "LECTURE"))
+	(id (org-entry-get-with-inheritance "CUSTOM_ID"))
+	(hash (list (cons 'name (format "%s-%s" name id))
+		    (cons 'week week)
+		    (cons 'lec lec))))
+
+    (prepend-hash-as-yaml-frontmatter filename hash)
+    (shell-command (format "./build_tools/post_process.py -t s %1$s %1$s" filename))))
 
 (defun pab/teaching-get-notes-topics ()
   "Get list of topics under current note."
