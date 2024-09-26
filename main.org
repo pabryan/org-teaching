@@ -1,0 +1,719 @@
+#+OPTIONS: toc:nil num:1
+
+* Sample Group
+** Sample Section
+:PROPERTIES:
+:NAME: sample
+:WEEK: 01
+:LECTURE: 01
+:TITLE: Sample Section
+:END:
+
+*** Lecture                                        :lecture:
+**** Limits
+:PROPERTIES:
+:CUSTOM_ID: limits
+:YOUTUBE_ID: ZLb44bNfh2E
+:END:
+
+***** Limits
+:PROPERTIES:
+:CUSTOM_ID: limits-title
+:END:
+
+***** Limits
+:PROPERTIES:
+:CUSTOM_ID: limits-limits
+:END:
+
+#+BEGIN_defn
+If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
+\[
+\lim_{x\to a} f(x) = L.
+\]
+*Note*: Here we let \(x\) approach \(a\) but we consider only \(x \neq a\).
+#+END_defn
+
+***** Sum Law
+:PROPERTIES:
+:CUSTOM_ID: limits-sum_law
+:END:
+
+#+BEGIN_thm
+If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist, then
+
+\[
+\lim_{x \to a} \left[f(x) + g(x)\right] = \lim_{x\to a} f(x) + \lim_{x\to a} g(x)
+\]
+#+END_thm
+
+***** Product Law
+:PROPERTIES:
+:CUSTOM_ID: limits-product_law
+:END:
+
+#+BEGIN_thm
+If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist, then
+
+\[
+\lim_{x \to a} \left[f(x) g(x)\right] = \left[\lim_{x\to a} f(x)\right] \left[\lim_{x\to a} g(x)\right]
+\]
+#+END_thm
+
+***** Quotient Law
+:PROPERTIES:
+:CUSTOM_ID: limits-quotient_law
+:END:
+
+#+BEGIN_thm
+If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist and if \(\lim_{x\to a} g(x) \neq 0\), then
+
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\displaystyle\lim_{x\to a} f(x)}{\displaystyle\lim_{x\to a} g(x)}
+\]
+#+END_thm
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: limits-example1
+:END:
+
+#+BEGIN_eg
+Calculate the limit,
+\[
+\lim_{x\to 3} 2 x^2 + 5x - 7
+\]
+#+END_eg
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: limits-example2
+:END:
+
+#+BEGIN_eg
+Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2}
+\]
+#+END_eg
+
+**** One Sided Limits
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits
+:YOUTUBE_ID: MBDFe0iRNDA
+:END:
+
+***** One Sided Limits
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits-title
+:END:
+
+***** One Sided Limits (Left)
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits-left
+:END:
+
+#+BEGIN_defn
+If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\) *from the left*, then the limit from the left exists and we write
+\[
+{\color{red} \lim_{x\to a^-}} f(x) = L.
+\]
+*Note*: To say that \(x\) approaches \(a\) from the left means that we restrict to \({\color{red} x < a}\).
+#+END_defn
+
+***** One Sided Limits (Right)
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits-right
+:END:
+
+#+BEGIN_defn
+If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\) *from the right*, then the limit from the right exists and we write
+\[
+{\color{red} \lim_{x\to a^+}} f(x) = L.
+\]
+*Note*: To say that \(x\) approaches \(a\) from the right means that we restrict to \({\color{red} x > a}\).
+#+END_defn
+
+***** Limits and One Side Limits
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits-limits
+:END:
+
+#+BEGIN_thm
+\[
+\lim_{x\to a} f(x) = L
+\]
+if and only if
+\[
+\lim_{x\to a^-} f(x) = L \text{ and } \lim_{x\to a^+} f(x) = L
+\]
+#+END_thm
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits-example
+:END:
+
+#+BEGIN_eg
+Calculate the left and right limits of the function
+\[
+f(x) = \begin{cases}
+x + 1, & x \leq 2 \\
+x^2, & x > 2
+\end{cases}
+\]
+as \(x \to 2\).
+#+END_eg
+
+**** Infinite Limits
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits
+:YOUTUBE_ID: Uyfs19_B6WE
+:END:
+
+***** Infinite Limits
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits-title
+:END:
+
+***** Positive Infinite Limits
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits-positive_infinite
+:END:
+
+#+BEGIN_defn
+If the functions values \(f(x)\) become positive and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = \infty.
+\]
+#+END_defn
+
+***** Negative Infinite Limits
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits-negative_infinite
+:END:
+
+#+BEGIN_defn
+If the functions values \(f(x)\) become negative and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = -\infty.
+\]
+#+END_defn
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits-example1
+:END:
+
+#+BEGIN_eg
+Calculate the limit
+\[
+\lim_{x\to 0} \frac{1}{x^2}
+\]
+#+END_eg
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits-example2
+:END:
+
+#+BEGIN_eg
+Calculate the limit
+\[
+\lim_{x \to 1} \frac{x+1}{x-1}
+\]
+#+END_eg
+
+**** Squeeze Theorem
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem
+:YOUTUBE_ID: MS5R6ZXdDx8
+:END:
+
+***** Squeeze Theorem
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem-title
+:END:
+
+***** Squeeze Theorem
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem-squeeze_theorem
+:END:
+
+#+BEGIN_thm
+Suppose that \(\textcolor{green}{f(x)} \leq \textcolor{orange}{g(x)} \leq \textcolor{green}{h(x)}\) and that
+\[
+\lim_{x \to a} \textcolor{green}{f(x)} = \lim_{x \to a} \textcolor{green}{h(x)} = L.
+\]
+Then
+\[
+\lim_{x\to a} \textcolor{orange}{g(x)} = L.
+\]
+#+END_thm
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem-example1
+:END:
+
+#+BEGIN_eg
+Evaluate the limit
+
+\[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x}.
+\]
+#+END_eg
+
+***** Example
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem-example2
+:END:
+
+#+BEGIN_eg
+Evaluate the limit
+\[
+\lim_{\theta \to 0} \sin \theta
+\]
+#+END_eg
+
+*** Notes                                            :notes:
+**** Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+
+Limits are a fundamental concept in calculus that form the basis for understanding continuity, differentiation, and integration. A limit is the value that a function approaches as the input approaches a certain value.
+
+[[https://en.wikipedia.org/wiki/Limit_(mathematics)][Wikipedia Article on Limits]]
+
+***** Lecture Materials
+:PROPERTIES:
+:CUSTOM_ID: introduction-lecture_materials
+:END:
+
+- These notes: [[https://pabryan.github.io/notes/mq_math1010_2024_s2/notes_01_01_limits.pdf][PDF]]
+- Slides: [[https://pabryan.github.io/slides/mq_math1010_2024_s2/lecture_01_01_limits/][Online]]
+- Slides [[https://pabryan.github.io/slides/mq_math1010_2024_s2/lecture_01_01_limits.pdf][PDF]]
+
+***** References: [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)][Calculus OpenStax]]
+:PROPERTIES:
+:CUSTOM_ID: introduction-references
+:END:
+
+- [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)/02%3A_Limits/2.02%3A_The_Limit_of_a_Function][2.2: The Limit of a Function]]
+- [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)/02%3A_Limits/2.03%3A_The_Limit_Laws][2.3: The Limit Laws]]
+
+**** Limits
+:PROPERTIES:
+:CUSTOM_ID: limits
+:YOUTUBE_ID: ZLb44bNfh2E
+:END:
+
+#+BEGIN_defn
+If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
+\[
+\lim_{x\to a} f(x) = L.
+\]
+*Note*: Here we let \(x\) approach \(a\) but we consider only \(x \neq a\).
+#+END_defn
+
+#+BEGIN_thm
+If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist, then
+
+- Sum Law :: \(\displaystyle \lim_{x \to a} \left[f(x) + g(x)\right] = \lim_{x\to a} f(x) + \lim_{x\to a} g(x)\)
+- Product Law :: \(\displaystyle \lim_{x \to a} \left[f(x) g(x)\right] = \left[\lim_{x\to a} f(x)\right] \left[\lim_{x\to a} g(x)\right]\)
+- Quotient Law :: \(\displaystyle \lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\displaystyle\lim_{x\to a} f(x)}{\displaystyle\lim_{x\to a} g(x)}\) provided \(\lim_{x\to a} g(x) \neq 0\)
+#+END_thm
+
+#+BEGIN_eg
+Calculate the limit,
+\[
+\lim_{x\to 3} 2 x^2 + 5x - 7
+\]
+
+Using the limit laws,
+\begin{align*}
+\lim_{x\to 3} 2 x^2 + 3x - 7 &= 2 \lim_{x\to 3} x^2 + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&= 2 \left[\lim_{x\to 3} x\right]\left[\lim_{x\to 3} x\right] + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&= 2 \times 3 \times 3 + 5 \times 3 - 7 \\
+&= 26
+\end{align*}
+#+END_eg
+
+#+BEGIN_eg
+Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x+5}
+\]
+
+For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x+5 = 2 + 5  = 7.
+\]
+Since the denominator limit is not \(0\) we may apply the quotient law to obtain
+\[
+\lim_{x \to 2} \frac{x^2 - 4}{x+5} = \frac{\lim_{x\to 2} x^2 - 4}{\lim_{x \to 2} x+5} = \frac{0}{7} = 0
+\]
+#+END_eg
+
+#+BEGIN_eg
+Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2}
+\]
+
+For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} (x-2) = 2 - 2 = 0.
+\]
+We may not directly apply the quotient law since the denominator limit is \(0\). Instead, factorising the numerator we obtain that for \(x \neq 2\)
+\[
+\frac{x^2 - 4}{x-2} = \frac{(x-2)(x+2)}{x-2} = x+2.
+\]
+Now we may apply the limit laws to obtain
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2} = \lim_{x\to 2} (x+2) = 2 + 2 = 4.
+\]
+#+END_eg
+
+**** One Sided Limits
+:PROPERTIES:
+:CUSTOM_ID: one_sided_limits
+:END:
+
+#+BEGIN_defn
+If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\) *from the left*, then the limit from the left exists and we write
+\[
+\lim_{x\to a^{-}} f(x) = L.
+\]
+*Note*: To say that \(x\) approaches \(a\) from the left means that we restrict to \(x < a\).
+
+The limit from the right is similar, but with \(x > a\); in this case we write
+\[
+\lim_{x\to a^{+}} f(x) = L.
+\]
+#+END_defn
+
+#+BEGIN_thm
+The limit \(\lim_{x\to a} f(x) = L\) if and only if \(\lim_{x\to a^-} f(x) = L\) and \(\lim_{x\to a^+} f(x) = L\).
+#+END_thm
+
+#+BEGIN_eg
+Calculate the left and right limits of the function
+\[
+f(x) = \begin{cases}
+x + 1, & x \leq 2 \\
+x^2, & x > 2
+\end{cases}
+\]
+as \(x \to 2\).
+
+For \(x \to 2^-\) we take \(x < 2\) and so
+\[
+\lim_{x\to 2^-} f(x) = \lim_{x\to 2^-} x + 1 = 2 + 1 = 3
+\]
+For \(x \to 2^+\) we take \(x > 2\) and so
+\[
+\lim_{x\to 2^+} f(x) = \lim_{x\to 2^+} x^2 = 2^2 = 4.
+\]
+
+Since \(\lim_{x\to 2^-} f(x) \neq \lim_{x\to 2^+} f(x)\), the limit \(\lim_{x \to 2} f(x)\) does not exist.
+#+END_eg
+
+**** Infinite Limits
+:PROPERTIES:
+:CUSTOM_ID: infinite_limits
+:END:
+
+#+BEGIN_defn
+If the functions values \(f(x)\) become positive and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = \infty.
+\]
+
+If the functions values \(f(x)\) become negative and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = -\infty.
+\]
+
+Similar definitions apply for \(\lim_{x \to a^{\pm}} f(x)\).
+#+END_defn
+
+#+BEGIN_eg
+Calculate the limit
+\[
+\lim_{x\to 0} \frac{1}{x^2}
+\]
+
+The numerator has limit \(\lim_{x\to 0} x^2 = 0\) hence we cannot apply the quotient rule. Notice that the numerator equals \(1\) and that as \(x\) gets close to \(0\) (and hence is very small), we get \(1\) divided by \(x^2\) (which is an even smaller number). But \(1\) divided by a small number is a large number!
+
+For example, if \(x = 0.1\), \(x^2 = 0.01\) and \(\tfrac{1}{x^2} = \tfrac{1}{0.01} = 100\) and for \(x = 0.0001\) we get \(x^2 = (10^{-4})^2 = 10^{-8}\) and so \(\tfrac{1}{x^2} = \tfrac{1}{10^{-8}} = 10^8\).
+
+Notice moreover that for example, if \(x \in (-10^{-4}, 10^{-4})\) and \(x \neq 0\), then \(0 < x^2 < 10^{-8}\) and hence
+\[
+\frac{1}{x^2} > 10^8.
+\]
+
+In fact, if \(M > 0\) is any real positive number and \(x \in (-\sqrt{M}, \sqrt{M})\) with \(x \neq 0\), then \(0 < x^2 < M\) and hence
+\[
+\frac{1}{x^2} > M.
+\]
+
+That is, for any real number \(M > 0\), if \(x\) is close enough to \(0\) (i.e. \(0 < |x| < \sqrt{M}\)), then \(\tfrac{1}{x^2} > M\). In other words, as \(x\) tends to \(0\), \(\frac{1}{x^2}\) becomes larger than any positive number, and hence
+\[
+\lim_{x\to 0} \frac{1}{x^2} = \infty.
+\]
+#+END_eg
+
+#+BEGIN_eg
+Calculate the limit
+\[
+\lim_{x \to 1} \frac{x+1}{x-1}
+\]
+
+For the numerator,
+\[
+\lim_{x\to 1} x+1 = 1+1 = 2.
+\]
+For the denominator,
+\[
+\lim_{x\to 1} x-1 = 1 - 1 = 0.
+\]
+Thus we may not apply the quotient rule. Similarly to the previous example, the numerator tends to \(2\) (a finite number) while the denominator tends to \(0\). Thus as \(x\) tends to \(1\), the quotient \(\tfrac{x+1}{x-2}\) is tending to \(2\) divided by a small number. Again we expect the limit to be infinite, but we must take care of the sign!
+
+If \(x > 1\) and close to \(1\) then \(\tfrac{x+1}{x-1}\) will be positive and very large in magnitude, while if \(x < - 1\) and close to \(1\), \(\tfrac{x+1}{x-1}\) will be negative and very large in magnitude. Therefore
+\[
+\lim_{x\to 1^-} \frac{x+1}{x-1} = - \infty \text{ and } \lim_{x\to 1^+} \frac{x+1}{x-1} = \infty.
+\]
+More succinctly,
+\[
+\lim_{x\to 1^{\pm}} \frac{x+1}{x-1} = \pm \infty.
+\]
+
+In this case, the limit \(\lim_{x\to 1} \tfrac{x+1}{x-1}\) doesn't exist (it doesn't even equal infinity either) since the left and right limits are not the same.
+#+END_eg
+
+**** Squeeze Theorem
+:PROPERTIES:
+:CUSTOM_ID: squeeze_theorem
+:END:
+
+#+BEGIN_thm
+Suppose that \(f(x) \leq g(x) \leq h(x)\) and that
+\[
+\lim_{x \to a} f(x) = \lim_{x \to a} h(x) = L.
+\]
+
+Then
+\[
+\lim_{x\to a} g(x) = L.
+\]
+#+END_thm
+
+#+BEGIN_eg
+Evaluate the limit
+
+\[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x}.
+\]
+
+Since \(-1 \leq \sin y \leq 1\) for any \(y\), letting \(y = \tfrac{1}{x}\) we get that for any \(x \neq 0\) we have
+\[
+-1 \leq \sin \tfrac{1}{x} \leq 1.
+\]
+Multiplying by \(x^2\) gives
+\[
+-x^2 \leq x^2 \sin \tfrac{1}{x} \leq x^2.
+\]
+
+We take \(f(x) = -x^2\), \(g(x) = x^2 \sin \tfrac{1}{x}\), and \(h(x) = x^2\) which satisfy
+\[
+f(x) \leq g(x) \leq h(x)
+\]
+and
+\[
+\lim_{x\to 0} f(x) = \lim_{x\to 0} -x^2 = 0 = \lim_{x\to 0} x^2 = \lim_{x\to 0} h(x).
+\]
+Therefore by the squeeze theorem
+\[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x} = 0.
+\]
+#+END_eg
+
+#+BEGIN_export latex
+\clearpage
+#+END_export
+
+#+CAPTION: By Traced by User:Stannered - Image:TrigInequality.png, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=1868444
+#+NAME: Trig Inequality
+#+ATTR_LaTeX: :width 0.5\textwidth
+[[./img/TrigInequality.png]]
+
+#+BEGIN_eg
+Evaluate the limit
+\[
+\lim_{\theta \to 0} \sin \theta
+\]
+
+Referring to the picture above, consider the point \(A = (x, y)\) in the positive quadrant of the plane and let \(\theta\) be the angle \(\angle AOB\). Then \(\theta \in (0, \pi/2)\) and \(y = \sin(\theta) > 0\) is the length of the line segment \(AB\).
+
+The line segment \(AD\) has length \(\sqrt{y^2 + z^2}\) where \(z\) is the length of the segment \(BD\). Since \(y = \sqrt{y^2} < \sqrt{y^2 + z^2}\), the length of \(AB\) is less than the length of \(AD\), which in turn is less than the length of the circular arc \(AD\) (the shortest distance between two points is along a straight line).
+
+But the length of the circular arc is \(\theta\). Thus for \(\theta \in (0, \pi/2)\) we have
+\[
+0 < \sin \theta = y < \sqrt{y^2 + z^2} < \theta.
+\]
+That is \(0 < \sin \theta < \theta\). Since the limits as \(\theta \to 0\) on the left and right of the inequality are both equal to \(0\), by the squeeze theorem,
+\[
+\lim_{\theta \to 0^+} \sin \theta = 0
+\]
+By using \(\sin(-\theta) = -\sin(\theta)\), or arguing with a similar picture as above, for \(\theta \in (-\pi/2, 0)\) we get
+\[
+\theta < \sin\theta < 0
+\]
+and hence by the squeeze theorem,
+\[
+\lim_{\theta \to 0^-} \sin \theta = 0.
+\]
+Therefore
+\[
+\lim_{\theta \to 0} \sin \theta = 0.
+\]
+#+END_eg
+
+*** Problems                                      :problems:
+
+1. Let \(f : \RR^2 \to \RR\) be a differentiable function. Verify that \(df(X) = \ip{\nabla f}{X}\) for any vector \(X \in \RR^2\) where \(df\) is the differential of \(f\).
+
+   #+BEGIN_soln
+   Recall that
+   \[
+   df(X) = \partial_x f X^1 + \partial_y f X^2
+   \]
+   where \(X = (X^1, X^2)\).
+
+   Since \(\nabla f = (\partial_x f, \partial_y f)\) we have
+   \begin{align*}
+   \ip{\nabla f}{X} &= \ip{(\partial_x f, \partial_y f)}{(X^1, X^2)} \\
+   &= \partial_x f X^1 + \partial_y f X^2 \\
+   &= df(X).
+   \end{align*}
+   #+END_soln
+
+2. Calculate the gradient of \(f(x, y) = x^2 \sin (5y)\). Using this result and the previous question, calculate \(df(\vec{e}_1 + \vec{e}_2)\).
+
+   #+BEGIN_soln
+   \begin{align*}
+   \nabla f &= (\partial_x (x^2 \sin(5y)), \partial_y (x^2 \sin(5y)) \\
+   &= (2x \sin(5y), 5x^2 \cos(5y)).
+   \end{align*}
+
+   Then using the previous question
+   \begin{align*}
+   df(\vec{e}_1 + \vec{e}_2) &= \ip{\nabla f}{\vec{e}_1 + \vec{e}_2} \\
+   &= \ip{(2x \sin(5y), 5x^2 \cos(5y))}{(1, 1)} \\
+   &= 2x\sin(5y) + 5x^2 \cos(5y).
+   \end{align*}
+   #+END_soln
+
+3. Let \(f : \RR^n \to \RR\) and \(g : \RR \to \RR\) be differentiable functions.
+
+   1. Verify the chain rule for gradients
+      \[
+      \nabla (g \circ f) = (g' \circ f) \nabla f
+      \]
+
+      #+BEGIN_soln
+      From the usual chain rule,
+      \[
+      \partial_i (g \circ f) = (g' \circ f) \partial_i f.
+      \]
+
+      Thus
+      \begin{align*}
+      \nabla (g \circ f) &= \big(\partial_1 (g \circ f) , \dots, \partial_n (g \circ f) \big) \\
+      &= \big((g' \circ f) \partial_1 f, \dots, (g' \circ f) \partial_n f\big) \\
+      &= (g' \circ f) \big(\partial_1 f, \dots, \partial_n f\big) \\
+      &= (g' \circ f) \nabla f.
+      \end{align*}
+      #+END_soln
+
+   2. Using the chain rule calculate \(\nabla (e^{x - \sin y})\)
+
+      #+BEGIN_soln
+      Let \(g(u) = e^u\) and let \(u = f(x, y) = x - \sin y\). Then \(e^{x-\sin y} = g \circ f (x, y)\). We have
+      \begin{align*}
+      g'(u) &= e^u \\
+      \nabla f &= \big(1, -\cos y\big).
+      \end{align*}
+      Then by the chain rule,
+      \begin{align*}
+      \nabla (e^{x-\sin y}) &= (g' \circ f) \nabla f \\
+      &= e^f (1, - \cos y) \\
+      &= e^{x-\sin y} (1, - \cos y).
+      \end{align*}
+      #+END_soln
+
+   3. Directly calculate the gradient of \(e^{x-\sin y}\) to verify the chain rule in this case.
+
+      #+BEGIN_soln
+      \begin{align*}
+      \partial_x (e^{x - \sin y}) &= e^{x - \sin y} \\
+      \partial_y (e^{x - \sin y}) &= -\cos y e^{x - \sin y}.
+      \end{align*}
+
+      Thus
+      \begin{align*}
+      \nabla (e^{x-\sin y}) &= \big(e^{x-\sin y}, -\cos y e^{x-\sin y}\big) \\
+      &= e^{x-\sin y} (1, -\cos y).
+      \end{align*}
+      #+END_soln
+
+4. Let \(r(x, y, z) = \sqrt{x^2 + y^2 + z^2}\).
+
+   1. Calculate \(\nabla r\) for \((x, y, z) \neq (0, 0, 0)\).
+
+      #+BEGIN_soln
+      \begin{align*}
+      \partial_x r &= \partial_x \sqrt{x^2 + y^2 + z^2} \\
+      &= \frac{1}{2} \frac{1}{\sqrt{x^2 + y^2 + z^2}} \partial_x (x^2 + y^2 + z^2) \\
+      &= \frac{1}{2} \frac{1}{\sqrt{x^2 + y^2 + z^2}} 2x \\
+      &= \frac{x}{\sqrt{x^2 + y^2 + z^2}} \\
+      &= \frac{x}{r}
+      \end{align*}
+
+      Similarly \(\partial_y r = \frac{y}{r}\) and \(\partial_z r = \frac{z}{r}\).
+
+      Thus
+      \begin{align*}
+      \nabla r &= (\partial_x r, \partial_y r, \partial_z r) \\
+      &= \left(\frac{x}{r}, \frac{y}{r}, \frac{z}{r}\right) \\
+      &= \frac{1}{r} (x, y, z)
+      \end{align*}
+      #+END_soln
+
+   2. Calculate \(\nabla \left(\tfrac{1}{r}\right)\).
+
+      #+BEGIN_soln
+      By the chain rule
+      \begin{align*}
+      \nabla \left(\tfrac{1}{r}\right) &= - \frac{1}{r^2} \nabla r \\
+      &= - \frac{1}{r^2} \frac{1}{r} (x, y, z) \\
+      &= - \frac{1}{r^3} (x, y, z)
+      \end{align*}
+      #+END_soln
+
+* Startup                                         :noexport:
+
+# Local Variables:
+# eval: (load (expand-file-name "build_tools/setup.el"))
+# eval: (pab/teaching-mode)
+# End:
