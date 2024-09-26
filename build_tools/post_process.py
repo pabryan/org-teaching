@@ -35,7 +35,7 @@ def process_challenge(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
 
     return convert_to_str(soup, contents, True)
 
-types = {"n" : process_note, "s" : process_subnote, "l" : process_lecture, "p" : process_problem, "c" : process_challenge}
+source_types = {"n" : process_note, "s" : process_subnote, "l" : process_lecture, "p" : process_problem, "c" : process_challenge}
 
 def process_environments(soup: BeautifulSoup) -> BeautifulSoup:
     # Convert theorem like environments
@@ -98,7 +98,7 @@ def process(source: str, destination: str, source_type: str):
 
     soup = BeautifulSoup(contents.content, "lxml")
 
-    output = types[source_type](soup, contents)
+    output = source_types[source_type](soup, contents)
 
     with open(args.destination, "w") as f:
         f.write(output)
@@ -108,7 +108,7 @@ def get_args() -> argparse.ArgumentParser:
 
     parser = argparse.ArgumentParser(description="Post process org-exports")
 
-    parser.add_argument("-t", "--type", help="Type of org-export to convert", type=str, choices=types.keys(), required=True)
+    parser.add_argument("-t", "--type", help="Type of org-export to convert", type=str, choices=source_types.keys(), required=True)
     parser.add_argument("source", help="Source html file from custom org-export", type=str)
     parser.add_argument("destination", help="Output html after processing", type=str)
 
