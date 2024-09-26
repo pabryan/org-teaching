@@ -8,8 +8,6 @@ import argparse
 from bs4 import BeautifulSoup
 import frontmatter # pip install python-frontmatter
 
-import pab_setup
-
 def process_note(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
     """Process a note"""
 
@@ -118,8 +116,6 @@ def get_args() -> argparse.ArgumentParser:
 
 if __name__ == "__main__":
     os.chdir(os.path.join(sys.path[0], ".."))
-    #config = pab_setup.load_config("settings.json")
 
     args = get_args()
-
     process(args.source, args.destination, args.type)
