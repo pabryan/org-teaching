@@ -200,18 +200,3 @@ Loads key-maps and loads settings."
 
   (pab/teaching-load-settings)
   (pab/teaching-create-build))
-
-;; Some testing to see how to loop through headlines matching tag without inheritance
-(defun pab/loop ()
-  "Loops through headlines."
-  (interactive)
-  (let ((org-use-tag-inheritance nil))
-    (org-map-entries #'pab/message "+lecture-noexport")))
-
-(defun pab/message ()
-  "Message at headline."
-  (interactive)
-
-  (let ((name (org-entry-get-with-inheritance "NAME"))
-	(tags (org-get-tags nil t)))
-    (message (format "%s: %s" name (nth 0 tags)))))
