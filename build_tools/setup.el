@@ -151,9 +151,11 @@ Then runs python post-processing script."
 	(week (org-entry-get-with-inheritance "WEEK"))
 	(lec (org-entry-get-with-inheritance "LECTURE"))
 	(id (org-entry-get-with-inheritance "CUSTOM_ID"))
+	(title (org-element-property :title (org-element-at-point)))
 	(hash (list (cons 'name (format "%s-%s" name id))
 		    (cons 'week week)
-		    (cons 'lec lec))))
+		    (cons 'lec lec)
+		    (cons 'title title))))
 
     (prepend-hash-as-yaml-frontmatter filename hash)
     (shell-command (format "./build_tools/post_process.py -t s %1$s %1$s" filename))))
