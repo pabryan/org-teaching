@@ -6,42 +6,29 @@ include_variables: note_variables.html
 ---
 
 <div class="container">
-  <div class="row justify-content-center my-3">
-    <div class="col-12">
-      <div class="abstract">
-	{{ page.abstract }}
-      </div>
-    </div>
-  </div>
+  <div class="note">
+    <div class="accordion">
 
-  <div class="row justify-content-center my-3">
-    <div class="col-12">
+      {% for topicdata in page.topics %}
 
-      <div class="note">
-	<div class="accordion">
+      {% capture topic_name %}{{ page.pagename }}-{{ topicdata }}{% endcapture %}
+      {% assign topic = site.pages | where:"pagename", topic_name | first %}
 
-	  {% for topicdata in page.topics %}
+      <div class="accordion-item" id="outline-container-{{ topic.pagename }}-item">
+	<h1 class="accordion-header" id="outline-container-{{ topic.pagename }}-header">
+	  <button aria-controls="outline-container-{{ topic.pagename }}-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-{{ topic.pagename }}-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	    {{ topic.title }}
+	  </button>
+	</h1>
 
-	  {% capture topic_name %}{{ page.pagename }}-{{ topicdata }}{% endcapture %}
-	  {% assign topic = site.pages | where:"pagename", topic_name | first %}
-
-	  <div class="accordion-item" id="outline-container-{{ topic.pagename }}-item">
-	    <h1 class="accordion-header" id="outline-container-{{ topic.pagename }}-header">
-	      <button aria-controls="outline-container-{{ topic.pagename }}-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-{{ topic.pagename }}-collapse" data-bs-toggle="collapse" id="introduction" type="button">
-		{{ topic.title }}
-	      </button>
-	    </h1>
-
-	    <div aria-labelledby="outline-container-{{ topic.pagename }}-header" class="accordion-collapse collapse" id="outline-container-{{ topic.pagename }}-collapse">
-	      <div class="accordion-body p-3 m-0" id="text-{{ topic.pagename }}-body">
-		{{ topic.content }}
-	      </div>
-	    </div>
+	<div aria-labelledby="outline-container-{{ topic.pagename }}-header" class="accordion-collapse collapse" id="outline-container-{{ topic.pagename }}-collapse">
+	  <div class="accordion-body p-3 m-0" id="text-{{ topic.pagename }}-body">
+	    {{ topic.content }}
 	  </div>
-
-	  {% endfor %}
 	</div>
       </div>
+
+      {% endfor %}
     </div>
   </div>
 </div>
