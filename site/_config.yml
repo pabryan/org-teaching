@@ -1,0 +1,11 @@
+# Site settings
+title: Site Title
+description: Site Description
+author: "Paul Bryan"
+email: pabryan@gmail.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]

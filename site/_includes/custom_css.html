@@ -1,0 +1,4 @@
+{% for css in layout.custom_css %}
+{% capture csspath %}/css/{{ css }}{% endcapture %}
+<link href="{{ csspath | relative_url }}" rel="stylesheet">
+{% endfor %}

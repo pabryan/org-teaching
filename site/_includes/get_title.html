@@ -1,0 +1,7 @@
+{% unless title %}
+  {% if page.title %}
+    {% assign title = page.title %}
+  {% else %}
+    {% assign title = site.title %}
+  {% endif %}
+{% endunless %}

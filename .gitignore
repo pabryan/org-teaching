@@ -18,6 +18,6 @@
 auto/
 build/
 __pycache__/
-docs/_site/
+site/_site/
 ltximg/
 .ipynb_checkpoints/

@@ -1,0 +1,107 @@
+@import url('https://fonts.cdnfonts.com/css/jost');
+
+body {
+    /* background-color: #12171c; */
+    background-color: #080708;
+    color: white;
+    --bs-body-font-family: "Jost*", sans-serif;
+}
+
+/* Make equations a little smaller on small screens
+to make equations better fit the width*/
+@media (max-width: 600px) {
+    .MathJax {
+	font-size: 0.8em;
+    }
+    .shrinkeq {
+	font-size: 70%;
+    }
+
+    mjx-container {
+	overflow-x: auto;
+	overflow-y: hidden;
+    }
+}
+
+.content {
+    max-width: 1000px;
+}
+
+h3 {
+    padding: 1ex;
+    text-align: center;
+    color: #c4acd4;
+    font-size: calc(2.0rem + .6vw);
+}
+
+.card {
+    margin-top: 1rem!important;
+    margin-bottom: 1rem!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
+}
+
+.card-body {
+    /* background-color: #2E073F; */
+    background-color: #131113;
+}
+
+.card-header {
+    color: #ffff;
+}
+
+.defn .card-header {
+    background-color: #0059b3;
+}
+
+.defn h5.card-title::before {
+    content: "Definition"
+}
+
+.eg .card-header {
+    background-color: #00802b;
+}
+
+.eg h5.card-title::before {
+    content: "Example"
+}
+
+.ex .card-header {
+    background-color: #5c0099;
+}
+
+.ex h5.card-title::before {
+    content: "Exercise"
+}
+
+.lem .card-header {
+    background-color: #800000;
+}
+
+.lem h5.card-title::before {
+    content: "Lemma"
+}
+
+.thm .card-header {
+    background-color: #800000;
+}
+
+.thm h5.card-title::before {
+    content: "Theorem"
+}
+
+.cor .card-header {
+    background-color: #800000;
+}
+
+.cor h5.card-title::before {
+    content: "Corollary"
+}
+
+.pf .card-header {
+    background-color: #B36205;
+}
+
+.pf h5.card-title::before {
+    content: "Proof"
+}
