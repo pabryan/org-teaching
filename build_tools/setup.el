@@ -146,13 +146,13 @@ FILENAME is the name of the file exported by org.
 Adds yaml frontmatter to subnote.
 Then runs python post-processing script."
 
-  ;; (let ((hash '((name . Note) (num . 2))))
-  (let* ((name (org-entry-get-with-inheritance "NAME"))
+  ;; YAML frontmatter for jekyll - "name" is reserved in Jekyll.
+  (let* ((pagename (org-entry-get-with-inheritance "NAME"))
 	(week (org-entry-get-with-inheritance "WEEK"))
 	(lec (org-entry-get-with-inheritance "LECTURE"))
 	(id (org-entry-get-with-inheritance "CUSTOM_ID"))
 	(title (org-element-property :title (org-element-at-point)))
-	(hash (list (cons 'name (format "%s-%s" name id))
+	(hash (list (cons 'pagename (format "%s-%s" pagename id))
 		    (cons 'week week)
 		    (cons 'lec lec)
 		    (cons 'title title))))
