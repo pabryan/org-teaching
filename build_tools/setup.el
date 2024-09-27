@@ -57,12 +57,12 @@ The function will be called after the org-export to post-process the result."
 	(setq filename (org-export-output-file-name (format ".%s" ext) t pab/teaching-export-dir)))
       (org-export-to-file backend filename nil t nil t nil post-process))))
 
-(defun prepend-hash-as-yaml-frontmatter (filename hash)
-  "Prepend HASH to  FILENAME.
+(defun pab/teaching-prepend-hash-to-file-as-yaml-frontmatter (filename hash)
+  "Prepend HASH to FILENAME as yaml-frontmatter.
 
-HASH should be a hash and FILENAME the name of a file.
+HASH should be a hash to be converted to yaml frontmatter.
+FILENAME should be a string containing the name of a file.
 
-HASH is converted to YAML and prepended as frontmatter to FILENAME.
 The result is of the form
 
 ---
@@ -71,13 +71,15 @@ The result is of the form
 
 <filecontents>"
 
-  (let* ((yaml-contents (yaml-encode hash))
-	 (yaml-frontmatter (format "---\n%s\n---\n\n" yaml-contents)))
-
-    (with-temp-buffer
-      (insert yaml-frontmatter)
+  (with-temp-buffer
+      (insert (pab/teaching-hash-to-yaml-frontmatter hash))
       (insert-file-contents filename)
-      (write-region nil nil filename))))
+      (write-region nil nil filename)))
+
+(defun pab/teaching-hash-to-yaml-frontmatter (hash)
+  "Convert HASH into a string of yaml frontmatter."
+
+  (format "---\n%s\n---\n\n" (yaml-encode hash)))
 
 (defun pab/teaching-export-file-name ()
   "Construct the file-name for export.
@@ -138,6 +140,20 @@ Saves to FILENAME if passed, otherwise let org decide the filename."
 	(pab/teaching-export-to-backend '(html) export-filename #'pab/teaching-export-subnote-post-process))
     (message "Not a subnote")))
 
+(defun pab/teaching-subnote-hash-frontmatter ()
+  "Generate hash frontmatter for subnote."
+
+  (let*
+      ((pagename (org-entry-get-with-inheritance "NAME"))
+	(week (org-entry-get-with-inheritance "WEEK"))
+	(lec (org-entry-get-with-inheritance "LECTURE"))
+	(id (org-entry-get-with-inheritance "CUSTOM_ID"))
+	(title (org-element-property :title (org-element-at-point))))
+    (list (cons 'pagename (format "%s-%s" pagename id))
+		    (cons 'week week)
+		    (cons 'lec lec)
+		    (cons 'title title))))
+
 (defun pab/teaching-export-subnote-post-process (filename)
   "Post process a subnote after org-export-to-file.
 
@@ -146,19 +162,9 @@ FILENAME is the name of the file exported by org.
 Adds yaml frontmatter to subnote.
 Then runs python post-processing script."
 
-  ;; YAML frontmatter for jekyll - "name" is reserved in Jekyll.
-  (let* ((pagename (org-entry-get-with-inheritance "NAME"))
-	(week (org-entry-get-with-inheritance "WEEK"))
-	(lec (org-entry-get-with-inheritance "LECTURE"))
-	(id (org-entry-get-with-inheritance "CUSTOM_ID"))
-	(title (org-element-property :title (org-element-at-point)))
-	(hash (list (cons 'pagename (format "%s-%s" pagename id))
-		    (cons 'week week)
-		    (cons 'lec lec)
-		    (cons 'title title))))
-
-    (prepend-hash-as-yaml-frontmatter filename hash)
-    (shell-command (format "./build_tools/post_process.py -t s %1$s %1$s" filename))))
+  (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter
+   filename (pab/teaching-subnote-hash-frontmatter))
+  (shell-command (format "./build_tools/post_process.py -t s %1$s %1$s" filename)))
 
 (defun pab/teaching-get-notes-topics ()
   "Get list of topics under current note."
