@@ -104,7 +104,10 @@ Otherwise return FILENAME-CUSTOM_ID where CUSTOM_ID is obtained from the tags."
       (format "%s-%s" filename_prefix topic))))
 
 (defun pab/teaching-subnote-p ()
-  "Test if headline at point is a sub-note."
+  "Test if headline at point is a sub-note.
+
+This will be true provided the headline one level
+higher is a note."
 
   (save-excursion
     (org-up-heading-safe)
