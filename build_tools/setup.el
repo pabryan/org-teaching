@@ -177,17 +177,73 @@ Then runs python post-processing script."
 	 (format "LEVEL=%d" (+ note-level 1)) 'tree))
     (message "Not a note")))
 
+(defun pab/teaching-note-hash-frontmatter ()
+  "Generate hash frontmatter for note."
+
+  (let*
+      ((layout "note")
+       (pagename (org-entry-get-with-inheritance "NAME"))
+       (title (org-entry-get-with-inheritance "TITLE"))
+       (week (org-entry-get-with-inheritance "WEEK"))
+       (lec (org-entry-get-with-inheritance "LECTURE"))
+       (abstract (pab/teaching-note-abstract)))
+    (list
+     (cons 'layout layout)
+     (cons 'pagename pagename)
+     (cons 'title title)
+     (cons 'week week)
+     (cons 'lec lec)
+     (cons 'topics (pab/teaching-get-notes-topics))
+     (cons 'abstract (format "%s" abstract)))))
+
+(defun pab/teaching-note-abstract ()
+  "Return the first paragraph of the first subnote."
+
+  (save-excursion
+    (org-goto-first-child)
+    (let ((el (org-element-at-point)))
+      (pab/teaching-first-para el))))
+
+(defun pab/teaching-first-para (element)
+  "Message the first paragraph following headline ELEMENT, if present.
+When called interactively, ELEMENT is the element at point."
+
+  (save-excursion
+    (when-let ((beg (org-element-property :contents-begin element)))
+      (goto-char beg)
+      (let* ((el (org-element-at-point)))
+	(when (eq 'property-drawer (org-element-type el))
+	  (setq el (pab/teaching-org-next-element el)))
+	(when (eq 'paragraph (org-element-type el))
+	  (buffer-substring-no-properties
+           (org-element-property :contents-begin el)
+           (org-element-property :contents-end el)))))))
+
+(defun pab/teaching-org-next-element (element)
+  "Return the next element after ELEMENT."
+
+  (save-excursion
+    (let ((end (org-element-property :end element)))
+      (goto-char (+ end 1))
+      (org-element-at-point))))
+
 (defun pab/teaching-export-note (&optional filename)
   "Export a note.
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
   (if (pab/teaching-note-p)
-      (let ((note-level (org-element-property :level (org-element-at-point))))
-	(pab/teaching-export-to-backend '(latex html) filename)
+      (let*
+	  ((hash (pab/teaching-note-hash-frontmatter))
+	   (note-level (org-element-property :level (org-element-at-point)))
+	   (outfile (file-name-concat pab/teaching-export-dir (format "%s.%s" filename "html"))))
+	(with-temp-buffer
+	  (write-region nil nil outfile))
+	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash)
+	(pab/teaching-export-to-backend '(latex) filename)
 	(org-map-entries
 	 (lambda() (pab/teaching-export-subnote filename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))
-    (message "Not a note")))
+  (message "Not a note")))
 
 (defun pab/teaching-export-lecture (&optional filename)
   "Export a lecture.
