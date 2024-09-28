@@ -170,11 +170,11 @@ Then runs python post-processing script."
   "Get list of topics under current note."
 
   (if (pab/teaching-note-p)
-      (let ((org-use-tag-inheritance nil))
+      (let ((note-level (org-element-property :level (org-element-at-point))))
 	(org-map-entries
-	 (lambda ()
-	   (format "\"%s\"" (org-entry-get nil "CUSTOM_ID")))
-	 "+notes-noexport" 'tree))
+	 (lambda()
+	   (org-entry-get nil "CUSTOM_ID"))
+	 (format "LEVEL=%d" (+ note-level 1)) 'tree))
     (message "Not a note")))
 
 (defun pab/teaching-export-note (&optional filename)
