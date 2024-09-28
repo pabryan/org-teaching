@@ -49,12 +49,12 @@ The function will be called after the org-export to post-process the result."
 
 
   (dolist (backend backends)
-    (let ((ext (cond ((equal backend 'html) "html")
-		     ((equal backend 'latex) "tex")))
+    (let ((ext (cond ((equal backend 'html) ".html")
+		     ((equal backend 'latex) ".tex")))
 	  (filename nil))
       (if outfile
-	  (setq filename (file-name-concat pab/teaching-export-dir (format "%s.%s" outfile ext)))
-	(setq filename (org-export-output-file-name (format ".%s" ext) t pab/teaching-export-dir)))
+	  (setq filename (file-name-concat pab/teaching-export-dir (file-name-with-extension outfile ext)))
+	(setq filename (org-export-output-file-name ext t pab/teaching-export-dir)))
       (org-export-to-file backend filename nil t nil t nil post-process))))
 
 (defun pab/teaching-prepend-hash-to-file-as-yaml-frontmatter (filename hash)
