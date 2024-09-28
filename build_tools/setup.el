@@ -138,10 +138,9 @@ higher is a note."
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
-  (if (pab/teaching-subnote-p)
+  (when (pab/teaching-subnote-p)
       (let ((export-filename (pab/teaching-export-subtopic-file-name filename)))
-	(pab/teaching-export-to-backend '(html) export-filename #'pab/teaching-export-subnote-post-process))
-    (message "Not a subnote")))
+	(pab/teaching-export-to-backend '(html) export-filename #'pab/teaching-export-subnote-post-process))))
 
 (defun pab/teaching-subnote-hash-frontmatter ()
   "Generate hash frontmatter for subnote."
@@ -172,13 +171,12 @@ Then runs python post-processing script."
 (defun pab/teaching-get-notes-topics ()
   "Get list of topics under current note."
 
-  (if (pab/teaching-note-p)
+  (when (pab/teaching-note-p)
       (let ((note-level (org-element-property :level (org-element-at-point))))
 	(org-map-entries
 	 (lambda()
 	   (org-entry-get nil "CUSTOM_ID"))
-	 (format "LEVEL=%d" (+ note-level 1)) 'tree))
-    (message "Not a note")))
+	 (format "LEVEL=%d" (+ note-level 1)) 'tree))))
 
 (defun pab/teaching-note-hash-frontmatter ()
   "Generate hash frontmatter for note."
@@ -235,7 +233,7 @@ When called interactively, ELEMENT is the element at point."
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
-  (if (pab/teaching-note-p)
+  (when (pab/teaching-note-p)
       (let*
 	  ((hash (pab/teaching-note-hash-frontmatter))
 	   (note-level (org-element-property :level (org-element-at-point)))
@@ -245,35 +243,31 @@ Saves to FILENAME if passed, otherwise let org decide the filename."
 	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash)
 	(pab/teaching-export-to-backend '(latex) filename)
 	(org-map-entries
-	 (lambda() (pab/teaching-export-subnote filename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))
-  (message "Not a note")))
+	 (lambda() (pab/teaching-export-subnote filename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))))
 
 (defun pab/teaching-export-lecture (&optional filename)
   "Export a lecture.
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
-  (if (pab/teaching-lecture-p)
-	(pab/teaching-export-to-backend '(html) filename)
-    (message "Not a lecture")))
+  (when (pab/teaching-lecture-p)
+	(pab/teaching-export-to-backend '(html) filename)))
 
 (defun pab/teaching-export-problems (&optional filename)
   "Export problems.
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
-  (if (pab/teaching-problem-p)
-      (pab/teaching-export-to-backend '(html latex) filename)
-    (message "Not a problem")))
+  (when (pab/teaching-problem-p)
+      (pab/teaching-export-to-backend '(html latex) filename)))
 
 (defun pab/teaching-export-challenge (&optional filename)
   "Export challenge.
 
 Saves to FILENAME if passed, otherwise let org decide the filename."
 
-  (if (pab/teaching-challenge-p)
-	(pab/teaching-export-to-backend '(html latex) filename)
-    (message "Not a challenge")))
+  (when (pab/teaching-challenge-p)
+	(pab/teaching-export-to-backend '(html latex) filename)))
 
 (defun pab/teaching-export ()
   "Export headline based on tag.
