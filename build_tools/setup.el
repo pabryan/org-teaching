@@ -5,9 +5,11 @@
 
 (defvar-local pab/teaching-build-dir nil)
 (defvar-local pab/teaching-export-dir nil)
-(defvar-local pab/teaching-publish-dir nil)
-(defvar-local pab/teaching-publish-dirs nil)
+(defvar-local pab/teaching-export-dirs nil)
 (defvar-local pab/teaching-site-dir nil)
+(defvar-local pab/teaching-export-notes-dir nil)
+(defvar-local pab/teaching-export-lectures-dir nil)
+(defvar-local pab/teaching-export-problems-dir nil)
 
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
@@ -36,12 +38,15 @@ Loads key-maps and loads settings."
 
     (setq pab/teaching-build-dir (expand-file-name (gethash "build_dir" json-settings)))
     (setq pab/teaching-export-dir (expand-file-name (gethash "export_dir" json-settings) pab/teaching-build-dir))
-    (setq pab/teaching-publish-dir (expand-file-name (gethash "publish_dir" json-settings) pab/teaching-build-dir))
     (setq pab/teaching-site-dir (gethash "site_dir" json-settings))
-    (setq pab/teaching-publish-dirs (gethash "publish_dirs" json-settings))
+    (setq pab/teaching-export-dirs (gethash "export_dirs" json-settings))
     (maphash
      (lambda (hashkey hashval)
-       (puthash hashkey (expand-file-name hashval pab/teaching-publish-dir) pab/teaching-publish-dirs)) pab/teaching-publish-dirs)))
+       (puthash hashkey (expand-file-name hashval pab/teaching-export-dir) pab/teaching-export-dirs))
+     pab/teaching-export-dirs)
+    (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
+    (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
+    (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))))
 
 (defun pab/teaching-create-build ()
   "Create build enviroment."
@@ -49,17 +54,16 @@ Loads key-maps and loads settings."
 
   (make-directory pab/teaching-build-dir :parents)
   (make-directory pab/teaching-export-dir :parents)
-  (make-directory pab/teaching-publish-dir :parents)
   (maphash (lambda (hashkey hashval)
 	     (make-directory hashval :parents))
-	   pab/teaching-publish-dirs)
+	   pab/teaching-export-dirs)
   (let* ((files (directory-files pab/teaching-site-dir nil directory-files-no-dot-files-regexp))
 	 (files (seq-remove (lambda (x) (string-match ".*~$" x)) files)))
     (dolist
 	(file files)
 	(make-symbolic-link
 	 (expand-file-name file pab/teaching-site-dir)
-	 (expand-file-name file pab/teaching-publish-dir) t))))
+	 (expand-file-name file pab/teaching-export-dir) t))))
 
 (defun pab/teaching-export-to-backend (backends &optional outfile post-process)
   "Export at point using BACKENDS.
