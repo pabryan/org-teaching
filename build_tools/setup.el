@@ -35,10 +35,14 @@ Loads key-maps and loads settings."
 	 (json-key-type 'string)
 	 (json-settings (json-read-file "settings.json")))
 
-    (setq pab/teaching-build-dir (gethash "build_dir" json-settings))
-    (setq pab/teaching-export-dir (file-name-concat pab/teaching-build-dir (gethash "export_dir" json-settings)))
-    (setq pab/teaching-publish-dir (file-name-concat pab/teaching-build-dir (gethash "publish_dir" json-settings)))
-    (setq pab/teaching-publish-dirs (gethash "publish_dirs" json-settings))))
+    (setq pab/teaching-build-dir (expand-file-name (gethash "build_dir" json-settings)))
+    (setq pab/teaching-export-dir (expand-file-name (gethash "export_dir" json-settings) pab/teaching-build-dir))
+    (setq pab/teaching-publish-dir (expand-file-name (gethash "publish_dir" json-settings) pab/teaching-build-dir))
+    (setq pab/teaching-site-dir (gethash "site_dir" json-settings))
+    (setq pab/teaching-publish-dirs (gethash "publish_dirs" json-settings))
+    (maphash
+     (lambda (hashkey hashval)
+       (puthash hashkey (expand-file-name hashval pab/teaching-publish-dir) pab/teaching-publish-dirs)) pab/teaching-publish-dirs)))
 
 (defun pab/teaching-create-build ()
   "Create build enviroment."
@@ -47,8 +51,8 @@ Loads key-maps and loads settings."
   (make-directory pab/teaching-export-dir :parents)
   (make-directory pab/teaching-publish-dir :parents)
   (maphash (lambda (hashkey hashval)
-	     (make-directory (file-name-concat pab/teaching-publish-dir hashval) :parents))
-	   pab/teaching-publish-dirs))
+	     (make-directory hashval :parents))
+	   pab/teaching-publish-dirs)
 
 (defun pab/teaching-export-to-backend (backends &optional outfile post-process)
   "Export at point using BACKENDS.
