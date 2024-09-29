@@ -127,7 +127,8 @@ otherwise builds filename as <week>_<lec>_<name>"
 Accepts one argument FILENAME_PREFIX
 
 Returns nil if EXPORT_FILE_NAME is already set.
-Otherwise return FILENAME-CUSTOM_ID where CUSTOM_ID is obtained from the tags."
+Otherwise return FILENAME_PREFIX-CUSTOM_ID
+where CUSTOM_ID is obtained from the tags."
 
   (unless (org-entry-get nil "EXPORT_FILE_NAME")
     (let ((topic (org-entry-get-with-inheritance "CUSTOM_ID")))
