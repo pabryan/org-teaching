@@ -10,12 +10,11 @@
 (defvar-local pab/teaching-export-notes-dir nil)
 (defvar-local pab/teaching-export-lectures-dir nil)
 (defvar-local pab/teaching-export-problems-dir nil)
+(defvar-local pab/teaching-export-notes-tex-dir nil)
 
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
 (define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
-(define-key pab/teaching-mode-map (kbd "C-c h") (lambda () (pab/teaching-export-to-backend 'html)))
-(define-key pab/teaching-mode-map (kbd "C-c t") (lambda () (pab/teaching-export-to-backend 'latex)))
 
 (define-minor-mode pab/teaching-mode
   "Minor mode for my teaching setup.
@@ -45,6 +44,7 @@ Loads key-maps and loads settings."
        (puthash hashkey (expand-file-name hashval pab/teaching-export-dir) pab/teaching-export-dirs))
      pab/teaching-export-dirs)
     (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
+    (setq pab/teaching-export-notes-tex-dir (file-name-concat pab/teaching-export-notes-dir "tex"))
     (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
     (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))))
 
@@ -57,6 +57,7 @@ Loads key-maps and loads settings."
   (maphash (lambda (hashkey hashval)
 	     (make-directory hashval :parents))
 	   pab/teaching-export-dirs)
+  (make-directory pab/teaching-export-notes-tex-dir :parents)
   (let* ((files (directory-files pab/teaching-site-dir nil directory-files-no-dot-files-regexp))
 	 (files (seq-remove (lambda (x) (string-match ".*~$" x)) files)))
     (dolist
@@ -65,30 +66,25 @@ Loads key-maps and loads settings."
 	 (expand-file-name file pab/teaching-site-dir)
 	 (expand-file-name file pab/teaching-export-dir) t))))
 
-(defun pab/teaching-export-to-backend (backends &optional outfile post-process)
-  "Export at point using BACKENDS.
+(defun pab/teaching-export-to-backend (outfile backends &optional post-process)
+  "Export to OUTFILE at point using BACKENDS.
+
 BACKENDS should be a list of backends to use.
 
 For example ('html), ('html 'tex)
 
 Currently implemented are html and tex.
 
-If OUTFILE is set, export to that file in the pab/teaching-export-dir directory
-with appropriate file extension for echo backend in BACKENDS
-Otherwise let org decide the filename
+Export to OUTFILE with extension appropriate for each backend in BACKEND.
 
 If provided, POST-PROCESS should be an elisp function with one mandatory
 argument containing a filename.
 The function will be called after the org-export to post-process the result."
 
-
   (dolist (backend backends)
-    (let ((ext (cond ((equal backend 'html) ".html")
+    (let* ((ext (cond ((equal backend 'html) ".html")
 		     ((equal backend 'latex) ".tex")))
-	  (filename nil))
-      (if outfile
-	  (setq filename (file-name-concat pab/teaching-export-dir (file-name-with-extension outfile ext)))
-	(setq filename (org-export-output-file-name ext t pab/teaching-export-dir)))
+	   (filename (file-name-with-extension outfile ext)))
       (org-export-to-file backend filename nil t nil t nil post-process))))
 
 (defun pab/teaching-prepend-hash-to-file-as-yaml-frontmatter (filename hash)
@@ -168,14 +164,21 @@ higher is a note."
 
   (member "challenge" (org-get-tags nil t)))
 
-(defun pab/teaching-export-subnote (&optional filename)
-  "Export sub-topics.
+(defun pab/teaching-export-subnote (notename)
+  "Export sub-topic at point to file determined by NOTENAME.
 
-Saves to FILENAME if passed, otherwise let org decide the filename."
+The name of the file is obtained by calling
+pab/teaching-export-subtopic-file-name.
+
+The exported file well be created in
+
+pab/teaching-export-notes-dir/notename."
 
   (when (pab/teaching-subnote-p)
-      (let ((export-filename (pab/teaching-export-subtopic-file-name filename)))
-	(pab/teaching-export-to-backend '(html) export-filename #'pab/teaching-export-subnote-post-process))))
+    (let* ((notes-dir (expand-file-name notename pab/teaching-export-notes-dir))
+	   (export-filename (expand-file-name (pab/teaching-export-subtopic-file-name notename) notes-dir)))
+      (make-directory notes-dir t)
+      (pab/teaching-export-to-backend export-filename '(html) #'pab/teaching-export-subnote-post-process))))
 
 (defun pab/teaching-subnote-hash-frontmatter ()
   "Generate hash frontmatter for subnote."
@@ -263,46 +266,65 @@ When called interactively, ELEMENT is the element at point."
       (goto-char (+ end 1))
       (org-element-at-point))))
 
-(defun pab/teaching-export-note (&optional filename)
-  "Export a note.
+(defun pab/teaching-export-note (notename)
+  "Export note at point to file determined by NOTENAME.
 
-Saves to FILENAME if passed, otherwise let org decide the filename."
+The name of the file is obtained by calling
+pab/teaching-export-note-file-name.
+
+The note is exported to both html and LaTeX along with
+all subnotes..
+
+The exported html file is created as
+
+pab/teaching-export-notes-dir/NOTENAME/index.html
+
+The exported LaTeX file is created as
+
+pab/teaching-export-notes-tex-dir/NOTENAME
+
+The subnotes are exported by calling
+pab/teaching-export-subnote on each subnote."
 
   (when (pab/teaching-note-p)
       (let*
 	  ((hash (pab/teaching-note-hash-frontmatter))
 	   (note-level (org-element-property :level (org-element-at-point)))
-	   (outfile (file-name-concat pab/teaching-export-dir (format "%s.%s" filename "html"))))
+	   (note-dir (file-name-concat pab/teaching-export-notes-dir notename))
+	   (outfile (file-name-concat note-dir "index.html"))
+	   (texfile (file-name-concat pab/teaching-export-notes-tex-dir notename)))
+	(make-directory note-dir t)
 	(with-temp-buffer
 	  (write-region nil nil outfile))
 	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash)
-	(pab/teaching-export-to-backend '(latex) filename)
+
+	(pab/teaching-export-to-backend texfile '(latex))
 	(org-map-entries
-	 (lambda() (pab/teaching-export-subnote filename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))))
+	 (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))))
 
-(defun pab/teaching-export-lecture (&optional filename)
-  "Export a lecture.
+(defun pab/teaching-export-lecture (filename)
+  "Export a lecture to FILENAME.
 
-Saves to FILENAME if passed, otherwise let org decide the filename."
+The output is in pab/teaching-export-lectures-dir."
 
   (when (pab/teaching-lecture-p)
-	(pab/teaching-export-to-backend '(html) filename)))
+	(pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-lectures-dir) '(html))))
 
-(defun pab/teaching-export-problems (&optional filename)
-  "Export problems.
+(defun pab/teaching-export-problems (filename)
+  "Export a problem to FILENAME.
 
-Saves to FILENAME if passed, otherwise let org decide the filename."
+The output is in pab/teaching-export-problems-dir."
 
   (when (pab/teaching-problem-p)
-      (pab/teaching-export-to-backend '(html latex) filename)))
+    (pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-problems-dir) '(html latex))))
 
-(defun pab/teaching-export-challenge (&optional filename)
-  "Export challenge.
+(defun pab/teaching-export-challenge (filename)
+  "Export a challenge to FILENAME.
 
-Saves to FILENAME if passed, otherwise let org decide the filename."
+The output is in pab/teaching-export-problems-dir."
 
   (when (pab/teaching-challenge-p)
-	(pab/teaching-export-to-backend '(html latex) filename)))
+    (pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-problems-dir) '(html latex))))
 
 (defun pab/teaching-export ()
   "Export headline based on tag.
@@ -316,7 +338,7 @@ Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
 	  ((pab/teaching-subnote-p)
 	   (pab/teaching-export-subnote (format "notes_%s" filename)))
 	  ((pab/teaching-lecture-p)
-	   (pab/teaching-export-lecture (format "lecture_%s" filename)))
+	   (pab/teaching-export-lecture (format "lectures_%s" filename)))
 	  ((pab/teaching-problem-p)
 	   (pab/teaching-export-problems (format "problems_%s"filename)))
 	  ((pab/teaching-challenge-p)

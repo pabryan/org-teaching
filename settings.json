@@ -1,10 +1,9 @@
 {
     "build_dir" : "build",
     "export_dir" : "export",
-    "publish_dir" : "publish",
-    "publish_dirs" : {
+    "export_dirs" : {
 	"notes" : "notes",
-	"lecture" : "lectures",
+	"lectures" : "lectures",
 	"problems" : "problems"
     },
     "site_dir" : "site/",
