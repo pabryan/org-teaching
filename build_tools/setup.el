@@ -9,6 +9,24 @@
 (defvar-local pab/teaching-publish-dirs nil)
 (defvar-local pab/teaching-site-dir nil)
 
+(defvar pab/teaching-mode-map (make-sparse-keymap))
+(define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
+(define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
+(define-key pab/teaching-mode-map (kbd "C-c h") (lambda () (pab/teaching-export-to-backend 'html)))
+(define-key pab/teaching-mode-map (kbd "C-c t") (lambda () (pab/teaching-export-to-backend 'latex)))
+
+(define-minor-mode pab/teaching-mode
+  "Minor mode for my teaching setup.
+
+Loads key-maps and loads settings."
+
+  :init-value nil
+  :lighter " pab/teaching"
+
+  (pab/teaching-load-settings)
+  (pab/teaching-create-build)
+  (pab/teaching-create-publish))
+
 (defun pab/teaching-load-settings ()
   "Load settings file."
 
@@ -295,20 +313,3 @@ Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
   (interactive)
   (let ((org-use-tag-inheritance nil))
     (org-map-entries #'pab/teaching-export "+notes-noexport|+lecture-noexport|+problems-noexport|+challenge-noexport")))
-
-(defvar pab/teaching-mode-map (make-sparse-keymap))
-(define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
-(define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
-(define-key pab/teaching-mode-map (kbd "C-c h") (lambda () (pab/teaching-export-to-backend 'html)))
-(define-key pab/teaching-mode-map (kbd "C-c t") (lambda () (pab/teaching-export-to-backend 'latex)))
-
-(define-minor-mode pab/teaching-mode
-  "Minor mode for my teaching setup.
-
-Loads key-maps and loads settings."
-
-  :init-value nil
-  :lighter " pab/teaching"
-
-  (pab/teaching-load-settings)
-  (pab/teaching-create-build))
