@@ -7,6 +7,7 @@
 	"lecture" : "lectures",
 	"problems" : "problems"
     },
+    "site_dir" : "site/",
     "build_tools_dir" : "build_tools",
     "build_json" : "build_spec.json"
 }
