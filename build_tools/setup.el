@@ -46,6 +46,7 @@ Loads key-maps and loads settings."
 (defun pab/teaching-create-build ()
   "Create build enviroment."
   (interactive)
+
   (make-directory pab/teaching-build-dir :parents)
   (make-directory pab/teaching-export-dir :parents)
   (make-directory pab/teaching-publish-dir :parents)
