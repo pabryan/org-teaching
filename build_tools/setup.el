@@ -3,10 +3,11 @@
 (require 'org)
 (require 'ox)
 
-(make-local-variable 'pab/teaching-build-dir)
-(make-local-variable 'pab/teaching-export-dir)
-(make-local-variable 'pab/teaching-publish-dir)
-(make-local-variable 'pab/teaching-publish-dirs)
+(defvar-local pab/teaching-build-dir nil)
+(defvar-local pab/teaching-export-dir nil)
+(defvar-local pab/teaching-publish-dir nil)
+(defvar-local pab/teaching-publish-dirs nil)
+(defvar-local pab/teaching-site-dir nil)
 
 (defun pab/teaching-load-settings ()
   "Load settings file."
