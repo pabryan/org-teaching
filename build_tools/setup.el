@@ -53,6 +53,13 @@ Loads key-maps and loads settings."
   (maphash (lambda (hashkey hashval)
 	     (make-directory hashval :parents))
 	   pab/teaching-publish-dirs)
+  (let* ((files (directory-files pab/teaching-site-dir nil directory-files-no-dot-files-regexp))
+	 (files (seq-remove (lambda (x) (string-match ".*~$" x)) files)))
+    (dolist
+	(file files)
+	(make-symbolic-link
+	 (expand-file-name file pab/teaching-site-dir)
+	 (expand-file-name file pab/teaching-publish-dir) t))))
 
 (defun pab/teaching-export-to-backend (backends &optional outfile post-process)
   "Export at point using BACKENDS.
