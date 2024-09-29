@@ -24,8 +24,7 @@ Loads key-maps and loads settings."
   :lighter " pab/teaching"
 
   (pab/teaching-load-settings)
-  (pab/teaching-create-build)
-  (pab/teaching-create-publish))
+  (pab/teaching-create-build))
 
 (defun pab/teaching-load-settings ()
   "Load settings file."
