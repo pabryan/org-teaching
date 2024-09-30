@@ -3,14 +3,16 @@
 (require 'org)
 (require 'ox)
 
-(defvar-local pab/teaching-build-dir nil)
+(defvar-local pab/teaching-base-dir nil)
 (defvar-local pab/teaching-export-dir nil)
+(defvar-local pab/teaching-export-html-dir nil)
+(defvar-local pab/teaching-export-tex-dir nil)
 (defvar-local pab/teaching-export-dirs nil)
 (defvar-local pab/teaching-site-dir nil)
 (defvar-local pab/teaching-export-notes-dir nil)
 (defvar-local pab/teaching-export-lectures-dir nil)
 (defvar-local pab/teaching-export-problems-dir nil)
-(defvar-local pab/teaching-export-notes-tex-dir nil)
+
 
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
@@ -25,7 +27,7 @@ Loads key-maps and loads settings."
   :lighter " pab/teaching"
 
   (pab/teaching-load-settings)
-  (pab/teaching-create-build))
+  (pab/teaching-create-export))
 
 (defun pab/teaching-load-settings ()
   "Load settings file."
@@ -35,36 +37,36 @@ Loads key-maps and loads settings."
 	 (json-key-type 'string)
 	 (json-settings (json-read-file "settings.json")))
 
-    (setq pab/teaching-build-dir (expand-file-name (gethash "build_dir" json-settings)))
-    (setq pab/teaching-export-dir (expand-file-name (gethash "export_dir" json-settings) pab/teaching-build-dir))
-    (setq pab/teaching-site-dir (gethash "site_dir" json-settings))
+    (setq pab/teaching-base-dir
+	  (expand-file-name (or (gethash "base_dir" json-settings)
+				default-directory)))
+    (setq pab/teaching-export-dir (expand-file-name (gethash "export_dir" json-settings) pab/teaching-base-dir))
+    (setq pab/teaching-export-html-dir (expand-file-name "html" pab/teaching-export-dir))
+    (setq pab/teaching-export-tex-dir (expand-file-name "tex" pab/teaching-export-dir))
+    (setq pab/teaching-site-dir (expand-file-name (gethash "site_dir" json-settings)))
     (setq pab/teaching-export-dirs (gethash "export_dirs" json-settings))
-    (maphash
-     (lambda (hashkey hashval)
-       (puthash hashkey (expand-file-name hashval pab/teaching-export-dir) pab/teaching-export-dirs))
-     pab/teaching-export-dirs)
     (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
-    (setq pab/teaching-export-notes-tex-dir (file-name-concat pab/teaching-export-notes-dir "tex"))
     (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
     (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))))
 
-(defun pab/teaching-create-build ()
-  "Create build enviroment."
+(defun pab/teaching-create-export ()
+  "Create export enviroment."
   (interactive)
 
-  (make-directory pab/teaching-build-dir :parents)
+  (make-directory pab/teaching-base-dir :parents)
   (make-directory pab/teaching-export-dir :parents)
-  (maphash (lambda (hashkey hashval)
-	     (make-directory hashval :parents))
-	   pab/teaching-export-dirs)
-  (make-directory pab/teaching-export-notes-tex-dir :parents)
+  (make-directory pab/teaching-export-html-dir :parents)
+  (make-directory pab/teaching-export-tex-dir :parents)
+  (dolist (dir (list pab/teaching-export-html-dir pab/teaching-export-tex-dir))
+    (maphash (lambda (hashkey hashval)
+	       (make-directory (expand-file-name hashval dir) :parents))
+	     pab/teaching-export-dirs))
   (let* ((files (directory-files pab/teaching-site-dir nil directory-files-no-dot-files-regexp))
 	 (files (seq-remove (lambda (x) (string-match ".*~$" x)) files)))
-    (dolist
-	(file files)
-	(make-symbolic-link
-	 (expand-file-name file pab/teaching-site-dir)
-	 (expand-file-name file pab/teaching-export-dir) t))))
+    (dolist (file files)
+      (make-symbolic-link
+       (expand-file-name file pab/teaching-site-dir)
+       (expand-file-name file pab/teaching-export-html-dir) t))))
 
 (defun pab/teaching-export-to-backend (outfile backends &optional post-process)
   "Export to OUTFILE at point using BACKENDS.
@@ -82,10 +84,17 @@ argument containing a filename.
 The function will be called after the org-export to post-process the result."
 
   (dolist (backend backends)
-    (let* ((ext (cond ((equal backend 'html) ".html")
-		     ((equal backend 'latex) ".tex")))
-	   (filename (file-name-with-extension outfile ext)))
-      (org-export-to-file backend filename nil t nil t nil post-process))))
+    (let (ext export-dir)
+      (cond ((equal backend 'html)
+	     (setq ext ".html")
+	     (setq export-dir pab/teaching-export-html-dir))
+	    ((equal backend 'latex)
+	     (setq ext ".tex")
+	     (setq export-dir pab/teaching-export-tex-dir)))
+      (let ((filename
+	     (file-name-with-extension (expand-file-name outfile export-dir) ext)))
+	(make-directory (file-name-directory filename) t)
+	(org-export-to-file backend filename nil t nil t nil post-process)))))
 
 (defun pab/teaching-prepend-hash-to-file-as-yaml-frontmatter (filename hash)
   "Prepend HASH to FILENAME as yaml-frontmatter.
@@ -175,9 +184,10 @@ The exported file well be created in
 pab/teaching-export-notes-dir/notename."
 
   (when (pab/teaching-subnote-p)
-    (let* ((notes-dir (expand-file-name notename pab/teaching-export-notes-dir))
-	   (export-filename (expand-file-name (pab/teaching-export-subtopic-file-name notename) notes-dir)))
-      (make-directory notes-dir t)
+    (let* ((export-filename
+	    (file-name-concat pab/teaching-export-notes-dir
+			      notename
+			      (pab/teaching-export-subtopic-file-name notename))))
       (pab/teaching-export-to-backend export-filename '(html) #'pab/teaching-export-subnote-post-process))))
 
 (defun pab/teaching-subnote-hash-frontmatter ()
@@ -290,10 +300,9 @@ pab/teaching-export-subnote on each subnote."
       (let*
 	  ((hash (pab/teaching-note-hash-frontmatter))
 	   (note-level (org-element-property :level (org-element-at-point)))
-	   (note-dir (file-name-concat pab/teaching-export-notes-dir notename))
-	   (outfile (file-name-concat note-dir "index.html"))
-	   (texfile (file-name-concat pab/teaching-export-notes-tex-dir notename)))
-	(make-directory note-dir t)
+	   (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html"))
+	   (texfile (file-name-concat pab/teaching-export-notes-dir notename)))
+	(make-directory (file-name-directory outfile) t)
 	(with-temp-buffer
 	  (write-region nil nil outfile))
 	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash)
@@ -308,7 +317,7 @@ pab/teaching-export-subnote on each subnote."
 The output is in pab/teaching-export-lectures-dir."
 
   (when (pab/teaching-lecture-p)
-	(pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-lectures-dir) '(html))))
+	(pab/teaching-export-to-backend (file-name-concat pab/teaching-export-lectures-dir filename) '(html))))
 
 (defun pab/teaching-export-problems (filename)
   "Export a problem to FILENAME.
@@ -316,7 +325,7 @@ The output is in pab/teaching-export-lectures-dir."
 The output is in pab/teaching-export-problems-dir."
 
   (when (pab/teaching-problem-p)
-    (pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-problems-dir) '(html latex))))
+    (pab/teaching-export-to-backend (file-name-concat pab/teaching-export-problems-dir filename) '(html latex))))
 
 (defun pab/teaching-export-challenge (filename)
   "Export a challenge to FILENAME.
@@ -324,7 +333,7 @@ The output is in pab/teaching-export-problems-dir."
 The output is in pab/teaching-export-problems-dir."
 
   (when (pab/teaching-challenge-p)
-    (pab/teaching-export-to-backend (expand-file-name filename pab/teaching-export-problems-dir) '(html latex))))
+    (pab/teaching-export-to-backend (file-name-concat pab/teaching-export-problems-dir filename) '(html latex))))
 
 (defun pab/teaching-export ()
   "Export headline based on tag.

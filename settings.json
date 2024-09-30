@@ -1,5 +1,4 @@
 {
-    "build_dir" : "build",
     "export_dir" : "export",
     "export_dirs" : {
 	"notes" : "notes",
@@ -8,5 +7,5 @@
     },
     "site_dir" : "site/",
     "build_tools_dir" : "build_tools",
-    "build_json" : "build_spec.json"
+    "comment" : "Add config option base_dir to specifiy a directory other than the deafult directory, i.e. the one containing the org file. If a relative path is specified it will be relative to the default directory."
 }
