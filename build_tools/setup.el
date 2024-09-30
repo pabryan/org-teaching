@@ -17,6 +17,7 @@
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
 (define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
+(define-key pab/teaching-mode-map (kbd "C-c b") #'pab/teaching-create-export)
 
 (define-minor-mode pab/teaching-mode
   "Minor mode for my teaching setup.
@@ -61,12 +62,7 @@ Loads key-maps and loads settings."
     (maphash (lambda (hashkey hashval)
 	       (make-directory (expand-file-name hashval dir) :parents))
 	     pab/teaching-export-dirs))
-  (let* ((files (directory-files pab/teaching-site-dir nil directory-files-no-dot-files-regexp))
-	 (files (seq-remove (lambda (x) (string-match ".*~$" x)) files)))
-    (dolist (file files)
-      (make-symbolic-link
-       (expand-file-name file pab/teaching-site-dir)
-       (expand-file-name file pab/teaching-export-html-dir) t))))
+  (copy-directory pab/teaching-site-dir pab/teaching-export-html-dir t t t))
 
 (defun pab/teaching-export-to-backend (outfile backends &optional post-process)
   "Export to OUTFILE at point using BACKENDS.
