@@ -16,7 +16,7 @@
 *.nav
 *.snm
 auto/
-build/
+export/
 __pycache__/
 site/_site/
 ltximg/
