@@ -13,7 +13,7 @@
 (defvar-local pab/teaching-export-notes-dir nil)
 (defvar-local pab/teaching-export-lectures-dir nil)
 (defvar-local pab/teaching-export-problems-dir nil)
-
+(defvar-local pab/teaching-build_tools-dir nil)
 
 (defvar pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
@@ -50,7 +50,8 @@ Loads key-maps and loads settings."
     (setq pab/teaching-export-dirs (gethash "export_dirs" json-settings))
     (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
     (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
-    (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))))
+    (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))
+    (setq pab/teaching-build_tools-dir (expand-file-name (gethash "build_tools_dir" json-settings) pab/teaching-base-dir))))
 
 (defun pab/teaching-create-export ()
   "Create export enviroment."
@@ -213,7 +214,9 @@ Then runs python post-processing script."
 
   (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter
    filename (pab/teaching-subnote-hash-frontmatter))
-  (shell-command (format "./build_tools/post_process.py -t s %1$s %1$s" filename)))
+  (shell-command (format "%1$s -t s %2$s %2$s"
+			 (expand-file-name "post_process.py" pab/teaching-build_tools-dir)
+			 filename)))
 
 (defun pab/teaching-get-notes-topics ()
   "Get list of topics under current note."
