@@ -1,0 +1,129 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pabnotes}[2024/05/01 Page layout and useful maths macros]
+
+\usepackage[utf8]{inputenc}
+% allow zero width spaces from org export
+\usepackage[T1]{fontenc}
+\DeclareUnicodeCharacter{200B}{{\hskip 0pt}}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amstext}
+
+\usepackage{ifthen}
+
+% Layout
+\usepackage[a4paper,margin=1.5cm,rmargin=1.5cm,includehead]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{36.0pt}
+\lhead{\large{\sc{\textbf{Week \weeknum{}}}}}
+\rhead{\large{\sc{Subject Name}}
+\cfoot{}
+\usepackage{parskip}
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\pagebreak}
+\usepackage[colorlinks=true,linkcolor=magenta,citecolor=blue,urlcolor=blue,hypertexnames=false,linktocpage]{hyperref}
+
+% Macros
+\let\oldforall\forall
+\renewcommand{\forall}{\oldforall \, }
+
+\let\oldexist\exists
+\renewcommand{\exists}{\oldexist \: }
+
+% Include shared TeX/HTML macros
+\let\SS\undefined
+%\input{macros}
+
+% These macros only work in TeX and not in HTML
+\newcommand{\hugezero}{\text{\huge 0}}
+\DeclareMathOperator{\omicron}{o}
+
+% Hack to fix for some weird plotly error
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+
+% Boxed environments
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{environ}
+
+\colorlet{cboxcoltext}{black}
+\colorlet{cboxcoltitle}{white}
+\colorlet{cboxtitletext}{black}
+\colorlet{cboxcolframe}{black}
+
+\definecolor{thmcolor}{HTML}{800000}
+\definecolor{egcolor}{HTML}{00802b}
+\definecolor{defncolor}{HTML}{0059b3}
+\definecolor{lemcolor}{HTML}{800000}
+\definecolor{corcolor}{HTML}{800000}
+\definecolor{pfcolor}{HTML}{B36205}
+\definecolor{remcolor}{HTML}{0059b3}
+\definecolor{excolor}{HTML}{5c0099}
+\colorlet{cboxcolback}{white}
+
+\newtcolorbox{cbox}[2][]{
+  toptitle=1ex,
+  parbox=false,
+  before skip=1em,
+  after skip=1em,
+  bottomtitle=1ex,
+  colback=cboxcolback,
+  colframe=cboxcolframe,
+  colbacktitle=#2,
+  coltext=cboxcoltext,
+  coltitle=cboxcoltitle,
+  title={#1},
+  breakable
+}
+
+% Theorems
+\newenvironment{thmbox}[3][\empty]
+{\begin{cbox}[{#2}\ifthenelse{\equal{#1}{}}{}{: {#1}}]{#3}}
+{\end{cbox}}
+\newenvironment{thm}[1][\empty]
+{\begin{thmbox}[{#1}]{Theorem}{thmcolor}}
+{\end{thmbox}}
+\newenvironment{eg}[1][\empty]
+{\begin{thmbox}[{#1}]{Example}{egcolor}}
+{\end{thmbox}}
+\newenvironment{defn}[1][\empty]
+{\begin{thmbox}[{#1}]{Definition}{defncolor}}
+{\end{thmbox}}
+\newenvironment{lem}[1][\empty]
+{\begin{thmbox}[{#1}]{Lemma}{lemcolor}}
+{\end{thmbox}}
+\newenvironment{cor}[1][\empty]
+{\begin{thmbox}[{#1}]{Corollary}{corcolor}}
+{\end{thmbox}}
+\newenvironment{pf}[1][\empty]
+{\begin{thmbox}[{#1}]{Proof}{pfcolor}}
+{\end{thmbox}}
+\newenvironment{rem}[1][\empty]
+{\begin{thmbox}[{#1}]{Remark}{remcolor}}
+{\end{thmbox}}
+\newenvironment{ex}[1][\empty]
+{\begin{thmbox}[{#1}]{Exercise}{excolor}}
+{\end{thmbox}}
+
+%% Solutions
+\newboolean{showsoln}
+\ifdefined\cmdlineshowsoln
+\setboolean{showsoln}{true}
+\else
+\setboolean{showsoln}{false}
+\fi
+
+\newtcolorbox{solnbox}[1][]{before=\par\smallskip\centering,parbox=false,#1}
+\NewEnviron{soln}{\ifthenelse{\boolean{showsoln}}{\begin{solnbox}\BODY{}\end{solnbox}}{}}
+
+\newcommand{\pts}[1]{({#1} points)}
+\newcommand{\solnpts}[1]{\textcolor{red}{({#1} points)}}
+\newcommand{\tagsolnpts}[1]{\tag{\textcolor{red}{{#1} points}}}
+
+% Lists
+\usepackage{enumitem}
+%\setlist[description]{font=$\bullet$\scshape\bfseries}
+\setlist[description]{font=\textendash\enskip\scshape\bfseries,leftmargin=!,labelwidth=4cm,itemindent=0em,topsep=3ex,itemsep=1.5ex}
