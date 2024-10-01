@@ -66,7 +66,8 @@ Loads key-maps and loads settings."
 	       (make-directory (expand-file-name hashval dir) :parents))
 	     pab/teaching-export-dirs))
   (copy-directory pab/teaching-site-dir pab/teaching-export-html-dir t t t)
-  (copy-file (expand-file-name "macros.tex" pab/teaching-tex-dir) (expand-file-name "_includes/" pab/teaching-export-html-dir) t))
+  (copy-file (expand-file-name "macros.tex" pab/teaching-tex-dir) (expand-file-name "_includes/" pab/teaching-export-html-dir) t)
+  (copy-directory pab/teaching-tex-dir pab/teaching-export-tex-dir t t t))
 
 (defun pab/teaching-export-to-backend (outfile backends &optional post-process)
   "Export to OUTFILE at point using BACKENDS.
@@ -299,19 +300,38 @@ The subnotes are exported by calling
 pab/teaching-export-subnote on each subnote."
 
   (when (pab/teaching-note-p)
-      (let*
+      (let
 	  ((hash (pab/teaching-note-hash-frontmatter))
-	   (note-level (org-element-property :level (org-element-at-point)))
-	   (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html"))
-	   (texfile (file-name-concat pab/teaching-export-notes-dir notename)))
+	   (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html")))
 	(make-directory (file-name-directory outfile) t)
 	(with-temp-buffer
 	  (write-region nil nil outfile))
-	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash)
+	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash))
 
-	(pab/teaching-export-to-backend texfile '(latex))
+      (let ((note-level (org-element-property :level (org-element-at-point))))
 	(org-map-entries
-	 (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))))
+	 (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))
+
+      (let ((texfile (file-name-concat pab/teaching-export-notes-dir notename))
+	    (specfile (expand-file-name (format "%s-spec.tex" notename)
+					(file-name-concat pab/teaching-export-tex-dir pab/teaching-export-notes-dir)))
+	    (latex-cmd (format "%s %s %s %s"
+			       (expand-file-name "compile_note.sh" pab/teaching-build_tools-dir)
+			       notename
+			       pab/teaching-export-notes-dir
+			       (expand-file-name "notes_template.tex" pab/teaching-export-tex-dir))))
+	(pab/teaching-export-to-backend texfile '(latex))
+	(pab/teaching-make-note-tex-spec notename specfile)
+	(shell-command latex-cmd))))
+
+(defun pab/teaching-make-note-tex-spec (notename specfile)
+  "Create a note tex spec file for NOTENAME in the file SPECFILE."
+
+  (with-temp-buffer
+    (insert (format "\\newcommand{\\weeknum}{%s}\n" "01"))
+    (insert (format "\\newcommand{\\topic}{%s}\n" "Topic"))
+    (insert (format "\\newcommand{\\src}{%s}\n" notename))
+    (write-region nil nil specfile)))
 
 (defun pab/teaching-export-lecture (filename)
   "Export a lecture to FILENAME.
