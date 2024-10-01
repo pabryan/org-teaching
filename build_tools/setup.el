@@ -300,38 +300,48 @@ The subnotes are exported by calling
 pab/teaching-export-subnote on each subnote."
 
   (when (pab/teaching-note-p)
-      (let
-	  ((hash (pab/teaching-note-hash-frontmatter))
-	   (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html")))
-	(make-directory (file-name-directory outfile) t)
-	(with-temp-buffer
-	  (write-region nil nil outfile))
-	(pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash))
+      (pab/teaching-export-note-html notename)
+      (pab/teaching-export-note-pdf notename)))
 
-      (let ((note-level (org-element-property :level (org-element-at-point))))
-	(org-map-entries
-	 (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree))
+(defun pab/teaching-export-note-html (notename)
+  "Export note NOTENAME to html."
 
-      (let ((texfile (file-name-concat pab/teaching-export-notes-dir notename))
-	    (specfile (expand-file-name (format "%s-spec.tex" notename)
-					(file-name-concat pab/teaching-export-tex-dir pab/teaching-export-notes-dir)))
-	    (latex-cmd (format "%s %s %s %s"
-			       (expand-file-name "compile_note.sh" pab/teaching-build_tools-dir)
-			       notename
-			       pab/teaching-export-notes-dir
-			       (expand-file-name "notes_template.tex" pab/teaching-export-tex-dir))))
-	(pab/teaching-export-to-backend texfile '(latex))
-	(pab/teaching-make-note-tex-spec notename specfile)
-	(shell-command latex-cmd))))
+  (let
+      ((hash (pab/teaching-note-hash-frontmatter))
+       (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html")))
+    (make-directory (file-name-directory outfile) t)
+    (with-temp-buffer
+      (write-region nil nil outfile))
+    (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash))
 
-(defun pab/teaching-make-note-tex-spec (notename specfile)
-  "Create a note tex spec file for NOTENAME in the file SPECFILE."
+  (let ((note-level (org-element-property :level (org-element-at-point))))
+    (org-map-entries
+     (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree)))
 
-  (with-temp-buffer
-    (insert (format "\\newcommand{\\weeknum}{%s}\n" "01"))
-    (insert (format "\\newcommand{\\topic}{%s}\n" "Topic"))
-    (insert (format "\\newcommand{\\src}{%s}\n" notename))
-    (write-region nil nil specfile)))
+(defun pab/teaching-export-note-pdf (notename)
+  "Export note NOTENAME to pdf."
+
+  (let ((texfile (file-name-concat pab/teaching-export-notes-dir notename))
+	(latex-cmd (format "%s %s %s %s"
+			   (expand-file-name "compile_note.sh" pab/teaching-build_tools-dir)
+			   notename
+			   pab/teaching-export-notes-dir
+			   (expand-file-name "notes_template.tex" pab/teaching-export-tex-dir))))
+    (pab/teaching-export-to-backend texfile '(latex))
+    (pab/teaching-make-note-tex-spec notename)
+    (shell-command latex-cmd)))
+
+(defun pab/teaching-make-note-tex-spec (notename)
+  "Create a note tex spec file for NOTENAME."
+
+  (let ((specfile
+	(expand-file-name (format "%s-spec.tex" notename)
+			  (file-name-concat pab/teaching-export-tex-dir pab/teaching-export-notes-dir))))
+    (with-temp-buffer
+      (insert (format "\\newcommand{\\weeknum}{%s}\n" "01"))
+      (insert (format "\\newcommand{\\topic}{%s}\n" "Topic"))
+      (insert (format "\\newcommand{\\src}{%s}\n" notename))
+      (write-region nil nil specfile))))
 
 (defun pab/teaching-export-lecture (filename)
   "Export a lecture to FILENAME.
