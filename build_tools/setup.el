@@ -9,6 +9,7 @@
 (defvar-local pab/teaching-export-tex-dir nil)
 (defvar-local pab/teaching-export-dirs nil)
 (defvar-local pab/teaching-site-dir nil)
+(defvar-local pab/teaching-tex-dir nil)
 (defvar-local pab/teaching-export-notes-dir nil)
 (defvar-local pab/teaching-export-lectures-dir nil)
 (defvar-local pab/teaching-export-problems-dir nil)
@@ -45,6 +46,7 @@ Loads key-maps and loads settings."
     (setq pab/teaching-export-html-dir (expand-file-name "html" pab/teaching-export-dir))
     (setq pab/teaching-export-tex-dir (expand-file-name "tex" pab/teaching-export-dir))
     (setq pab/teaching-site-dir (expand-file-name (gethash "site_dir" json-settings)))
+    (setq pab/teaching-tex-dir (expand-file-name (gethash "tex_dir" json-settings)))
     (setq pab/teaching-export-dirs (gethash "export_dirs" json-settings))
     (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
     (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
@@ -62,7 +64,8 @@ Loads key-maps and loads settings."
     (maphash (lambda (hashkey hashval)
 	       (make-directory (expand-file-name hashval dir) :parents))
 	     pab/teaching-export-dirs))
-  (copy-directory pab/teaching-site-dir pab/teaching-export-html-dir t t t))
+  (copy-directory pab/teaching-site-dir pab/teaching-export-html-dir t t t)
+  (copy-file (expand-file-name "macros.tex" pab/teaching-tex-dir) (expand-file-name "_includes/" pab/teaching-export-html-dir) t))
 
 (defun pab/teaching-export-to-backend (outfile backends &optional post-process)
   "Export to OUTFILE at point using BACKENDS.
