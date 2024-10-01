@@ -367,12 +367,18 @@ The output is in pab/teaching-export-problems-dir."
   (when (pab/teaching-challenge-p)
     (pab/teaching-export-to-backend (file-name-concat pab/teaching-export-problems-dir filename) '(html latex))))
 
-(defun pab/teaching-export ()
+(defun pab/teaching-export (&optional nobuildp)
   "Export headline based on tag.
+
+If NOBUILDP is nil (the default), then build the export environment first
+If NOBUILDP is non-nil, then don't build the export environment.
 
 Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
 
-  (interactive)
+  (interactive "P")
+  (unless nobuildp
+    (pab/teaching-create-export))
+
   (let ((filename (pab/teaching-export-file-name)))
     (cond ((pab/teaching-note-p)
 	   (pab/teaching-export-note (format "notes_%s" filename)))
@@ -390,5 +396,6 @@ Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
   "Export all notes, lectures and problems/challenges."
 
   (interactive)
+  (pab/teaching-create-export)
   (let ((org-use-tag-inheritance nil))
-    (org-map-entries #'pab/teaching-export "+notes-noexport|+lecture-noexport|+problems-noexport|+challenge-noexport")))
+    (org-map-entries (lambda () (pab/teaching-export t)) "+notes-noexport|+lecture-noexport|+problems-noexport|+challenge-noexport")))
