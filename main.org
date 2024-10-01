@@ -552,11 +552,6 @@ Therefore by the squeeze theorem
 \clearpage
 #+END_export
 
-#+CAPTION: By Traced by User:Stannered - Image:TrigInequality.png, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=1868444
-#+NAME: Trig Inequality
-#+ATTR_LaTeX: :width 0.5\textwidth
-[[./img/TrigInequality.png]]
-
 #+BEGIN_eg
 Evaluate the limit
 \[
