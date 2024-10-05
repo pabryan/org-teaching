@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/theme/black.min.css">
+
+    <!-- Custom CSS -->
+    <link href="{{ '/css/style.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/css/slides.css' | relative_url }}" rel="stylesheet">
+
+    <title>Lecture {{ page.week }}.{{ page.lecture }} : {{ page.title }}</title>
+  </head>
+
+  <body>
+    {% include mathjax_macros.html %}
+
+    <div class="reveal">
+      <div class="slides">
+	{{ content }}
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/plugin/math/math.min.js"</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/plugin/math/mathjax3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/plugin/notes/notes.min.js"></script>
+
+    <script>
+      Reveal.initialize({plugins: [ RevealNotes, RevealMath.MathJax3 ]});
+    </script>
+  </body>
+</html>

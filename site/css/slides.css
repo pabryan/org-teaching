@@ -1,0 +1,15 @@
+h2 {
+    display: none;
+}
+
+ul li {
+    margin: 1em !important;
+}
+
+:root {
+    --r-background-color: #000000;
+}
+
+.card-body {
+    background-color: #000000;
+}
