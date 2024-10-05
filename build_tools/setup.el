@@ -343,13 +343,43 @@ pab/teaching-export-subnote on each subnote."
       (insert (format "\\newcommand{\\src}{%s}\n" notename))
       (write-region nil nil specfile))))
 
+(defun pab/teaching-lecture-hash-frontmatter ()
+  "Generate hash frontmatter for lecture."
+
+  (let*
+      ((layout "slides")
+       (pagename (org-entry-get-with-inheritance "NAME"))
+       (title (org-entry-get-with-inheritance "TITLE"))
+       (week (org-entry-get-with-inheritance "WEEK"))
+       (lec (org-entry-get-with-inheritance "LECTURE")))
+    (list
+     (cons 'layout layout)
+     (cons 'pagename pagename)
+     (cons 'title title)
+     (cons 'week week)
+     (cons 'lec lec))))
+
+(defun pab/teaching-export-lecture-post-process (filename)
+  "Post process a lecture after org-export-to-file.
+
+FILENAME is the name of the file exported by org.
+
+Adds yaml frontmatter to lecture.
+Then runs python post-processing script."
+
+  (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter
+   filename (pab/teaching-lecture-hash-frontmatter))
+  (shell-command (format "%1$s -t l %2$s %2$s"
+			 (expand-file-name "post_process.py" pab/teaching-build_tools-dir)
+			 filename)))
+
 (defun pab/teaching-export-lecture (filename)
   "Export a lecture to FILENAME.
 
 The output is in pab/teaching-export-lectures-dir."
 
   (when (pab/teaching-lecture-p)
-	(pab/teaching-export-to-backend (file-name-concat pab/teaching-export-lectures-dir filename) '(html))))
+	(pab/teaching-export-to-backend (file-name-concat pab/teaching-export-lectures-dir filename) '(html) #'pab/teaching-export-lecture-post-process)))
 
 (defun pab/teaching-export-problems (filename)
   "Export a problem to FILENAME.

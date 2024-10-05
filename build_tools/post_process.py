@@ -8,6 +8,8 @@ import argparse
 from bs4 import BeautifulSoup
 import frontmatter # pip install python-frontmatter
 
+import re
+
 def process_note(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
     """Process a note"""
 
@@ -22,6 +24,10 @@ def process_subnote(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
 
 def process_lecture(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
     """Process a lecture"""
+
+    process_lecture_sections(soup)
+    process_environments(soup)
+    remove_ignore(soup, "h[0-9]", "ignore_heading")
 
     return convert_to_str(soup, contents, True)
 
@@ -70,12 +76,27 @@ def process_environments(soup: BeautifulSoup) -> BeautifulSoup:
 
     return soup
 
+def process_lecture_sections(soup: BeautifulSoup) -> BeautifulSoup:
+    section_classes = ["outline-2", "outline-3"]
+
+    for section_class in section_classes:
+        sections = soup.find_all("div", class_=section_class)
+        for section in sections:
+            section.name = "section"
+
+    return soup
+
 def process_subnote_soup(soup: BeautifulSoup) -> BeautifulSoup:
     """Proccess a subnote soup"""
 
     process_environments(soup)
 
     return soup
+
+def remove_ignore(soup: BeautifulSoup, match: str, ignore_tag: str) -> BeautifulSoup:
+    elements = soup.find_all(re.compile(match), class_=ignore_tag)
+    for element in elements:
+        element.extract()
 
 def convert_to_str(soup: BeautifulSoup, contents: frontmatter.Post, with_yaml: bool) -> str:
     """Convert a soup to a string with or without YAML"""
