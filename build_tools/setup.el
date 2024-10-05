@@ -74,7 +74,7 @@ Loads key-maps and loads settings."
 
 BACKENDS should be a list of backends to use.
 
-For example ('html), ('html 'tex)
+For example (\\='html), (\\='html \\='tex)
 
 Currently implemented are html and tex.
 
@@ -403,7 +403,7 @@ The output is in pab/teaching-export-problems-dir."
 If NOBUILDP is nil (the default), then build the export environment first
 If NOBUILDP is non-nil, then don't build the export environment.
 
-Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
+Possible tags are notes, lecture, problems, challenge"
 
   (interactive "P")
   (unless nobuildp
