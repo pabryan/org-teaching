@@ -429,3 +429,20 @@ Possible tags are 'notes', 'lecture', 'problems', 'challenge'"
   (pab/teaching-create-export)
   (let ((org-use-tag-inheritance nil))
     (org-map-entries (lambda () (pab/teaching-export t)) "+notes-noexport|+lecture-noexport|+problems-noexport|+challenge-noexport")))
+
+(defun pab/org-export-figure-markup (filename caption)
+  "On org export, output backend dependent markup for figure in FILENAME.
+
+The markup is given a caption of CAPTION.
+
+For html the export is a Jekyll include for an interactive  plotly graph.
+
+For latex it's a png."
+
+  (let* ((export org-export-current-backend)
+	 (format-string
+	  (cond
+	   ((eq 'html export) "{%% include plotly.html filename=\\\"%1$s\\\" caption=\\\"%1$s\\\" %%}")
+	   ((eq 'latex export) "#+CAPTION: %2$s\\n[[file:%1$s.png]]")
+	   (t "[[file:%1$s.png]]"))))
+    (format format-string filename caption)))

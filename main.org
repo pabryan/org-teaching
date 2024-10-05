@@ -712,3 +712,22 @@ Therefore
 # eval: (load (expand-file-name "build_tools/setup.el"))
 # eval: (pab/teaching-mode)
 # End:
+
+** Export code blocks
+
+This code block produces custom output for figure exports depending on the backend used.
+
+#+NAME: pab/export-fig
+#+begin_src emacs-lisp :var filename="" caption="" :exports none :results raw
+(pab/org-export-figure-markup filename caption)
+#+end_src
+
+It can be called directly:
+
+#+call: pab/export-fig(filename="myfile", caption="mycaption") :results raw
+
+It can be called using ~noweb~ syntax from other code blocks. The code block could produce the figure and then call the ~pab/export-fig~ code block above to generate the appropriate export outputs depending on the backend.
+
+#+BEGIN_src python :results raw :noweb yes
+return "<<pab/export-fig(filename='myfile', caption='Caption')>>"
+#+END_src
