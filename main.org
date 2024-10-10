@@ -309,6 +309,18 @@ Limits are a fundamental concept in calculus that form the basis for understandi
 :YOUTUBE_ID: ZLb44bNfh2E
 :END:
 
+#+NAME: plotly_two_loop_limacon
+#+BEGIN_src python :noweb yes :exports results :results raw replace :var plotname="two_loop_limacon" :session
+theta = sp.symbols('\\theta')
+
+f = 1 + 3*sp.cos(theta)
+fig = polar_plot(f)
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
+#+END_src
+
+#+RESULTS:
+[[file:figs/two_loop_limacon.png]]
+
 #+BEGIN_defn
 If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
 \[
@@ -707,7 +719,187 @@ Therefore
       #+END_soln
 
 * Startup                                         :noexport:
+** Python init
 
+Here we run the init code for python code blocks. It seems best to have a single wrapper that's called on startup which performs various generic tasks and then potentially makes calls other code block inits that execute specific tasks.  Here I load some standard packages and then call the plotly init block which creates various helpers for plotly plots.
+
+#+NAME: pab/python-init-block
+#+BEGIN_src python :exports none :results none :noweb yes :session
+import sys
+import os
+
+import numpy as np
+import sympy as sp
+
+<<pab/plotly-init-block>>
+<<pab/polar-plot-setup>>
+#+END_src
+
+** Plotly
+*** Plotly init
+
+*Init for plotly*
+
+Import plotly and associated modules. Sets some themes and creates some backend depend export functions.
+
+#+NAME: pab/plotly-init-block
+#+BEGIN_src python :exports results :results raw :noweb yes :session
+import plotly.express as px
+
+import plotly.io as pio
+pio.templates.default  = "plotly_dark"
+pio.kaleido.scope.plotlyjs = "/usr/share/python3-plotly/plotly.js"
+
+import imageio
+
+def plotly_save_html(fig, filename, **kwargs):
+    yaml_frontmatter = "---\nlayout: plotly\n---\n\n"
+    fig_html = fig.to_html(include_plotlyjs = "cdn", include_mathjax = "cdn", full_html = False, **kwargs)
+
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(yaml_frontmatter + fig_html)
+
+def plotly_export_html(fig, filename, width, height):
+    html_template="""
+    ,#+BEGIN_export html
+    <iframe allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" src="{filename}"></iframe>
+    ,#+END_export
+    """
+
+    return(html_template.format(filename=filename, height=height, width="100%"))
+
+def plotly_save_png(fig, filename, **kwargs):
+    fig.write_image(filename)
+
+    fig_png = imageio.v3.imread(filename)
+    return ([(fig_png.shape)[1], (fig_png.shape)[0]])
+
+def plotly_export_latex(fig, filename):
+
+    return(f"[[file:{filename}]]")
+
+def plotly_export_static(fig, filename):
+
+    return(f"[[file:{filename}]]")
+
+def plotly_export(fig, plotname, backend, **kwargs):
+    htmldir = f"/home/paul/teaching/export/html/"
+    pngdir = f"/home/paul/teaching/export/tex/"
+    filename = f"figs/{plotname}"
+    png_filename = f"{filename}.png"
+    html_filename = f"/{filename}.html"
+
+    width, height = plotly_save_png(fig, f"{pngdir}/{png_filename}", **kwargs)
+    plotly_save_html(fig, f"{htmldir}/{filename}.html", **kwargs)
+
+    if backend == "html":
+        ret = plotly_export_html(fig, f"/{filename}", width, height)
+    elif backend == "latex":
+        ret = plotly_export_latex(fig, png_filename)
+    else:
+        ret = plotly_export_static(fig, f"{pngdir}/{png_filename}")
+
+    return(ret)
+#+END_src
+
+#+RESULTS: pab/plotly-init-block
+None
+
+*** Simple Test Example
+
+#+NAME: plotly_simple_test_example
+#+BEGIN_src python :noweb yes :exports results :results raw replace :var plotname="myplot" :session
+xval = np.linspace(0, 2*np.pi, 100)
+yval = (np.cos(xval))**2
+
+fig = px.line(x = xval, y = yval)
+
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
+#+END_src
+
+#+RESULTS:
+[[file:/home/paul/teaching/export/tex//figs/myplot.png]]
+
+*** Plotly polar animation example
+
+#+NAME: pab/polar-plot-setup
+#+BEGIN_src python :noweb yes :exports none :results none :session
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+animation_opts = dict(frame=dict(duration=10, redraw=False),
+                      transition=dict(duration=0),
+                      easing='linear',
+                      fromcurrent=True,
+                      mode='immediate')
+
+def get_range(a):
+    amin = np.min(a)
+    amax = np.max(a)
+    pad = 0.05 * (amax - amin)
+    return [amin - pad, amax + pad]
+
+def polar_plot(f):
+    theta_vals = np.linspace(0, 2*np.pi, 1000)
+
+    if f.is_constant():
+        r_vals = np.full_like(theta_vals, sp.N(f))
+    else:
+        flambda = sp.lambdify(tuple(f.free_symbols), f)
+        r_vals = flambda(theta_vals)
+
+    x_vals = r_vals * np.cos(theta_vals)
+    y_vals = r_vals * np.sin(theta_vals)
+
+    xy_title =  r"$(x, y) = [" + sp.latex(f) + r"]\, * \,(\cos\theta, \sin\theta)$"
+    rtheta_title =  r"$r = " + sp.latex(f) + r"$"
+    fig = make_subplots(rows=2, cols = 1, subplot_titles = (xy_title, rtheta_title), row_heights=[0.8, 0.2], vertical_spacing = 0.15)
+
+    fig.update_xaxes(range = get_range(x_vals), showticklabels=False, row=1, col = 1)
+    fig.update_yaxes(range = get_range(y_vals), showticklabels=False, scaleanchor = "x1", scaleratio = 1, row=1, col=1)
+    fig.add_trace(go.Scatter(x=x_vals, y=y_vals, mode="lines", line={"color" : "blue"}), row=1, col=1)
+    fig.add_trace(go.Scatter(x=[x_vals[0]], y=[y_vals[0]], mode="markers", marker={"color" : "red", "size" : 10}), row=1, col=1)
+    fig.add_trace(go.Scatter(x=[0, x_vals[0]], y = [0, y_vals[0]], mode="lines", line={"color": "red"}), row=1, col=1)
+
+    fig.update_xaxes(range = get_range(theta_vals), showticklabels=False, row=2, col = 1)
+    fig.update_yaxes(range = get_range(r_vals), showticklabels=False, scaleanchor = "x2", scaleratio = 1, row=2, col=1)
+    fig.add_trace(go.Scatter(x=theta_vals, y=r_vals, mode="lines", line={"color" : "red"}), row=2, col=1)
+    fig.add_trace(go.Scatter(x=[theta_vals[0]], y=[r_vals[0]], mode="markers", marker={"color" : "red", "size" : 10}), row=2, col=1)
+
+    fig.update_layout(showlegend=False, width=400, height=600)
+
+    fig.layout.annotations[0]["y"] += 0.05
+    fig.layout.annotations[1]["y"] += 0.05
+
+    L = len(theta_vals)
+    frames = [go.Frame(name = k,
+                       data = [go.Scatter(x=[x_vals[k]], y=[y_vals[k]]),
+                               go.Scatter(x=[0, x_vals[k]], y=[0, y_vals[k]]),
+                               go.Scatter(x=[theta_vals[k]], y=[r_vals[k]])],
+                       traces = [1, 2, 4]) for k in range(L)]
+    fig.update(frames = frames)
+
+    return fig
+
+def show(fig, **kwargs):
+    fig.show(auto_play=True, animation_opts=animation_opts, include_plotlyjs = "cdn", include_mathjax = "cdn", **kwargs)
+#+END_src
+
+#+NAME: plotly_polar_plot_example
+#+BEGIN_src python :exports results :results raw replace :var plotname="polarplot_example" :session
+theta = sp.symbols('\\theta')
+
+f = 1 + 3*sp.cos(theta)
+fig = polar_plot(f)
+
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
+#+END_src
+
+#+RESULTS: plotly_polar_plot_example
+[[file:/home/paul/teaching/export/tex//figs/polarplot_example.png]]
+
+#+RESULTS:
+[[file:/home/paul/teaching/export/tex//figs/polarplot_example.png]]
 
 ** Code block export
 
