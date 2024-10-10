@@ -708,26 +708,42 @@ Therefore
 
 * Startup                                         :noexport:
 
+
+** Code block export
+
+This code block returns the current export backend as a string, or the empty string if there is no backend (i.e. upon code block evaluation in the buffer).
+
+#+NAME: pab/org-export-get-current-backend
+#+begin_src emacs-lisp :exports raw :results raw
+(if org-export-current-backend
+    (symbol-name org-export-current-backend)
+    "")
+#+end_src
+
+As simple way to test is to call it:
+
+#+call: pab/org-export-get-current-backend() exports: both results: raw
+
+In the buffer this should result in blank results. When exporting it should simply output the name of the export backend. This happens before export, so the output of export would be as if the results (i.e. the name of the backend) had just been included as text. This will then be processed by the org export. So for example, when exporting to ~html~, the backend is ~html~ which will just insert the string "html" into the buffer which will then be exported as ~<p>html</p>~.
+
+The results can be accessed in another code block using ~noweb~ syntax ~<<pab/org-export-get-current-backend()>>~. The way it works is to do a string replace of the entire term ~<<pab/org-export-get-current-backend()>>~ before evaluation and then evaluate the resulting code in the block. Here's a simple example, in a python block:
+
+#+NAME: python_get_current_backend_example
+#+BEGIN_src python :noweb yes :exports both :results raw replace
+org_export_current_backend = "<<pab/org-export-get-current-backend()>>"
+
+if org_export_current_backend:
+    return(f"{org_export_current_backend}")
+else:
+    return("In buffer evaluation")
+#+END_src
+
+#+RESULTS:
+
+** File local variables
+
 # Local Variables:
 # eval: (load (expand-file-name "build_tools/setup.el"))
 # eval: (pab/teaching-mode)
+# eval: (save-excursion (org-babel-goto-named-src-block "pab/python-init-block") (org-babel-execute-src-block))
 # End:
-
-** Export code blocks
-
-This code block produces custom output for figure exports depending on the backend used.
-
-#+NAME: pab/export-fig
-#+begin_src emacs-lisp :var filename="" caption="" :exports none :results raw
-(pab/org-export-figure-markup filename caption)
-#+end_src
-
-It can be called directly:
-
-#+call: pab/export-fig(filename="myfile", caption="mycaption") :results raw
-
-It can be called using ~noweb~ syntax from other code blocks. The code block could produce the figure and then call the ~pab/export-fig~ code block above to generate the appropriate export outputs depending on the backend.
-
-#+BEGIN_src python :results raw :noweb yes
-return "<<pab/export-fig(filename='myfile', caption='Caption')>>"
-#+END_src
