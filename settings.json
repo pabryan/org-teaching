@@ -7,6 +7,7 @@
     },
     "site_dir" : "site",
     "tex_dir" : "tex",
+    "figs_dir" : "figs",
     "build_tools_dir" : "build_tools",
     "comment" : "Add config option base_dir to specifiy a directory other than the deafult directory, i.e. the one containing the org file. If a relative path is specified it will be relative to the default directory."
 }
