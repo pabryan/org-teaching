@@ -318,9 +318,6 @@ fig = polar_plot(f)
 plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
 #+END_src
 
-#+RESULTS:
-[[file:figs/two_loop_limacon.png]]
-
 #+BEGIN_defn
 If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
 \[
@@ -802,9 +799,6 @@ def plotly_export(fig, plotname, backend, **kwargs):
     return(ret)
 #+END_src
 
-#+RESULTS: pab/plotly-init-block
-None
-
 *** Simple Test Example
 
 #+NAME: plotly_simple_test_example
@@ -816,9 +810,6 @@ fig = px.line(x = xval, y = yval)
 
 plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
 #+END_src
-
-#+RESULTS:
-[[file:/home/paul/teaching/export/tex//figs/myplot.png]]
 
 *** Plotly polar animation example
 
@@ -895,12 +886,6 @@ fig = polar_plot(f)
 plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
 #+END_src
 
-#+RESULTS: plotly_polar_plot_example
-[[file:/home/paul/teaching/export/tex//figs/polarplot_example.png]]
-
-#+RESULTS:
-[[file:/home/paul/teaching/export/tex//figs/polarplot_example.png]]
-
 ** Code block export
 
 This code block returns the current export backend as a string, or the empty string if there is no backend (i.e. upon code block evaluation in the buffer).
@@ -929,8 +914,6 @@ if org_export_current_backend:
 else:
     return("In buffer evaluation")
 #+END_src
-
-#+RESULTS:
 
 ** File local variables
 
