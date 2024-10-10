@@ -398,6 +398,16 @@ Now we may apply the limit laws to obtain
 :CUSTOM_ID: one_sided_limits
 :END:
 
+#+NAME: plotly_cos_sqaured
+#+BEGIN_src python :noweb yes :exports results :results raw replace :var plotname="myplot" :session
+xval = np.linspace(0, 2*np.pi, 100)
+yval = (np.cos(xval))**2
+
+fig = px.line(x = xval, y = yval)
+
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
+#+END_src
+
 #+BEGIN_defn
 If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\) *from the left*, then the limit from the left exists and we write
 \[
