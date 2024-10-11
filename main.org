@@ -906,6 +906,25 @@ fig = polar_plot(f)
 plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
 #+END_src
 
+** Settings
+
+Here we expose the settings configured in the elisp file ~build_tools/setup.el~ which is generated from the settings file ~settings.json~. The way we expose these is to evaluate to a ~json~ string representing the settings. Then any ~noweb~ blocks can access the string and parse it using their internal ~json~ libraries.
+
+#+NAME: pab/export-get-settings
+#+begin_src emacs-lisp :exports raw :results raw
+(require 'json)
+(let ((settings
+       (list
+	(cons 'html-dir pab/teaching-export-html-dir)
+	(cons 'html-figs-dir pab/teaching-export-html-figs-dir)
+	(cons 'tex-figs-dir pab/teaching-export-tex-figs-dir))))
+
+      (json-encode settings))
+#+END_src
+
+#+RESULTS: pab/export-get-settings
+{"html-figs-dir":"/home/paul/teaching/export/html/figs","tex-figs-dir":"/home/paul/teaching/export/tex/figs"}
+
 ** Code block export
 
 This code block returns the current export backend as a string, or the empty string if there is no backend (i.e. upon code block evaluation in the buffer).
