@@ -769,11 +769,15 @@ def plotly_save_html(fig, filename, **kwargs):
 def plotly_export_html(fig, filename, width, height):
     html_template="""
     ,#+BEGIN_export html
-    <iframe allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" src="{filename}"></iframe>
+    <noscript>
+      <img src="{filename}.png"></img>
+    </noscript>
+
+    <iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" src="{filename}"></iframe>
     ,#+END_export
     """
 
-    return(html_template.format(filename=filename, height=height, width="100%"))
+    return(html_template.format(filename=filename, height=height, width=width))
 
 def plotly_save_png(fig, filename, **kwargs):
     fig.write_image(filename)
@@ -797,6 +801,7 @@ def plotly_export(fig, plotname, backend, **kwargs):
     html_filename = f"/{filename}.html"
 
     width, height = plotly_save_png(fig, f"{pngdir}/{png_filename}", **kwargs)
+    plotly_save_png(fig, f"{htmldir}/{filename}.png", **kwargs)
     plotly_save_html(fig, f"{htmldir}/{filename}.html", **kwargs)
 
     if backend == "html":
