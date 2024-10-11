@@ -738,6 +738,8 @@ import os
 import numpy as np
 import sympy as sp
 
+import json
+
 <<pab/plotly-init-block>>
 <<pab/polar-plot-setup>>
 #+END_src
@@ -794,27 +796,27 @@ def plotly_export_static(fig, filename):
     return(f"[[file:{filename}]]")
 
 def plotly_export(fig, plotname, backend, **kwargs):
-    htmldir = f"/home/paul/teaching/export/html/"
-    pngdir = f"/home/paul/teaching/export/tex/"
-    filename = f"figs/{plotname}"
-    png_filename = f"{filename}.png"
-    html_filename = f"/{filename}.html"
+    settings = json.loads('<<pab/export-get-settings()>>')
+    basehtmldir = settings["html-dir"]
+    htmldir = settings["html-figs-dir"]
+    texdir = settings["tex-figs-dir"]
+    relhtmldir = os.path.relpath(htmldir, basehtmldir)
 
     # Reduce plotly margins
     fig.update_layout(
         margin=dict(l=0, r=0, t=5, b=5),
     )
 
-    width, height = plotly_save_png(fig, f"{pngdir}/{png_filename}", **kwargs)
-    plotly_save_png(fig, f"{htmldir}/{filename}.png", **kwargs)
-    plotly_save_html(fig, f"{htmldir}/{filename}.html", **kwargs)
+    width, height = plotly_save_png(fig, f"{htmldir}/{plotname}.png", **kwargs)
+    plotly_save_html(fig, f"{htmldir}/{plotname}.html", **kwargs)
+    plotly_save_png(fig, f"{texdir}/{plotname}.png", **kwargs)
 
     if backend == "html":
-        ret = plotly_export_html(fig, f"/{filename}", width, height)
+        ret = plotly_export_html(fig, f"/{relhtmldir}/{plotname}", width, height)
     elif backend == "latex":
-        ret = plotly_export_latex(fig, png_filename)
+        ret = plotly_export_latex(fig, f"{texdir}/{plotname}.png")
     else:
-        ret = plotly_export_static(fig, f"{pngdir}/{png_filename}")
+        ret = plotly_export_static(fig, f"{texdir}/{plotname}.png")
 
     return(ret)
 #+END_src
