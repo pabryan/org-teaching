@@ -6,6 +6,7 @@
 	"problems" : "problems"
     },
     "site_dir" : "site",
+    "html_dir" : "html",
     "tex_dir" : "tex",
     "figs_dir" : "figs",
     "build_tools_dir" : "build_tools",
