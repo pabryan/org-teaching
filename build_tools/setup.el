@@ -17,7 +17,7 @@
 (defvar-local pab/teaching-export-problems-dir nil)
 (defvar-local pab/teaching-build_tools-dir nil)
 
-(defvar pab/teaching-mode-map (make-sparse-keymap))
+(defvar-local pab/teaching-mode-map (make-sparse-keymap))
 (define-key pab/teaching-mode-map (kbd "C-c e") #'pab/teaching-export)
 (define-key pab/teaching-mode-map (kbd "C-c x") #'pab/teaching-export-all)
 (define-key pab/teaching-mode-map (kbd "C-c b") #'pab/teaching-create-export)
