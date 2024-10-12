@@ -804,7 +804,7 @@ def plotly_export(fig, plotname, backend, **kwargs):
 
     # Reduce plotly margins
     fig.update_layout(
-        margin=dict(l=0, r=0, t=5, b=5),
+        margin=dict(l=0, r=0),
     )
 
     width, height = plotly_save_png(fig, f"{htmldir}/{plotname}.png", **kwargs)
