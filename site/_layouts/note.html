@@ -9,11 +9,8 @@ include_variables: note_variables.html
   <div class="note">
     <div class="accordion">
 
-      {% for topicdata in page.topics %}
-
-      {% capture topic_name %}{{ page.pagename }}-{{ topicdata }}{% endcapture %}
-      {% assign topic = site.pages | where:"pagename", topic_name | first %}
-
+      {% assign note = site.collections | where:"label", page.pageid | first %}
+      {% for topic in note.docs %}
       <div class="accordion-item" id="outline-container-{{ topic.pagename }}-item">
 	<h1 class="accordion-header" id="outline-container-{{ topic.pagename }}-header">
 	  <button aria-controls="outline-container-{{ topic.pagename }}-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-{{ topic.pagename }}-collapse" data-bs-toggle="collapse" id="introduction" type="button">
@@ -27,7 +24,6 @@ include_variables: note_variables.html
 	  </div>
 	</div>
       </div>
-
       {% endfor %}
     </div>
   </div>

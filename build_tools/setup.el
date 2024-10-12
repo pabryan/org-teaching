@@ -15,6 +15,7 @@
 (defvar-local pab/teaching-export-notes-dir nil)
 (defvar-local pab/teaching-export-lectures-dir nil)
 (defvar-local pab/teaching-export-problems-dir nil)
+(defvar-local pab/teaching-export-collections-dir nil)
 (defvar-local pab/teaching-build_tools-dir nil)
 
 (defvar-local pab/teaching-mode-map (make-sparse-keymap))
@@ -56,6 +57,7 @@ Loads key-maps and loads settings."
     (setq pab/teaching-export-notes-dir (gethash "notes" pab/teaching-export-dirs))
     (setq pab/teaching-export-lectures-dir (gethash "lectures" pab/teaching-export-dirs))
     (setq pab/teaching-export-problems-dir (gethash "problems" pab/teaching-export-dirs))
+    (setq pab/teaching-export-collections-dir (expand-file-name (gethash "collections_dir" json-settings) pab/teaching-export-html-dir))
     (setq pab/teaching-build_tools-dir (expand-file-name (gethash "build_tools_dir" json-settings) pab/teaching-base-dir))))
 
 (defun pab/teaching-create-export ()
@@ -68,13 +70,15 @@ Loads key-maps and loads settings."
   (make-directory pab/teaching-export-tex-dir :parents)
   (make-directory pab/teaching-export-html-figs-dir :parents)
   (make-directory pab/teaching-export-tex-figs-dir :parents)
+  (make-directory pab/teaching-export-collections-dir :parents)
   (dolist (dir (list pab/teaching-export-html-dir pab/teaching-export-tex-dir))
     (maphash (lambda (hashkey hashval)
 	       (make-directory (expand-file-name hashval dir) :parents))
 	     pab/teaching-export-dirs))
   (copy-directory pab/teaching-site-dir pab/teaching-export-html-dir t t t)
   (copy-file (expand-file-name "macros.tex" pab/teaching-tex-dir) (expand-file-name "_includes/" pab/teaching-export-html-dir) t)
-  (copy-directory pab/teaching-tex-dir pab/teaching-export-tex-dir t t t))
+  (copy-directory pab/teaching-tex-dir pab/teaching-export-tex-dir t t t)
+  (pab/teaching-export-note-collection-config))
 
 (defun pab/teaching-export-to-backend (outfile backends &optional post-process)
   "Export to OUTFILE at point using BACKENDS.
@@ -193,8 +197,8 @@ pab/teaching-export-notes-dir/notename."
 
   (when (pab/teaching-subnote-p)
     (let* ((export-filename
-	    (file-name-concat pab/teaching-export-notes-dir
-			      notename
+	    (file-name-concat pab/teaching-export-collections-dir
+			      (format "_%s" notename)
 			      (pab/teaching-export-subtopic-file-name notename))))
       (pab/teaching-export-to-backend export-filename '(html) #'pab/teaching-export-subnote-post-process))))
 
@@ -236,6 +240,16 @@ Then runs python post-processing script."
 	   (org-entry-get nil "CUSTOM_ID"))
 	 (format "LEVEL=%d" (+ note-level 1)) 'tree))))
 
+(defun pab/teaching-note-id ()
+  "Construct the note id for the note a point."
+
+  (when (pab/teaching-note-p)
+    (let* ((name (org-entry-get-with-inheritance "NAME"))
+       (week (org-entry-get-with-inheritance "WEEK"))
+       (lec (org-entry-get-with-inheritance "LECTURE")))
+
+      (format "notes_%s_%s_%s" week lec name))))
+
 (defun pab/teaching-note-hash-frontmatter ()
   "Generate hash frontmatter for note."
 
@@ -245,14 +259,15 @@ Then runs python post-processing script."
        (title (org-entry-get-with-inheritance "TITLE"))
        (week (org-entry-get-with-inheritance "WEEK"))
        (lec (org-entry-get-with-inheritance "LECTURE"))
+       (pageid (format "notes_%s_%s_%s" week lec pagename))
        (abstract (pab/teaching-note-abstract)))
     (list
      (cons 'layout layout)
+     (cons 'pageid pageid)
      (cons 'pagename pagename)
      (cons 'title title)
      (cons 'week week)
      (cons 'lec lec)
-     (cons 'topics (pab/teaching-get-notes-topics))
      (cons 'abstract (format "%s" abstract)))))
 
 (defun pab/teaching-note-abstract ()
@@ -286,6 +301,14 @@ When called interactively, ELEMENT is the element at point."
       (goto-char (+ end 1))
       (org-element-at-point))))
 
+(defun pab/teaching-export-get-notes ()
+  "Get a list of all notes."
+
+  (let ((org-use-tag-inheritance nil))
+    (org-map-entries (lambda ()
+		       (cons (pab/teaching-note-id) (pab/teaching-get-notes-topics)))
+		     "+notes-noexport")))
+
 (defun pab/teaching-export-note (notename)
   "Export note at point to file determined by NOTENAME.
 
@@ -315,8 +338,7 @@ pab/teaching-export-subnote on each subnote."
 
   (let
       ((hash (pab/teaching-note-hash-frontmatter))
-       (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir notename "index.html")))
-    (make-directory (file-name-directory outfile) t)
+       (outfile (file-name-concat pab/teaching-export-html-dir pab/teaching-export-notes-dir (format "%s.html" notename))))
     (with-temp-buffer
       (write-region nil nil outfile))
     (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash))
@@ -336,7 +358,25 @@ pab/teaching-export-subnote on each subnote."
 			   (expand-file-name "notes_template.tex" pab/teaching-export-tex-dir))))
     (pab/teaching-export-to-backend texfile '(latex))
     (pab/teaching-make-note-tex-spec notename)
-    (shell-command latex-cmd)))
+    (async-shell-command latex-cmd)))
+
+(defun pab/teaching-export-note-collection-config ()
+  "Create collection configuation."
+
+  (let ((collection-header "\ncollections_dir: collections\ncollections:\n")
+	(config-file (expand-file-name "_config.yml" pab/teaching-export-html-dir)))
+    (let* ((notes (pab/teaching-export-get-notes))
+	   (collections-dir pab/teaching-export-collections-dir))
+      (with-temp-buffer
+	(insert collection-header)
+	(dolist (note notes)
+	  (let ((note-name (car note)))
+	    (make-directory (file-name-concat collections-dir (format "_%s" note-name)) :parents)
+	    (insert (format "  %s:\n" note-name))
+	    (insert "    order:\n")
+	    (dolist (topic (cdr note))
+	      (insert (format "      - %s-%s.html\n" note-name topic)))))
+	(append-to-file nil nil config-file)))))
 
 (defun pab/teaching-make-note-tex-spec (notename)
   "Create a note tex spec file for NOTENAME."
