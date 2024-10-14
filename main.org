@@ -759,7 +759,7 @@ import plotly.io as pio
 pio.templates.default  = "plotly_dark"
 pio.kaleido.scope.plotlyjs = "/usr/share/python3-plotly/plotly.js"
 
-import imageio
+import imageio.v3 as iio
 
 def plotly_save_html(fig, filename, **kwargs):
     yaml_frontmatter = "---\nlayout: plotly\n---\n\n"
@@ -784,7 +784,7 @@ def plotly_export_html(fig, filename, width, height):
 def plotly_save_png(fig, filename, **kwargs):
     fig.write_image(filename)
 
-    fig_png = imageio.v3.imread(filename)
+    fig_png = iio.imread(filename)
     return ([(fig_png.shape)[1], (fig_png.shape)[0]])
 
 def plotly_export_latex(fig, filename):
