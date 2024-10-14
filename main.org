@@ -754,6 +754,7 @@ Import plotly and associated modules. Sets some themes and creates some backend 
 #+NAME: pab/plotly-init-block
 #+BEGIN_src python :exports results :results raw :noweb yes :session
 import plotly.express as px
+import plotly.graph_objects as go
 
 import plotly.io as pio
 pio.templates.default  = "plotly_dark"
@@ -837,7 +838,6 @@ plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
 
 #+NAME: pab/polar-plot-setup
 #+BEGIN_src python :noweb yes :exports none :results none :session
-import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 animation_opts = dict(frame=dict(duration=10, redraw=False),
