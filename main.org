@@ -452,6 +452,19 @@ Since \(\lim_{x\to 2^-} f(x) \neq \lim_{x\to 2^+} f(x)\), the limit \(\lim_{x \t
 :CUSTOM_ID: infinite_limits
 :END:
 
+#+NAME: plotly_surface_plot
+#+BEGIN_src python :noweb yes :exports results :results raw replace :var plotname="surfaceplot" :session
+x, y = np.mgrid[-3:3:200j, -3:3:200j]
+z = np.cos(x**2 + y**2)
+
+fig = surface_plot(x, y, z)
+fig.update_layout(
+    width = 800,
+    height = 600)
+
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
+#+END_src
+
 #+BEGIN_defn
 If the functions values \(f(x)\) become positive and unbounded as \(x \to a\), then we write
 \[
