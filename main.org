@@ -934,6 +934,21 @@ def surface_plot(x, y, z):
 
     return (fig)
 #+END_src
+
+#+NAME: surface_plot_example
+#+BEGIN_src python :exports results :results raw replace :var plotname="surfaceplot_example" :session
+x, y = np.mgrid[-3:3:100j, -3:3:100j]
+z = np.cos(x**2 + y**2)
+
+fig = surface_plot(x, y, z)
+
+fig.update_layout(
+    width = 700,
+    height = 600)
+
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>")
+#+END_src
+
 ** Settings
 
 Here we expose the settings configured in the elisp file ~build_tools/setup.el~ which is generated from the settings file ~settings.json~. The way we expose these is to evaluate to a ~json~ string representing the settings. Then any ~noweb~ blocks can access the string and parse it using their internal ~json~ libraries.
