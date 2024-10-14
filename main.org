@@ -908,6 +908,32 @@ fig = polar_plot(f)
 plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
 #+END_src
 
+*** Plotly surface example
+
+#+NAME: pab/surface-plot-setup
+#+BEGIN_src python :noweb yes :exports none :results none :session
+def surface_plot(x, y, z):
+    fig = go.Figure([go.Surface(x=x, y=y, z=z, showscale=False, colorscale="deep")])
+
+    camera = dict(
+        eye=dict(x=1.5, y=1.5, z=1))
+
+    axes_dict = dict(showticklabels=False, showgrid=False, zeroline=False, title="", showbackground=False)
+
+    fig.update_layout(
+        autosize = False,
+        margin = dict(t=0),
+        scene_camera = camera,
+        scene = dict(
+            xaxis = axes_dict,
+            yaxis = axes_dict,
+            zaxis = axes_dict),
+        paper_bgcolor = 'rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+
+    return (fig)
+#+END_src
 ** Settings
 
 Here we expose the settings configured in the elisp file ~build_tools/setup.el~ which is generated from the settings file ~settings.json~. The way we expose these is to evaluate to a ~json~ string representing the settings. Then any ~noweb~ blocks can access the string and parse it using their internal ~json~ libraries.
