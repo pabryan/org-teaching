@@ -753,8 +753,7 @@ import sympy as sp
 
 import json
 
-<<pab/plotly-init-block>>
-<<pab/polar-plot-setup>>
+<<pab/plotly-init>>
 #+END_src
 
 ** Plotly
@@ -764,7 +763,7 @@ import json
 
 Import plotly and associated modules. Sets some themes and creates some backend depend export functions.
 
-#+NAME: pab/plotly-init-block
+#+NAME: pab/plotly-init
 #+BEGIN_src python :exports results :results raw :noweb yes :session
 import plotly.express as px
 import plotly.graph_objects as go
@@ -833,6 +832,9 @@ def plotly_export(fig, plotname, backend, **kwargs):
         ret = plotly_export_static(fig, f"{texdir}/{plotname}.png")
 
     return(ret)
+
+<<pab/polar-plot-setup>>
+<<pab/surface-plot-setup>>
 #+END_src
 
 *** Simple Test Example
