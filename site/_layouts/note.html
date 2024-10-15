@@ -5,26 +5,25 @@ custom_css:
 include_variables: note_variables.html
 ---
 
-<div class="container">
-  <div class="note">
-    <div class="accordion">
 
-      {% assign note = site.collections | where:"label", page.pageid | first %}
-      {% for topic in note.docs %}
-      <div class="accordion-item" id="outline-container-{{ topic.pagename }}-item">
-	<h1 class="accordion-header" id="outline-container-{{ topic.pagename }}-header">
-	  <button aria-controls="outline-container-{{ topic.pagename }}-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-{{ topic.pagename }}-collapse" data-bs-toggle="collapse" id="introduction" type="button">
-	    {{ topic.title }}
-	  </button>
-	</h1>
+<div class="note">
+  <div class="accordion">
 
-	<div aria-labelledby="outline-container-{{ topic.pagename }}-header" class="accordion-collapse collapse" id="outline-container-{{ topic.pagename }}-collapse">
-	  <div class="accordion-body p-3 m-0" id="text-{{ topic.pagename }}-body">
-	    {{ topic.content }}
-	  </div>
+    {% assign note = site.collections | where:"label", page.pageid | first %}
+    {% for topic in note.docs %}
+    <div class="accordion-item" id="outline-container-{{ topic.pagename }}-item">
+      <h1 class="accordion-header" id="outline-container-{{ topic.pagename }}-header">
+	<button aria-controls="outline-container-{{ topic.pagename }}-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-{{ topic.pagename }}-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  {{ topic.title }}
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-{{ topic.pagename }}-header" class="accordion-collapse collapse" id="outline-container-{{ topic.pagename }}-collapse">
+	<div class="accordion-body p-3 m-0" id="text-{{ topic.pagename }}-body">
+	  {{ topic.content }}
 	</div>
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
   </div>
 </div>
