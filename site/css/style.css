@@ -7,6 +7,7 @@ body {
     background-size: 100%;
     color: white;
     --bs-body-font-family: "Jost*", sans-serif;
+    font-size: 1.2em;
 }
 
 /* Make equations a little smaller on small screens
@@ -29,11 +30,21 @@ to make equations better fit the width*/
     max-width: 1200px;
 }
 
-h3 {
-    padding: 1ex;
+.title {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.6);
+    border-width: thin;
+    border-radius: 5px;
+    background-color: #291C2F;
+    margin-bottom: 2ex;
+}
+
+.title h3 {
     text-align: center;
     color: #c4acd4;
-    font-size: calc(2.0rem + .6vw);
+    color: #c8d4b5;
+    font-size: calc(1.5rem + .6vw);
+    padding: 0.5em;
 }
 
 iframe.plotly {
