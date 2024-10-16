@@ -315,7 +315,7 @@ theta = sp.symbols('\\theta')
 
 f = 1 + 3*sp.cos(theta)
 fig = polar_plot(f)
-plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", auto_play=True, animation_opts=animation_opts)
+plotly_export(fig, plotname, "<<pab/org-export-get-current-backend()>>", caption=r"\(r = " + sp.latex(f) + r"\)", auto_play=True, animation_opts=animation_opts)
 #+END_src
 
 #+BEGIN_defn
@@ -778,7 +778,7 @@ def plotly_save_html(fig, filename, **kwargs):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(yaml_frontmatter + fig_html)
 
-def plotly_export_html(fig, filename, width, height):
+def plotly_export_html(filename, caption, width, height):
     html_template="""
     ,#+BEGIN_export html
     <noscript>
@@ -786,10 +786,16 @@ def plotly_export_html(fig, filename, width, height):
     </noscript>
 
     <iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" allowtransparency="true" src="{filename}"></iframe>
-    ,#+END_export
     """
 
-    return(html_template.format(filename=filename, height=height, width=width))
+    if not caption == "":
+        html_template += """
+        <div style="text-align: center; margin-bottom: 2em;"><p>Polar Plot: {caption}</p></div>
+        """
+
+    html_template += "#+END_export\n"
+
+    return(html_template.format(filename=filename, caption=caption, height=height, width=width))
 
 def plotly_save_png(fig, filename, **kwargs):
     fig.write_image(filename)
@@ -797,11 +803,11 @@ def plotly_save_png(fig, filename, **kwargs):
     fig_png = iio.imread(filename)
     return ([(fig_png.shape)[1], (fig_png.shape)[0]])
 
-def plotly_export_latex(fig, filename):
+def plotly_export_latex(filename, caption):
 
     return(f"[[file:{filename}]]")
 
-def plotly_export_static(fig, filename):
+def plotly_export_static(filename, caption):
 
     return(f"[[file:{filename}]]")
 
@@ -811,6 +817,7 @@ def plotly_export(fig, plotname, backend, **kwargs):
     htmldir = settings["html-figs-dir"]
     texdir = settings["tex-figs-dir"]
     relhtmldir = os.path.relpath(htmldir, basehtmldir)
+    caption = kwargs.pop("caption", "")
 
     # Make plots transparent
     fig.update_layout(
@@ -822,11 +829,11 @@ def plotly_export(fig, plotname, backend, **kwargs):
     plotly_save_png(fig, f"{texdir}/{plotname}.png", **kwargs)
 
     if backend == "html":
-        ret = plotly_export_html(fig, f"/{relhtmldir}/{plotname}", width, height)
+        ret = plotly_export_html(f"/{relhtmldir}/{plotname}", caption, width, height)
     elif backend == "latex":
-        ret = plotly_export_latex(fig, f"{texdir}/{plotname}.png")
+        ret = plotly_export_latex(f"{texdir}/{plotname}.png", caption)
     else:
-        ret = plotly_export_static(fig, f"{texdir}/{plotname}.png")
+        ret = plotly_export_static(f"{texdir}/{plotname}.png", caption)
 
     return(ret)
 
@@ -876,9 +883,7 @@ def polar_plot(f):
     x_vals = r_vals * np.cos(theta_vals)
     y_vals = r_vals * np.sin(theta_vals)
 
-    xy_title =  r"$(x, y) = [" + sp.latex(f) + r"]\, * \,(\cos\theta, \sin\theta)$"
-    rtheta_title =  r"$r = " + sp.latex(f) + r"$"
-    fig = make_subplots(rows=2, cols = 1, subplot_titles = (xy_title, rtheta_title), row_heights=[0.8, 0.2], vertical_spacing = 0.15)
+    fig = make_subplots(rows=2, cols = 1, row_heights=[0.8, 0.2], vertical_spacing = 0.15)
 
     fig.update_xaxes(range = get_range(x_vals), showticklabels=False, row=1, col = 1)
     fig.update_yaxes(range = get_range(y_vals), showticklabels=False, scaleanchor = "x1", scaleratio = 1, row=1, col=1)
@@ -893,8 +898,6 @@ def polar_plot(f):
 
     fig.update_layout(showlegend=False, width=400, height=600)
 
-    fig.layout.annotations[0]["y"] += 0.05
-    fig.layout.annotations[1]["y"] += 0.05
 
     L = len(theta_vals)
     frames = [go.Frame(name = k,
