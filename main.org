@@ -785,7 +785,7 @@ def plotly_export_html(fig, filename, width, height):
       <img src="{filename}.png"></img>
     </noscript>
 
-    <iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" src="{filename}"></iframe>
+    <iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" allowtransparency="true" src="{filename}"></iframe>
     ,#+END_export
     """
 
@@ -812,6 +812,10 @@ def plotly_export(fig, plotname, backend, **kwargs):
     texdir = settings["tex-figs-dir"]
     relhtmldir = os.path.relpath(htmldir, basehtmldir)
 
+    # Make plots transparent
+    fig.update_layout(
+        paper_bgcolor = 'rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)')
 
     width, height = plotly_save_png(fig, f"{htmldir}/{plotname}.png", **kwargs)
     plotly_save_html(fig, f"{htmldir}/{plotname}.html", **kwargs)
@@ -934,10 +938,7 @@ def surface_plot(x, y, z):
         scene = dict(
             xaxis = axes_dict,
             yaxis = axes_dict,
-            zaxis = axes_dict),
-        paper_bgcolor = 'rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
+            zaxis = axes_dict))
 
     return (fig)
 #+END_src
