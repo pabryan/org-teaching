@@ -49,6 +49,9 @@ to make equations better fit the width*/
 
 iframe.plotly {
     width: 100%;
+    max-width: 750px;
+    display: flex;
+    margin: auto;
 }
 
 img {

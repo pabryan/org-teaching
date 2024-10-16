@@ -868,7 +868,7 @@ animation_opts = dict(frame=dict(duration=10, redraw=False),
 def get_range(a):
     amin = np.min(a)
     amax = np.max(a)
-    pad = 0.05 * (amax - amin)
+    pad = 0.15 * (amax - amin)
     return [amin - pad, amax + pad]
 
 def polar_plot(f):
@@ -883,21 +883,20 @@ def polar_plot(f):
     x_vals = r_vals * np.cos(theta_vals)
     y_vals = r_vals * np.sin(theta_vals)
 
-    fig = make_subplots(rows=2, cols = 1, row_heights=[0.8, 0.2], vertical_spacing = 0.15)
+    fig = make_subplots(rows=2, cols=3, specs=[[{"colspan" : 3}, None, None], [None, {}, None]], row_heights=[0.7, 0.3], column_widths=[0.2, 0.6, 0.2])
 
-    fig.update_xaxes(range = get_range(x_vals), showticklabels=False, row=1, col = 1)
-    fig.update_yaxes(range = get_range(y_vals), showticklabels=False, scaleanchor = "x1", scaleratio = 1, row=1, col=1)
+    fig.update_xaxes(range = get_range(x_vals), showticklabels=False, showgrid=False, zeroline=False, row=1, col = 1)
+    fig.update_yaxes(range = get_range(y_vals), showticklabels=False, showgrid=False, zeroline=False, scaleanchor = "x1", scaleratio = 1, row=1, col=1)
     fig.add_trace(go.Scatter(x=x_vals, y=y_vals, mode="lines", line={"color" : "blue"}), row=1, col=1)
     fig.add_trace(go.Scatter(x=[x_vals[0]], y=[y_vals[0]], mode="markers", marker={"color" : "red", "size" : 10}), row=1, col=1)
     fig.add_trace(go.Scatter(x=[0, x_vals[0]], y = [0, y_vals[0]], mode="lines", line={"color": "red"}), row=1, col=1)
 
-    fig.update_xaxes(range = get_range(theta_vals), showticklabels=False, row=2, col = 1)
-    fig.update_yaxes(range = get_range(r_vals), showticklabels=False, scaleanchor = "x2", scaleratio = 1, row=2, col=1)
-    fig.add_trace(go.Scatter(x=theta_vals, y=r_vals, mode="lines", line={"color" : "red"}), row=2, col=1)
-    fig.add_trace(go.Scatter(x=[theta_vals[0]], y=[r_vals[0]], mode="markers", marker={"color" : "red", "size" : 10}), row=2, col=1)
+    fig.update_xaxes(range = get_range(theta_vals), showticklabels=False, showgrid=False, row=2, col = 2)
+    fig.update_yaxes(range = get_range(r_vals), showticklabels=False, showgrid=False, row=2, col=2)
+    fig.add_trace(go.Scatter(x=theta_vals, y=r_vals, mode="lines", line={"color" : "red"}), row=2, col=2)
+    fig.add_trace(go.Scatter(x=[theta_vals[0]], y=[r_vals[0]], mode="markers", marker={"color" : "red", "size" : 10}), row=2, col=2)
 
-    fig.update_layout(showlegend=False, width=400, height=600)
-
+    fig.update_layout(showlegend=False, margin=dict(l=0,r=0,t=0,b=0))
 
     L = len(theta_vals)
     frames = [go.Frame(name = k,
