@@ -18,7 +18,7 @@ def process_note(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
 def process_subnote(soup: BeautifulSoup, contents: frontmatter.Post) -> str:
     """Process a subnote"""
 
-    process_subnote_soup(soup)
+    process_environments(soup)
 
     return convert_to_str(soup, contents, True)
 
@@ -83,13 +83,6 @@ def process_lecture_sections(soup: BeautifulSoup) -> BeautifulSoup:
         sections = soup.find_all("div", class_=section_class)
         for section in sections:
             section.name = "section"
-
-    return soup
-
-def process_subnote_soup(soup: BeautifulSoup) -> BeautifulSoup:
-    """Proccess a subnote soup"""
-
-    process_environments(soup)
 
     return soup
 
