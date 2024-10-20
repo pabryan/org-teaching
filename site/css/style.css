@@ -50,6 +50,15 @@ ul.toc {
     padding: 0px;
 }
 
+.offcanvas {
+    --bs-offcanvas-bg: #070f0c;
+    --bs-offcanvas-color: rgba(255, 255, 255, 0.87);
+}
+
+.offcanvas-header .btn-close {
+    margin: 0px!important;
+}
+
 iframe.plotly {
     width: 100%;
     max-width: 750px;
@@ -60,6 +69,10 @@ iframe.plotly {
 img {
     display: block;
     margin: auto;
+}
+
+.navbar {
+    --bs-navbar-toggler-focus-width: 0!important;
 }
 
 .accordion {
