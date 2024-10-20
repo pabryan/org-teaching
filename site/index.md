@@ -1,6 +1,5 @@
 ---
-layout: page
-title: The Full Title
-short_title: Short Title
+layout: toc
+key: note
+title: Notes
 ---
-{{ site.description }}
