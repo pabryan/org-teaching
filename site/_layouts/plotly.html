@@ -13,5 +13,16 @@
 
   <body>
     {{ content }}
+
+    <script>
+      let pab_graph = document.getElementsByClassName("plotly-graph-div")[0];
+
+      function pab_play() {
+	  Plotly.animate(pab_graph, null, {"frame": {"duration": 10, "redraw": false}, "transition": {"duration": 0}, "easing": "linear", "fromcurrent": false, "mode": "afterall"}).catch()
+      }
+
+      let pab_timer = setInterval(pab_play, 20000);
+    </script>
+
   </body>
 </html>
