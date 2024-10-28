@@ -1,0 +1,34 @@
+<nav class="navbar sticky-top navbar-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="offcanvas offcanvas-start" style="overflow-y:scroll; width:550px" tabindex="-1" id="offcanvas" data-bs-keyboard="true" data-bs-backdrop="true" data-bs-scroll="true">
+  <div class="container-fluid">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body px-0">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+	<li class="nav-item">
+	  <a href="{{ '/' | relative_url }}" class="nav-link text-truncate">
+	    <span class="ms-1">Home</span>
+	  </a>
+        </li>
+
+	{% assign entries = site.pages | where:"layout", "note" %}
+	{% for item in entries %}
+	  <li class="nav-item">
+	    <a href="{{ item.url | relative_url }}" class="nav-link text-truncate">
+	      <span class="ms-1 d-none d-md-inline">Week </span><span>{{ item.week }}: </span><span class="ms-1  d-none d-md-inline">{{ item.title }}</span><span class="ms-1 d-inline d-md-none">{{ item.title }}</span>
+  	    </a>
+          </li>
+	{% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>

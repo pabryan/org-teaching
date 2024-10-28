@@ -1,0 +1,109 @@
+---
+lec: 1
+pagename: sample-squeeze_theorem
+title: Squeeze Theorem
+week: 1
+---
+
+<div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Suppose that \(f(x) \leq g(x) \leq h(x)\) and that
+\[
+\lim_{x \to a} f(x) = \lim_{x \to a} h(x) = L.
+\]
+  </p>
+  <p>
+   Then
+\[
+\lim_{x\to a} g(x) = L.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Evaluate the limit
+  </p>
+  <p>
+   \[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x}.
+\]
+  </p>
+  <p>
+   Since \(-1 \leq \sin y \leq 1\) for any \(y\), letting \(y = \tfrac{1}{x}\) we get that for any \(x \neq 0\) we have
+\[
+-1 \leq \sin \tfrac{1}{x} \leq 1.
+\]
+Multiplying by \(x^2\) gives
+\[
+-x^2 \leq x^2 \sin \tfrac{1}{x} \leq x^2.
+\]
+  </p>
+  <p>
+   We take \(f(x) = -x^2\), \(g(x) = x^2 \sin \tfrac{1}{x}\), and \(h(x) = x^2\) which satisfy
+\[
+f(x) \leq g(x) \leq h(x)
+\]
+and
+\[
+\lim_{x\to 0} f(x) = \lim_{x\to 0} -x^2 = 0 = \lim_{x\to 0} x^2 = \lim_{x\to 0} h(x).
+\]
+Therefore by the squeeze theorem
+\[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x} = 0.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Evaluate the limit
+\[
+\lim_{\theta \to 0} \sin \theta
+\]
+  </p>
+  <p>
+   Referring to the picture above, consider the point \(A = (x, y)\) in the positive quadrant of the plane and let \(\theta\) be the angle \(\angle AOB\). Then \(\theta \in (0, \pi/2)\) and \(y = \sin(\theta) &gt; 0\) is the length of the line segment \(AB\).
+  </p>
+  <p>
+   The line segment \(AD\) has length \(\sqrt{y^2 + z^2}\) where \(z\) is the length of the segment \(BD\). Since \(y = \sqrt{y^2} &lt; \sqrt{y^2 + z^2}\), the length of \(AB\) is less than the length of \(AD\), which in turn is less than the length of the circular arc \(AD\) (the shortest distance between two points is along a straight line).
+  </p>
+  <p>
+   But the length of the circular arc is \(\theta\). Thus for \(\theta \in (0, \pi/2)\) we have
+\[
+0 &lt; \sin \theta = y &lt; \sqrt{y^2 + z^2} &lt; \theta.
+\]
+That is \(0 &lt; \sin \theta &lt; \theta\). Since the limits as \(\theta \to 0\) on the left and right of the inequality are both equal to \(0\), by the squeeze theorem,
+\[
+\lim_{\theta \to 0^+} \sin \theta = 0
+\]
+By using \(\sin(-\theta) = -\sin(\theta)\), or arguing with a similar picture as above, for \(\theta \in (-\pi/2, 0)\) we get
+\[
+\theta &lt; \sin\theta &lt; 0
+\]
+and hence by the squeeze theorem,
+\[
+\lim_{\theta \to 0^-} \sin \theta = 0.
+\]
+Therefore
+\[
+\lim_{\theta \to 0} \sin \theta = 0.
+\]
+  </p>
+ </div>
+</div>

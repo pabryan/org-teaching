@@ -1,0 +1,149 @@
+---
+lec: 1
+pagename: sample-limits
+title: Limits
+week: 1
+---
+
+<noscript>
+ <img src="/figs/two_loop_limacon.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/two_loop_limacon" width="700">
+</iframe>
+<div style="text-align: center; margin-bottom: 2em;">
+ <p>
+  Polar Plot: \(r = 3 \cos{\left(\theta \right)} + 1\)
+ </p>
+</div>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
+\[
+\lim_{x\to a} f(x) = L.
+\]
+   <b>
+    Note
+   </b>
+   : Here we let \(x\) approach \(a\) but we consider only \(x \neq a\).
+  </p>
+ </div>
+</div>
+<div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist, then
+  </p>
+  <dl class="org-dl">
+   <dt>
+    Sum Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \left[f(x) + g(x)\right] = \lim_{x\to a} f(x) + \lim_{x\to a} g(x)\)
+   </dd>
+   <dt>
+    Product Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \left[f(x) g(x)\right] = \left[\lim_{x\to a} f(x)\right] \left[\lim_{x\to a} g(x)\right]\)
+   </dd>
+   <dt>
+    Quotient Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\displaystyle\lim_{x\to a} f(x)}{\displaystyle\lim_{x\to a} g(x)}\) provided \(\lim_{x\to a} g(x) \neq 0\)
+   </dd>
+  </dl>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 3} 2 x^2 + 5x - 7
+\]
+  </p>
+  <p>
+   Using the limit laws,
+  </p>
+  \begin{align*}
+\lim_{x\to 3} 2 x^2 + 3x - 7 &amp;= 2 \lim_{x\to 3} x^2 + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&amp;= 2 \left[\lim_{x\to 3} x\right]\left[\lim_{x\to 3} x\right] + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&amp;= 2 \times 3 \times 3 + 5 \times 3 - 7 \\
+&amp;= 26
+\end{align*}
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x+5}
+\]
+  </p>
+  <p>
+   For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x+5 = 2 + 5  = 7.
+\]
+Since the denominator limit is not \(0\) we may apply the quotient law to obtain
+\[
+\lim_{x \to 2} \frac{x^2 - 4}{x+5} = \frac{\lim_{x\to 2} x^2 - 4}{\lim_{x \to 2} x+5} = \frac{0}{7} = 0
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-2">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2}
+\]
+  </p>
+  <p>
+   For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} (x-2) = 2 - 2 = 0.
+\]
+We may not directly apply the quotient law since the denominator limit is \(0\). Instead, factorising the numerator we obtain that for \(x \neq 2\)
+\[
+\frac{x^2 - 4}{x-2} = \frac{(x-2)(x+2)}{x-2} = x+2.
+\]
+Now we may apply the limit laws to obtain
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2} = \lim_{x\to 2} (x+2) = 2 + 2 = 4.
+\]
+  </p>
+ </div>
+</div>

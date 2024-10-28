@@ -1,0 +1,21 @@
+# Site settings
+title: Site Title
+description: Site Description
+author: "Paul Bryan"
+email: pabryan@gmail.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+collections_dir: collections
+collections:
+  notes_01_01_sample:
+    order:
+      - notes_01_01_sample-introduction.html
+      - notes_01_01_sample-limits.html
+      - notes_01_01_sample-one_sided_limits.html
+      - notes_01_01_sample-infinite_limits.html
+      - notes_01_01_sample-squeeze_theorem.html

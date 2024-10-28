@@ -1,0 +1,14 @@
+---
+layout: page
+---
+
+{% assign entries = site.pages | where:"layout", page.key %}
+{% for entry in entries %}
+<ul class="toc">
+  <li>
+    <div class="box">
+      <p><a href="{{ entry.url }}">{{ entry.title }}</a> - {{ entry.abstract }}</p>
+    </div>
+  </li>
+</ul>
+{% endfor %}

@@ -1,0 +1,111 @@
+---
+lec: 1
+pagename: sample-infinite_limits
+title: Infinite Limits
+week: 1
+---
+
+<noscript>
+ <img src="/figs/surfaceplot.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/surfaceplot" width="700">
+</iframe>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the functions values \(f(x)\) become positive and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = \infty.
+\]
+  </p>
+  <p>
+   If the functions values \(f(x)\) become negative and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = -\infty.
+\]
+  </p>
+  <p>
+   Similar definitions apply for \(\lim_{x \to a^{\pm}} f(x)\).
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit
+\[
+\lim_{x\to 0} \frac{1}{x^2}
+\]
+  </p>
+  <p>
+   The numerator has limit \(\lim_{x\to 0} x^2 = 0\) hence we cannot apply the quotient rule. Notice that the numerator equals \(1\) and that as \(x\) gets close to \(0\) (and hence is very small), we get \(1\) divided by \(x^2\) (which is an even smaller number). But \(1\) divided by a small number is a large number!
+  </p>
+  <p>
+   For example, if \(x = 0.1\), \(x^2 = 0.01\) and \(\tfrac{1}{x^2} = \tfrac{1}{0.01} = 100\) and for \(x = 0.0001\) we get \(x^2 = (10^{-4})^2 = 10^{-8}\) and so \(\tfrac{1}{x^2} = \tfrac{1}{10^{-8}} = 10^8\).
+  </p>
+  <p>
+   Notice moreover that for example, if \(x \in (-10^{-4}, 10^{-4})\) and \(x \neq 0\), then \(0 &lt; x^2 &lt; 10^{-8}\) and hence
+\[
+\frac{1}{x^2} &gt; 10^8.
+\]
+  </p>
+  <p>
+   In fact, if \(M &gt; 0\) is any real positive number and \(x \in (-\sqrt{M}, \sqrt{M})\) with \(x \neq 0\), then \(0 &lt; x^2 &lt; M\) and hence
+\[
+\frac{1}{x^2} &gt; M.
+\]
+  </p>
+  <p>
+   That is, for any real number \(M &gt; 0\), if \(x\) is close enough to \(0\) (i.e. \(0 &lt; |x| &lt; \sqrt{M}\)), then \(\tfrac{1}{x^2} &gt; M\). In other words, as \(x\) tends to \(0\), \(\frac{1}{x^2}\) becomes larger than any positive number, and hence
+\[
+\lim_{x\to 0} \frac{1}{x^2} = \infty.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit
+\[
+\lim_{x \to 1} \frac{x+1}{x-1}
+\]
+  </p>
+  <p>
+   For the numerator,
+\[
+\lim_{x\to 1} x+1 = 1+1 = 2.
+\]
+For the denominator,
+\[
+\lim_{x\to 1} x-1 = 1 - 1 = 0.
+\]
+Thus we may not apply the quotient rule. Similarly to the previous example, the numerator tends to \(2\) (a finite number) while the denominator tends to \(0\). Thus as \(x\) tends to \(1\), the quotient \(\tfrac{x+1}{x-2}\) is tending to \(2\) divided by a small number. Again we expect the limit to be infinite, but we must take care of the sign!
+  </p>
+  <p>
+   If \(x &gt; 1\) and close to \(1\) then \(\tfrac{x+1}{x-1}\) will be positive and very large in magnitude, while if \(x &lt; - 1\) and close to \(1\), \(\tfrac{x+1}{x-1}\) will be negative and very large in magnitude. Therefore
+\[
+\lim_{x\to 1^-} \frac{x+1}{x-1} = - \infty \text{ and } \lim_{x\to 1^+} \frac{x+1}{x-1} = \infty.
+\]
+More succinctly,
+\[
+\lim_{x\to 1^{\pm}} \frac{x+1}{x-1} = \pm \infty.
+\]
+  </p>
+  <p>
+   In this case, the limit \(\lim_{x\to 1} \tfrac{x+1}{x-1}\) doesn't exist (it doesn't even equal infinity either) since the left and right limits are not the same.
+  </p>
+ </div>
+</div>

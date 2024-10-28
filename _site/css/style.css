@@ -1,0 +1,134 @@
+@import url('https://fonts.cdnfonts.com/css/jost');
+
+body {
+    background-color: #16231e;
+    background-image: url('/img/blackboard.png');
+    background-repeat: repeat;
+    background-size: 100%;
+    color: rgba(255, 255, 255, 0.87);
+    --bs-body-font-family: "Jost*", sans-serif;
+}
+
+/* Make equations a little smaller on small screens
+to make equations better fit the width*/
+@media (max-width: 600px) {
+    .MathJax {
+	font-size: 0.8em;
+    }
+    .shrinkeq {
+	font-size: 70%;
+    }
+
+    mjx-container {
+	overflow-x: auto;
+	overflow-y: hidden;
+    }
+}
+
+.content {
+    max-width: 1200px;
+}
+
+.box {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.6);
+    border-width: thin;
+    border-radius: 5px;
+    background-color: #291C2F;
+    margin-bottom: 2ex;
+    padding: 1em;
+}
+
+h3.title {
+    text-align: center;
+    color: #c8d4b5;
+    font-size: calc(1.5rem);
+}
+
+ul.toc {
+    list-style: none;
+    padding: 0px;
+}
+
+iframe.plotly {
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+    margin: auto;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+.navbar {
+    --bs-navbar-toggler-focus-width: 0!important;
+}
+
+.card {
+    margin-top: 1rem!important;
+    margin-bottom: 1rem!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
+}
+
+.card-header {
+    color: #ffff;
+}
+
+.defn .card-header {
+    background-color: #0059b3;
+}
+
+.defn h5.card-title::before {
+    content: "Definition"
+}
+
+.eg .card-header {
+    background-color: #00802b;
+}
+
+.eg h5.card-title::before {
+    content: "Example"
+}
+
+.ex .card-header {
+    background-color: #5c0099;
+}
+
+.ex h5.card-title::before {
+    content: "Exercise"
+}
+
+.lem .card-header {
+    background-color: #800000;
+}
+
+.lem h5.card-title::before {
+    content: "Lemma"
+}
+
+.thm .card-header {
+    background-color: #800000;
+}
+
+.thm h5.card-title::before {
+    content: "Theorem"
+}
+
+.cor .card-header {
+    background-color: #800000;
+}
+
+.cor h5.card-title::before {
+    content: "Corollary"
+}
+
+.pf .card-header {
+    background-color: #B36205;
+}
+
+.pf h5.card-title::before {
+    content: "Proof"
+}

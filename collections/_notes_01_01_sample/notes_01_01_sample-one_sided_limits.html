@@ -1,0 +1,82 @@
+---
+lec: 1
+pagename: sample-one_sided_limits
+title: One Sided Limits
+week: 1
+---
+
+<noscript>
+ <img src="/figs/myplot.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/myplot" width="700">
+</iframe>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\)
+   <b>
+    from the left
+   </b>
+   , then the limit from the left exists and we write
+\[
+\lim_{x\to a^{-}} f(x) = L.
+\]
+   <b>
+    Note
+   </b>
+   : To say that \(x\) approaches \(a\) from the left means that we restrict to \(x &lt; a\).
+  </p>
+  <p>
+   The limit from the right is similar, but with \(x &gt; a\); in this case we write
+\[
+\lim_{x\to a^{+}} f(x) = L.
+\]
+  </p>
+ </div>
+</div>
+<div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   The limit \(\lim_{x\to a} f(x) = L\) if and only if \(\lim_{x\to a^-} f(x) = L\) and \(\lim_{x\to a^+} f(x) = L\).
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the left and right limits of the function
+\[
+f(x) = \begin{cases}
+x + 1, &amp; x \leq 2 \\
+x^2, &amp; x &gt; 2
+\end{cases}
+\]
+as \(x \to 2\).
+  </p>
+  <p>
+   For \(x \to 2^-\) we take \(x &lt; 2\) and so
+\[
+\lim_{x\to 2^-} f(x) = \lim_{x\to 2^-} x + 1 = 2 + 1 = 3
+\]
+For \(x \to 2^+\) we take \(x &gt; 2\) and so
+\[
+\lim_{x\to 2^+} f(x) = \lim_{x\to 2^+} x^2 = 2^2 = 4.
+\]
+  </p>
+  <p>
+   Since \(\lim_{x\to 2^-} f(x) \neq \lim_{x\to 2^+} f(x)\), the limit \(\lim_{x \to 2} f(x)\) does not exist.
+  </p>
+ </div>
+</div>

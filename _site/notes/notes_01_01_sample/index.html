@@ -1,0 +1,706 @@
+
+  
+
+
+
+
+
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+
+    <!-- class for hiding when javascript is disabled -->
+    <noscript>
+      <style>
+	.hide-no-js {display: none;}
+        .collapse {display: block!important;}
+      </style>
+    </noscript>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+    <!-- Default CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+    <!-- Layout css -->
+    
+
+<link href="/css/note.css" rel="stylesheet">
+
+
+
+    <title>Lesson 1. : Sample Section</title>
+  </head>
+
+  <body>
+
+    <div id="mathjax-macros" hidden style="display: none;">
+\(
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\SS}{\mathbb{S}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\Ric}{\operatorname{Ric}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Img}{\operatorname{Img}}
+\newcommand{\Id}{\operatorname{Id}}
+\newcommand{\avgint}{\mathop{\mathchoice{\,\rlap{-}\!\!\int}{\rlap{\raise.15em{\scriptstyle -}}\kern-.2em\int}{\rlap{\raise.09em{\scriptscriptstyle -}}\!\int}{\rlap{-}\!\int}}\nolimits}
+\newcommand{\abs}[1]{\left\lvert{#1}\right\rvert}
+\newcommand{\ip}[2]{\left\langle{#1},{#2}\right\rangle}
+\renewcommand{\vec}[1]{\overrightarrow{\mathbf{#1}}}
+\newcommand{\vecna}[1]{\mathbf{#1}}
+\DeclareMathOperator{\graph}{Gr}
+\DeclareMathOperator{\area}{Area}
+\DeclareMathOperator{\Rm}{Rm}
+\DeclareMathOperator{\ric}{Ric}
+\DeclareMathOperator{\arclen}{Len}
+\DeclareMathOperator{\divg}{div}
+\DeclareMathOperator{\curl}{curl}
+
+\newcommand{\hugezero}{\huge 0}
+\)
+</div>
+
+
+    <nav class="navbar sticky-top navbar-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="offcanvas offcanvas-start" style="overflow-y:scroll; width:550px" tabindex="-1" id="offcanvas" data-bs-keyboard="true" data-bs-backdrop="true" data-bs-scroll="true">
+  <div class="container-fluid">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body px-0">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+	<li class="nav-item">
+	  <a href="/" class="nav-link text-truncate">
+	    <span class="ms-1">Home</span>
+	  </a>
+        </li>
+
+	
+	
+	  <li class="nav-item">
+	    <a href="/notes/notes_01_01_sample/" class="nav-link text-truncate">
+	      <span class="ms-1 d-none d-md-inline">Week </span><span>1: </span><span class="ms-1  d-none d-md-inline">Sample Section</span><span class="ms-1 d-inline d-md-none">Sample Section</span>
+  	    </a>
+          </li>
+	
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+	<div class="col-md-12 col-lg-10">
+	  <div class="content container">
+
+	    <div class="container">
+	      <div class="box">
+		<h3 class="title">Lesson 1. : Sample Section</h3>
+	      </div>
+
+	      <div class="note">
+  <div class="accordion">
+
+    
+    
+    <div class="accordion-item" id="outline-container-sample-introduction-item">
+      <h1 class="accordion-header" id="outline-container-sample-introduction-header">
+	<button aria-controls="outline-container-sample-introduction-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-sample-introduction-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  Introduction
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-sample-introduction-header" class="accordion-collapse collapse" id="outline-container-sample-introduction-collapse">
+	<div class="accordion-body p-3 m-0" id="text-sample-introduction-body">
+	  <p>
+ Limits are a fundamental concept in calculus that form the basis for understanding continuity, differentiation, and integration. A limit is the value that a function approaches as the input approaches a certain value.
+</p>
+<p>
+ <a href="https://en.wikipedia.org/wiki/Limit_(mathematics)">
+  Wikipedia Article on Limits
+ </a>
+</p>
+<div class="outline-2" id="outline-container-introduction-lecture_materials">
+ <h2 id="introduction-lecture_materials">
+  <span class="section-number-2">
+   1.
+  </span>
+  Lecture Materials
+ </h2>
+ <div class="outline-text-2" id="text-introduction-lecture_materials">
+  <ul class="org-ul">
+   <li>
+    These notes:
+    <a href="https://pabryan.github.io/notes/mq_math1010_2024_s2/notes_01_01_limits.pdf">
+     PDF
+    </a>
+   </li>
+   <li>
+    Slides:
+    <a href="https://pabryan.github.io/slides/mq_math1010_2024_s2/lecture_01_01_limits/">
+     Online
+    </a>
+   </li>
+   <li>
+    Slides
+    <a href="https://pabryan.github.io/slides/mq_math1010_2024_s2/lecture_01_01_limits.pdf">
+     PDF
+    </a>
+   </li>
+  </ul>
+ </div>
+</div>
+<div class="outline-2" id="outline-container-introduction-references">
+ <h2 id="introduction-references">
+  <span class="section-number-2">
+   2.
+  </span>
+  References:
+  <a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)">
+   Calculus OpenStax
+  </a>
+ </h2>
+ <div class="outline-text-2" id="text-introduction-references">
+  <ul class="org-ul">
+   <li>
+    <a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)/02%3A_Limits/2.02%3A_The_Limit_of_a_Function">
+     2.2: The Limit of a Function
+    </a>
+   </li>
+   <li>
+    <a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax)/02%3A_Limits/2.03%3A_The_Limit_Laws">
+     2.3: The Limit Laws
+    </a>
+   </li>
+  </ul>
+ </div>
+</div>
+	</div>
+      </div>
+    </div>
+    
+    <div class="accordion-item" id="outline-container-sample-limits-item">
+      <h1 class="accordion-header" id="outline-container-sample-limits-header">
+	<button aria-controls="outline-container-sample-limits-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-sample-limits-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  Limits
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-sample-limits-header" class="accordion-collapse collapse" id="outline-container-sample-limits-collapse">
+	<div class="accordion-body p-3 m-0" id="text-sample-limits-body">
+	  <noscript>
+ <img src="/figs/two_loop_limacon.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/two_loop_limacon" width="700">
+</iframe>
+<div style="text-align: center; margin-bottom: 2em;">
+ <p>
+  Polar Plot: \(r = 3 \cos{\left(\theta \right)} + 1\)
+ </p>
+</div>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\), then the limit exists and we write
+\[
+\lim_{x\to a} f(x) = L.
+\]
+   <b>
+    Note
+   </b>
+   : Here we let \(x\) approach \(a\) but we consider only \(x \neq a\).
+  </p>
+ </div>
+</div>
+<div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the limits \(\lim_{x\to a}f(x)\) and \(\lim_{x\to a} g(x)\) exist, then
+  </p>
+  <dl class="org-dl">
+   <dt>
+    Sum Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \left[f(x) + g(x)\right] = \lim_{x\to a} f(x) + \lim_{x\to a} g(x)\)
+   </dd>
+   <dt>
+    Product Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \left[f(x) g(x)\right] = \left[\lim_{x\to a} f(x)\right] \left[\lim_{x\to a} g(x)\right]\)
+   </dd>
+   <dt>
+    Quotient Law
+   </dt>
+   <dd>
+    \(\displaystyle \lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\displaystyle\lim_{x\to a} f(x)}{\displaystyle\lim_{x\to a} g(x)}\) provided \(\lim_{x\to a} g(x) \neq 0\)
+   </dd>
+  </dl>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 3} 2 x^2 + 5x - 7
+\]
+  </p>
+  <p>
+   Using the limit laws,
+  </p>
+  \begin{align*}
+\lim_{x\to 3} 2 x^2 + 3x - 7 &amp;= 2 \lim_{x\to 3} x^2 + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&amp;= 2 \left[\lim_{x\to 3} x\right]\left[\lim_{x\to 3} x\right] + 5 \lim_{x\to 3} x - \lim_{x\to 3} 7 \\
+&amp;= 2 \times 3 \times 3 + 5 \times 3 - 7 \\
+&amp;= 26
+\end{align*}
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x+5}
+\]
+  </p>
+  <p>
+   For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x+5 = 2 + 5  = 7.
+\]
+Since the denominator limit is not \(0\) we may apply the quotient law to obtain
+\[
+\lim_{x \to 2} \frac{x^2 - 4}{x+5} = \frac{\lim_{x\to 2} x^2 - 4}{\lim_{x \to 2} x+5} = \frac{0}{7} = 0
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-2">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit,
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2}
+\]
+  </p>
+  <p>
+   For the numerator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} x^2 - 4 = 2^2 - 4 = 0
+\]
+For the denominator we may apply the limit laws to calculate that
+\[
+\lim_{x\to 2} (x-2) = 2 - 2 = 0.
+\]
+We may not directly apply the quotient law since the denominator limit is \(0\). Instead, factorising the numerator we obtain that for \(x \neq 2\)
+\[
+\frac{x^2 - 4}{x-2} = \frac{(x-2)(x+2)}{x-2} = x+2.
+\]
+Now we may apply the limit laws to obtain
+\[
+\lim_{x\to 2} \frac{x^2 - 4}{x-2} = \lim_{x\to 2} (x+2) = 2 + 2 = 4.
+\]
+  </p>
+ </div>
+</div>
+	</div>
+      </div>
+    </div>
+    
+    <div class="accordion-item" id="outline-container-sample-one_sided_limits-item">
+      <h1 class="accordion-header" id="outline-container-sample-one_sided_limits-header">
+	<button aria-controls="outline-container-sample-one_sided_limits-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-sample-one_sided_limits-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  One Sided Limits
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-sample-one_sided_limits-header" class="accordion-collapse collapse" id="outline-container-sample-one_sided_limits-collapse">
+	<div class="accordion-body p-3 m-0" id="text-sample-one_sided_limits-body">
+	  <noscript>
+ <img src="/figs/myplot.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/myplot" width="700">
+</iframe>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the function values \(f(x)\) approach \(L\) as the values \(x\) approach \(a\)
+   <b>
+    from the left
+   </b>
+   , then the limit from the left exists and we write
+\[
+\lim_{x\to a^{-}} f(x) = L.
+\]
+   <b>
+    Note
+   </b>
+   : To say that \(x\) approaches \(a\) from the left means that we restrict to \(x &lt; a\).
+  </p>
+  <p>
+   The limit from the right is similar, but with \(x &gt; a\); in this case we write
+\[
+\lim_{x\to a^{+}} f(x) = L.
+\]
+  </p>
+ </div>
+</div>
+<div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   The limit \(\lim_{x\to a} f(x) = L\) if and only if \(\lim_{x\to a^-} f(x) = L\) and \(\lim_{x\to a^+} f(x) = L\).
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the left and right limits of the function
+\[
+f(x) = \begin{cases}
+x + 1, &amp; x \leq 2 \\
+x^2, &amp; x &gt; 2
+\end{cases}
+\]
+as \(x \to 2\).
+  </p>
+  <p>
+   For \(x \to 2^-\) we take \(x &lt; 2\) and so
+\[
+\lim_{x\to 2^-} f(x) = \lim_{x\to 2^-} x + 1 = 2 + 1 = 3
+\]
+For \(x \to 2^+\) we take \(x &gt; 2\) and so
+\[
+\lim_{x\to 2^+} f(x) = \lim_{x\to 2^+} x^2 = 2^2 = 4.
+\]
+  </p>
+  <p>
+   Since \(\lim_{x\to 2^-} f(x) \neq \lim_{x\to 2^+} f(x)\), the limit \(\lim_{x \to 2} f(x)\) does not exist.
+  </p>
+ </div>
+</div>
+	</div>
+      </div>
+    </div>
+    
+    <div class="accordion-item" id="outline-container-sample-infinite_limits-item">
+      <h1 class="accordion-header" id="outline-container-sample-infinite_limits-header">
+	<button aria-controls="outline-container-sample-infinite_limits-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-sample-infinite_limits-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  Infinite Limits
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-sample-infinite_limits-header" class="accordion-collapse collapse" id="outline-container-sample-infinite_limits-collapse">
+	<div class="accordion-body p-3 m-0" id="text-sample-infinite_limits-body">
+	  <noscript>
+ <img src="/figs/surfaceplot.png"/>
+</noscript>
+<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/surfaceplot" width="700">
+</iframe>
+<div class="defn card" id="defn-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   If the functions values \(f(x)\) become positive and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = \infty.
+\]
+  </p>
+  <p>
+   If the functions values \(f(x)\) become negative and unbounded as \(x \to a\), then we write
+\[
+\lim_{x\to a} f(x) = -\infty.
+\]
+  </p>
+  <p>
+   Similar definitions apply for \(\lim_{x \to a^{\pm}} f(x)\).
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit
+\[
+\lim_{x\to 0} \frac{1}{x^2}
+\]
+  </p>
+  <p>
+   The numerator has limit \(\lim_{x\to 0} x^2 = 0\) hence we cannot apply the quotient rule. Notice that the numerator equals \(1\) and that as \(x\) gets close to \(0\) (and hence is very small), we get \(1\) divided by \(x^2\) (which is an even smaller number). But \(1\) divided by a small number is a large number!
+  </p>
+  <p>
+   For example, if \(x = 0.1\), \(x^2 = 0.01\) and \(\tfrac{1}{x^2} = \tfrac{1}{0.01} = 100\) and for \(x = 0.0001\) we get \(x^2 = (10^{-4})^2 = 10^{-8}\) and so \(\tfrac{1}{x^2} = \tfrac{1}{10^{-8}} = 10^8\).
+  </p>
+  <p>
+   Notice moreover that for example, if \(x \in (-10^{-4}, 10^{-4})\) and \(x \neq 0\), then \(0 &lt; x^2 &lt; 10^{-8}\) and hence
+\[
+\frac{1}{x^2} &gt; 10^8.
+\]
+  </p>
+  <p>
+   In fact, if \(M &gt; 0\) is any real positive number and \(x \in (-\sqrt{M}, \sqrt{M})\) with \(x \neq 0\), then \(0 &lt; x^2 &lt; M\) and hence
+\[
+\frac{1}{x^2} &gt; M.
+\]
+  </p>
+  <p>
+   That is, for any real number \(M &gt; 0\), if \(x\) is close enough to \(0\) (i.e. \(0 &lt; |x| &lt; \sqrt{M}\)), then \(\tfrac{1}{x^2} &gt; M\). In other words, as \(x\) tends to \(0\), \(\frac{1}{x^2}\) becomes larger than any positive number, and hence
+\[
+\lim_{x\to 0} \frac{1}{x^2} = \infty.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Calculate the limit
+\[
+\lim_{x \to 1} \frac{x+1}{x-1}
+\]
+  </p>
+  <p>
+   For the numerator,
+\[
+\lim_{x\to 1} x+1 = 1+1 = 2.
+\]
+For the denominator,
+\[
+\lim_{x\to 1} x-1 = 1 - 1 = 0.
+\]
+Thus we may not apply the quotient rule. Similarly to the previous example, the numerator tends to \(2\) (a finite number) while the denominator tends to \(0\). Thus as \(x\) tends to \(1\), the quotient \(\tfrac{x+1}{x-2}\) is tending to \(2\) divided by a small number. Again we expect the limit to be infinite, but we must take care of the sign!
+  </p>
+  <p>
+   If \(x &gt; 1\) and close to \(1\) then \(\tfrac{x+1}{x-1}\) will be positive and very large in magnitude, while if \(x &lt; - 1\) and close to \(1\), \(\tfrac{x+1}{x-1}\) will be negative and very large in magnitude. Therefore
+\[
+\lim_{x\to 1^-} \frac{x+1}{x-1} = - \infty \text{ and } \lim_{x\to 1^+} \frac{x+1}{x-1} = \infty.
+\]
+More succinctly,
+\[
+\lim_{x\to 1^{\pm}} \frac{x+1}{x-1} = \pm \infty.
+\]
+  </p>
+  <p>
+   In this case, the limit \(\lim_{x\to 1} \tfrac{x+1}{x-1}\) doesn't exist (it doesn't even equal infinity either) since the left and right limits are not the same.
+  </p>
+ </div>
+</div>
+	</div>
+      </div>
+    </div>
+    
+    <div class="accordion-item" id="outline-container-sample-squeeze_theorem-item">
+      <h1 class="accordion-header" id="outline-container-sample-squeeze_theorem-header">
+	<button aria-controls="outline-container-sample-squeeze_theorem-collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#outline-container-sample-squeeze_theorem-collapse" data-bs-toggle="collapse" id="introduction" type="button">
+	  Squeeze Theorem
+	</button>
+      </h1>
+
+      <div aria-labelledby="outline-container-sample-squeeze_theorem-header" class="accordion-collapse collapse" id="outline-container-sample-squeeze_theorem-collapse">
+	<div class="accordion-body p-3 m-0" id="text-sample-squeeze_theorem-body">
+	  <div class="thm card" id="thm-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Suppose that \(f(x) \leq g(x) \leq h(x)\) and that
+\[
+\lim_{x \to a} f(x) = \lim_{x \to a} h(x) = L.
+\]
+  </p>
+  <p>
+   Then
+\[
+\lim_{x\to a} g(x) = L.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-0">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Evaluate the limit
+  </p>
+  <p>
+   \[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x}.
+\]
+  </p>
+  <p>
+   Since \(-1 \leq \sin y \leq 1\) for any \(y\), letting \(y = \tfrac{1}{x}\) we get that for any \(x \neq 0\) we have
+\[
+-1 \leq \sin \tfrac{1}{x} \leq 1.
+\]
+Multiplying by \(x^2\) gives
+\[
+-x^2 \leq x^2 \sin \tfrac{1}{x} \leq x^2.
+\]
+  </p>
+  <p>
+   We take \(f(x) = -x^2\), \(g(x) = x^2 \sin \tfrac{1}{x}\), and \(h(x) = x^2\) which satisfy
+\[
+f(x) \leq g(x) \leq h(x)
+\]
+and
+\[
+\lim_{x\to 0} f(x) = \lim_{x\to 0} -x^2 = 0 = \lim_{x\to 0} x^2 = \lim_{x\to 0} h(x).
+\]
+Therefore by the squeeze theorem
+\[
+\lim_{x\to 0} x^2 \sin \tfrac{1}{x} = 0.
+\]
+  </p>
+ </div>
+</div>
+<div class="eg card" id="eg-1">
+ <div class="card-header">
+  <h5 class="card-title">
+  </h5>
+ </div>
+ <div class="card-body">
+  <p>
+   Evaluate the limit
+\[
+\lim_{\theta \to 0} \sin \theta
+\]
+  </p>
+  <p>
+   Referring to the picture above, consider the point \(A = (x, y)\) in the positive quadrant of the plane and let \(\theta\) be the angle \(\angle AOB\). Then \(\theta \in (0, \pi/2)\) and \(y = \sin(\theta) &gt; 0\) is the length of the line segment \(AB\).
+  </p>
+  <p>
+   The line segment \(AD\) has length \(\sqrt{y^2 + z^2}\) where \(z\) is the length of the segment \(BD\). Since \(y = \sqrt{y^2} &lt; \sqrt{y^2 + z^2}\), the length of \(AB\) is less than the length of \(AD\), which in turn is less than the length of the circular arc \(AD\) (the shortest distance between two points is along a straight line).
+  </p>
+  <p>
+   But the length of the circular arc is \(\theta\). Thus for \(\theta \in (0, \pi/2)\) we have
+\[
+0 &lt; \sin \theta = y &lt; \sqrt{y^2 + z^2} &lt; \theta.
+\]
+That is \(0 &lt; \sin \theta &lt; \theta\). Since the limits as \(\theta \to 0\) on the left and right of the inequality are both equal to \(0\), by the squeeze theorem,
+\[
+\lim_{\theta \to 0^+} \sin \theta = 0
+\]
+By using \(\sin(-\theta) = -\sin(\theta)\), or arguing with a similar picture as above, for \(\theta \in (-\pi/2, 0)\) we get
+\[
+\theta &lt; \sin\theta &lt; 0
+\]
+and hence by the squeeze theorem,
+\[
+\lim_{\theta \to 0^-} \sin \theta = 0.
+\]
+Therefore
+\[
+\lim_{\theta \to 0} \sin \theta = 0.
+\]
+  </p>
+ </div>
+</div>
+	</div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+	    </div>
+
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+  MathJax = {
+      tex: {
+	  inlineMath: [['$', '$'], ['\\(', '\\)']],
+	  tags: 'ams',
+      },
+      svg: {
+	  fontCache: 'global'
+      }
+  };
+</script>
+
+
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>
