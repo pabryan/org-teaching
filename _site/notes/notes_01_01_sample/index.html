@@ -42,7 +42,7 @@
     <title>Lesson 1. : Sample Section</title>
   </head>
 
-  <body>
+  <body style="background-image: url(/img/blackboard.png);">
 
     <div id="mathjax-macros" hidden style="display: none;">
 \(
@@ -73,40 +73,34 @@
 </div>
 
 
-    <nav class="navbar sticky-top navbar-light">
+    <nav class="navbar sticky-top">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
-      <i class="fas fa-bars"></i>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-  </div>
-</nav>
+    <div class="offcanvas offcanvas-start justify-content-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
 
-<div class="offcanvas offcanvas-start" style="overflow-y:scroll; width:550px" tabindex="-1" id="offcanvas" data-bs-keyboard="true" data-bs-backdrop="true" data-bs-scroll="true">
-  <div class="container-fluid">
-    <div class="offcanvas-header">
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-
-    <div class="offcanvas-body px-0">
-      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
-	<li class="nav-item">
-	  <a href="/" class="nav-link text-truncate">
-	    <span class="ms-1">Home</span>
-	  </a>
-        </li>
-
-	
-	
+	  
+	  
 	  <li class="nav-item">
 	    <a href="/notes/notes_01_01_sample/" class="nav-link text-truncate">
-	      <span class="ms-1 d-none d-md-inline">Week </span><span>1: </span><span class="ms-1  d-none d-md-inline">Sample Section</span><span class="ms-1 d-inline d-md-none">Sample Section</span>
+	      Week 1: Sample Section
   	    </a>
           </li>
-	
-      </ul>
+	  
+	</ul>
+      </div>
     </div>
   </div>
-</div>
+</nav>
 
 
     <div class="container-fluid">
@@ -209,11 +203,14 @@
 
       <div aria-labelledby="outline-container-sample-limits-header" class="accordion-collapse collapse" id="outline-container-sample-limits-collapse">
 	<div class="accordion-body p-3 m-0" id="text-sample-limits-body">
-	  <noscript>
- <img src="/figs/two_loop_limacon.png"/>
+	  <p>
+ <noscript>
+  <img src="/figs/two_loop_limacon.png"></img>
 </noscript>
-<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/two_loop_limacon" width="700">
-</iframe>
+
+<iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="700" height="500" scrolling="no" allowtransparency="true" src="/figs/two_loop_limacon"></iframe>
+
+</p>
 <div style="text-align: center; margin-bottom: 2em;">
  <p>
   Polar Plot: \(r = 3 \cos{\left(\theta \right)} + 1\)
@@ -364,11 +361,14 @@ Now we may apply the limit laws to obtain
 
       <div aria-labelledby="outline-container-sample-one_sided_limits-header" class="accordion-collapse collapse" id="outline-container-sample-one_sided_limits-collapse">
 	<div class="accordion-body p-3 m-0" id="text-sample-one_sided_limits-body">
-	  <noscript>
- <img src="/figs/myplot.png"/>
+	  <p>
+ <noscript>
+  <img src="/figs/myplot.png"></img>
 </noscript>
-<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/myplot" width="700">
-</iframe>
+
+<iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="700" height="500" scrolling="no" allowtransparency="true" src="/figs/myplot"></iframe>
+
+</p>
 <div class="defn card" id="defn-0">
  <div class="card-header">
   <h5 class="card-title">
@@ -452,11 +452,14 @@ For \(x \to 2^+\) we take \(x &gt; 2\) and so
 
       <div aria-labelledby="outline-container-sample-infinite_limits-header" class="accordion-collapse collapse" id="outline-container-sample-infinite_limits-collapse">
 	<div class="accordion-body p-3 m-0" id="text-sample-infinite_limits-body">
-	  <noscript>
- <img src="/figs/surfaceplot.png"/>
+	  <p>
+ <noscript>
+  <img src="/figs/surfaceplot.png"></img>
 </noscript>
-<iframe allowfullscreen="" allowtransparency="true" class="plotly hide-no-js" frameborder="0" height="500" scrolling="no" src="/figs/surfaceplot" width="700">
-</iframe>
+
+<iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="700" height="500" scrolling="no" allowtransparency="true" src="/figs/surfaceplot"></iframe>
+
+</p>
 <div class="defn card" id="defn-0">
  <div class="card-header">
   <h5 class="card-title">
@@ -686,7 +689,7 @@ Therefore
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
   MathJax = {
