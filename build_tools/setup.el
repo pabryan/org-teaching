@@ -185,25 +185,33 @@ higher is a note."
 
   (member "challenge" (org-get-tags nil t)))
 
-(defun pab/teaching-export-subnote (notename)
+(defun pab/teaching-export-subnote (notename subnote-num)
   "Export sub-topic at point to file determined by NOTENAME.
 
 The name of the file is obtained by calling
 pab/teaching-export-subtopic-file-name.
 
 The exported file well be created in
+pab/teaching-export-notes-dir/notename.
 
-pab/teaching-export-notes-dir/notename."
+SUBNOTE-NUM contains the subnotes position in the note,
+e.g 1 for 1st, 2 for 2nd etc."
 
   (when (pab/teaching-subnote-p)
     (let* ((export-filename
 	    (file-name-concat pab/teaching-export-collections-dir
 			      (format "_%s" notename)
 			      (pab/teaching-export-subtopic-file-name notename))))
-      (pab/teaching-export-to-backend export-filename '(html) #'pab/teaching-export-subnote-post-process))))
+      (pab/teaching-export-to-backend
+       export-filename '(html)
+       (lambda (filename) (pab/teaching-export-subnote-post-process filename subnote-num))))))
 
-(defun pab/teaching-subnote-hash-frontmatter ()
-  "Generate hash frontmatter for subnote."
+
+(defun pab/teaching-subnote-hash-frontmatter (subnote-num)
+  "Generate hash frontmatter for subnote.
+
+SUBNOTE-NUM contains the subnotes position in the note,
+e.g 1 for 1st, 2 for 2nd etc."
 
   (let*
       ((pagename (org-entry-get-with-inheritance "NAME"))
@@ -214,18 +222,23 @@ pab/teaching-export-notes-dir/notename."
     (list (cons 'pagename (format "%s-%s" pagename id))
 		    (cons 'week week)
 		    (cons 'lec lec)
-		    (cons 'title title))))
+		    (cons 'title title)
+		    (cons 'num subnote-num))))
 
-(defun pab/teaching-export-subnote-post-process (filename)
+(defun pab/teaching-export-subnote-post-process (filename subnote-num)
   "Post process a subnote after org-export-to-file.
 
 FILENAME is the name of the file exported by org.
 
 Adds yaml frontmatter to subnote.
-Then runs python post-processing script."
+Then runs python post-processing script.
+
+SUBNOTE-NUM contains the subnotes position in the note,
+e.g 1 for 1st, 2 for 2nd etc.
+This is added to the yaml frontmatter."
 
   (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter
-   filename (pab/teaching-subnote-hash-frontmatter))
+   filename (pab/teaching-subnote-hash-frontmatter subnote-num))
   (shell-command (format "%1$s -t s %2$s %2$s"
 			 (expand-file-name "post_process.py" pab/teaching-build_tools-dir)
 			 filename)))
@@ -343,9 +356,12 @@ pab/teaching-export-subnote on each subnote."
       (write-region nil nil outfile))
     (pab/teaching-prepend-hash-to-file-as-yaml-frontmatter outfile hash))
 
-  (let ((note-level (org-element-property :level (org-element-at-point))))
+  (let ((note-level (org-element-property :level (org-element-at-point))) (subnote-count 1))
     (org-map-entries
-     (lambda() (pab/teaching-export-subnote notename)) (format "LEVEL=%d" (+ note-level 1)) 'tree)))
+     (lambda()
+       (pab/teaching-export-subnote notename subnote-count)
+       (setq subnote-count (+ 1 subnote-count)))
+     (format "LEVEL=%d" (+ note-level 1)) 'tree)))
 
 (defun pab/teaching-export-note-pdf (notename)
   "Export note NOTENAME to pdf."
@@ -460,7 +476,7 @@ Possible tags are notes, lecture, problems, challenge"
     (cond ((pab/teaching-note-p)
 	   (pab/teaching-export-note (format "notes_%s" filename)))
 	  ((pab/teaching-subnote-p)
-	   (pab/teaching-export-subnote (format "notes_%s" filename)))
+	   (pab/teaching-export-subnote (format "notes_%s" filename) 0))
 	  ((pab/teaching-lecture-p)
 	   (pab/teaching-export-lecture (format "lectures_%s" filename)))
 	  ((pab/teaching-problem-p)
