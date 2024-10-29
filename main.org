@@ -773,7 +773,7 @@ import imageio.v3 as iio
 
 def plotly_save_html(fig, filename, **kwargs):
     yaml_frontmatter = "---\nlayout: plotly\n---\n\n"
-    fig_html = fig.to_html(include_plotlyjs = "cdn", include_mathjax = "cdn", full_html = False, **kwargs)
+    fig_html = fig.to_html(include_plotlyjs = "cdn", include_mathjax = "cdn", full_html = False, div_id="pab-plotly", **kwargs)
 
     with open(filename, "w", encoding="utf-8") as f:
         f.write(yaml_frontmatter + fig_html)
