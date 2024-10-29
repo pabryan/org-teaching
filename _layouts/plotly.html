@@ -15,7 +15,7 @@
     {{ content }}
 
     <script>
-      let pab_graph = document.getElementsByClassName("plotly-graph-div")[0];
+      let pab_graph = document.getElementById("pab-plotly");
 
       function pab_play() {
 	  Plotly.animate(pab_graph, null, {"frame": {"duration": 10, "redraw": false}, "transition": {"duration": 0}, "easing": "linear", "fromcurrent": false, "mode": "afterall"}).catch()
