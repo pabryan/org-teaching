@@ -781,11 +781,7 @@ def plotly_save_html(fig, filename, **kwargs):
 def plotly_export_html(filename, caption, width, height):
     html_template="""
     ,#+BEGIN_export html
-    <noscript>
-      <img src="{filename}.png"></img>
-    </noscript>
-
-    <iframe class="plotly hide-no-js" allowfullscreen="" frameborder="0" width="{width}" height="{height}" scrolling="no" allowtransparency="true" src="{filename}"></iframe>
+    {{% include plotly.html filename="{filename}" height="{height}" width="{width}" %}}
     """
 
     if not caption == "":
