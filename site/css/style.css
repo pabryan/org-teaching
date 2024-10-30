@@ -28,6 +28,11 @@ to make equations better fit the width*/
     max-width: 1200px;
 }
 
+.container {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
 .box {
     border-style: solid;
     border-color: rgba(255, 255, 255, 0.6);
