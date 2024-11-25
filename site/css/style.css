@@ -1,10 +1,31 @@
 @import url('https://fonts.cdnfonts.com/css/jost');
 
+:root {
+    --ot-bg-color: #0b120f;
+    --ot-font-color: rgba(255, 255, 255, 0.87);
+    --ot-highlight-color: #c8d4b5;
+    --ot-nav-bg-color: #070f0c;
+    --ot-header-bg-color: #291C2F;
+    --ot-accordion-bg-color: rgba(8, 17, 14, 0.9);
+    --ot-accordion-active-bg: #32173e;
+    --ot-card-body-bg-color: rgba(37, 25, 42, 0.3);
+    --ot-defn-header-bg-color: #0059b3;
+    --ot-eg-header-bg-color: #00802b;
+    --ot-ex-header-bg-color: #5c0099;
+    --ot-thm-header-bg-color: #800000;
+    --ot-lem-header-bg-color: var(--ot-thm-header-bg-color);
+    --ot-cor-header-bg-color: var(--ot-thm-header-bg-color);
+    --ot-pf-header-bg-color: #B36205;
+    --ot-border-style: solid;
+    --ot-border-width: thin;
+    --ot-border-radius: 5px;
+}
+
 body {
-    background-color: #16231e;
     background-repeat: repeat;
+    background-color:  var(--ot-bg-color);
     background-size: 100%;
-    color: rgba(255, 255, 255, 0.87);
+    color: var(--ot-font-color);
     --bs-body-font-family: "Jost*", sans-serif;
 }
 
@@ -34,18 +55,18 @@ to make equations better fit the width*/
 }
 
 .box {
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 0.6);
-    border-width: thin;
-    border-radius: 5px;
-    background-color: #291C2F;
     margin-bottom: 2ex;
+    border-style: var(--ot-border-style);
+    border-color: var(--ot-highlight-color);
+    border-width: var(--ot-border-width);
+    border-radius: var(--ot-border-radius);
+    background-color: var(--ot-header-bg-color);
     padding: 1em;
 }
 
 h3.title {
     text-align: center;
-    color: #c8d4b5;
+    color: var(--ot-highlight-color);
     font-size: calc(1.5rem);
 }
 
@@ -55,8 +76,8 @@ ul.toc {
 }
 
 .offcanvas {
-    --bs-offcanvas-bg: #070f0c;
-    --bs-offcanvas-color: rgba(255, 255, 255, 0.87);
+    --bs-offcanvas-bg: var(--ot-nav-bg-color);
+    --bs-offcanvas-color: var(--ot-font-color);
 }
 
 .offcanvas-header .btn-close {
@@ -80,15 +101,16 @@ img {
 }
 
 .accordion {
-    --bs-accordion-btn-bg: #291C2F;
-    --bs-accordion-active-bg: #32173e;
-    --bs-accordion-active-color: #c8d4b5;
-    --bs-accordion-bg: rgba(8, 17, 14, 0.9)!important;
     margin-bottom: 5ex;
+    --bs-accordion-btn-bg: var(--ot-header-bg-color);
+    --bs-accordion-active-bg: var(--ot-accordion-active-bg);
+    --bs-accordion-active-color: var(--ot-highlight-color);
+    --bs-accordion-bg: rgba(0, 0, 0, 0);
+    --bs-accordion-border-color: var(--ot-highlight-color);
 }
 
 .accordion-button {
-    color: #c8d4b5;
+    color: var(--ot-highlight-color);
     font-size: 1.5rem;
 }
 
@@ -105,7 +127,7 @@ img {
     margin-bottom: 1rem!important;
     margin-right: 0!important;
     margin-left: 0!important;
-    --bs-card-border-color: rgba(255, 255, 255, 0.8);
+    --bs-card-border-color: var(--ot-highlight-color);
     --bs-card-border-width: thin;
     --bs-card-bg: rbga(0, 0, 0, 0);
 }
@@ -116,13 +138,12 @@ img {
 
 .card-body {
     border-radius: 0px 0px 5px 5px;
-    background-color: rgba(8, 17, 14, 0.8);
-    background-color: rgba(37, 25, 42, 0.3)
+    background-color: var(--ot-card-body-bg-color);
 }
 
 
 .defn .card-header {
-    background-color: #0059b3;
+    background-color: var(--ot-defn-header-bg-color);
 }
 
 .defn h5.card-title::before {
@@ -130,7 +151,7 @@ img {
 }
 
 .eg .card-header {
-    background-color: #00802b;
+    background-color: var(--ot-eg-header-bg-color);
 }
 
 .eg h5.card-title::before {
@@ -138,31 +159,31 @@ img {
 }
 
 .ex .card-header {
-    background-color: #5c0099;
+    background-color: var(--ot-ex-header-bg-color)
 }
 
 .ex h5.card-title::before {
     content: "Exercise"
 }
 
-.lem .card-header {
-    background-color: #800000;
-}
-
-.lem h5.card-title::before {
-    content: "Lemma"
-}
-
 .thm .card-header {
-    background-color: #800000;
+    background-color: var(--ot-thm-header-bg-color);
 }
 
 .thm h5.card-title::before {
     content: "Theorem"
 }
 
+.lem .card-header {
+    background-color: var(--ot-lem-header-bg-color);
+}
+
+.lem h5.card-title::before {
+    content: "Lemma"
+}
+
 .cor .card-header {
-    background-color: #800000;
+    background-color: var(--ot-cor-header-bg-color);
 }
 
 .cor h5.card-title::before {
@@ -170,7 +191,7 @@ img {
 }
 
 .pf .card-header {
-    background-color: #B36205;
+    background-color: var(--ot-pf-header-bg-color);
 }
 
 .pf h5.card-title::before {
