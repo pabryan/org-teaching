@@ -28,6 +28,7 @@ body {
     background-size: cover;
     color: var(--ot-font-color);
     --bs-body-font-family: "Jost*", sans-serif;
+    padding-bottom: 5em;
 }
 
 /* Make equations a little smaller on small screens
@@ -56,12 +57,12 @@ to make equations better fit the width*/
 }
 
 .box {
-    margin-bottom: 2ex;
     border-style: var(--ot-border-style);
     border-color: var(--ot-highlight-color);
     border-width: var(--ot-border-width);
     border-radius: var(--ot-border-radius);
     background-color: var(--ot-header-bg-color);
+    margin-bottom: 4ex;
     padding: 1em;
 }
 
@@ -102,11 +103,11 @@ img {
 }
 
 .accordion {
-    margin-bottom: 5ex;
     --bs-accordion-btn-bg: var(--ot-header-bg-color);
     --bs-accordion-active-bg: var(--ot-accordion-active-bg);
     --bs-accordion-active-color: var(--ot-highlight-color);
     --bs-accordion-bg: rgba(0, 0, 0, 0);
+    --bs-accordion-border-width: 0px;
     --bs-accordion-border-color: var(--ot-highlight-color);
 }
 
