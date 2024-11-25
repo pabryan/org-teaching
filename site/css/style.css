@@ -22,9 +22,10 @@
 }
 
 body {
-    background-repeat: repeat;
     background-color:  var(--ot-bg-color);
-    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     color: var(--ot-font-color);
     --bs-body-font-family: "Jost*", sans-serif;
 }
