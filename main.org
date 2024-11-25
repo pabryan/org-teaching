@@ -767,7 +767,6 @@ import plotly.graph_objects as go
 
 import plotly.io as pio
 pio.templates.default  = "plotly_dark"
-pio.kaleido.scope.plotlyjs = "/usr/share/python3-plotly/plotly.js"
 
 import imageio.v3 as iio
 
