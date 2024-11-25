@@ -29,6 +29,14 @@ body {
     color: var(--ot-font-color);
     --bs-body-font-family: "Jost*", sans-serif;
     padding-bottom: 5em;
+    font-size: 100%;
+}
+
+/* Slightly larger font with medium and larger screens */
+@media (min-width: 780px) {
+    body {
+	font-size: 1.2rem;
+    }
 }
 
 /* Make equations a little smaller on small screens
@@ -69,7 +77,7 @@ to make equations better fit the width*/
 h3.title {
     text-align: center;
     color: var(--ot-highlight-color);
-    font-size: calc(1.5rem);
+    font-size: 1.5rem;
 }
 
 ul.toc {
@@ -156,6 +164,10 @@ accordion-item:last-of-type .accordion-header .accordion-button:not(.collapsed) 
 
 .accordion-button:focus {
     box-shadow: none;
+}
+
+h1.accordion-header .accordion-button {
+    font-size: 1.5rem;
 }
 
 .card {
