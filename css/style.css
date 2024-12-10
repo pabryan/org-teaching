@@ -1,11 +1,42 @@
 @import url('https://fonts.cdnfonts.com/css/jost');
 
+:root {
+    --ot-bg-color: #0b120f;
+    --ot-font-color: rgba(255, 255, 255, 0.87);
+    --ot-highlight-color: #c8d4b5;
+    --ot-nav-bg-color: #070f0c;
+    --ot-header-bg-color: #291C2F;
+    --ot-accordion-bg-color: rgba(8, 17, 14, 0.8);
+    --ot-accordion-active-bg: #32173e;
+    --ot-card-body-bg-color: rgba(37, 25, 42, 0.3);
+    --ot-defn-header-bg-color: #0059b3;
+    --ot-eg-header-bg-color: #00802b;
+    --ot-ex-header-bg-color: #5c0099;
+    --ot-thm-header-bg-color: #800000;
+    --ot-lem-header-bg-color: var(--ot-thm-header-bg-color);
+    --ot-cor-header-bg-color: var(--ot-thm-header-bg-color);
+    --ot-pf-header-bg-color: #B36205;
+    --ot-border-style: solid;
+    --ot-border-width: thin;
+    --ot-border-radius: 5px;
+}
+
 body {
-    background-color: #16231e;
-    background-repeat: repeat;
-    background-size: 100%;
-    color: rgba(255, 255, 255, 0.87);
+    background-color:  var(--ot-bg-color);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--ot-font-color);
     --bs-body-font-family: "Jost*", sans-serif;
+    padding-bottom: 5em;
+    font-size: 100%;
+}
+
+/* Slightly larger font with medium and larger screens */
+@media (min-width: 780px) {
+    body {
+	font-size: 1.2rem;
+    }
 }
 
 /* Make equations a little smaller on small screens
@@ -34,19 +65,19 @@ to make equations better fit the width*/
 }
 
 .box {
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 0.6);
-    border-width: thin;
-    border-radius: 5px;
-    background-color: #291C2F;
-    margin-bottom: 2ex;
+    border-style: var(--ot-border-style);
+    border-color: var(--ot-highlight-color);
+    border-width: var(--ot-border-width);
+    border-radius: var(--ot-border-radius);
+    background-color: var(--ot-header-bg-color);
+    margin-bottom: 4ex;
     padding: 1em;
 }
 
 h3.title {
     text-align: center;
-    color: #c8d4b5;
-    font-size: calc(1.5rem);
+    color: var(--ot-highlight-color);
+    font-size: 1.5rem;
 }
 
 ul.toc {
@@ -55,8 +86,8 @@ ul.toc {
 }
 
 .offcanvas {
-    --bs-offcanvas-bg: #070f0c;
-    --bs-offcanvas-color: rgba(255, 255, 255, 0.87);
+    --bs-offcanvas-bg: var(--ot-nav-bg-color);
+    --bs-offcanvas-color: var(--ot-font-color);
 }
 
 .offcanvas-header .btn-close {
@@ -80,16 +111,47 @@ img {
 }
 
 .accordion {
-    --bs-accordion-btn-bg: #291C2F;
-    --bs-accordion-active-bg: #32173e;
-    --bs-accordion-active-color: #c8d4b5;
-    --bs-accordion-bg: rgba(8, 17, 14, 0.9)!important;
-    margin-bottom: 5ex;
+    --bs-accordion-btn-bg: var(--ot-header-bg-color);
+    --bs-accordion-active-bg: var(--ot-accordion-active-bg);
+    --bs-accordion-active-color: var(--ot-highlight-color);
+    --bs-accordion-bg: rgba(0, 0, 0, 0);
+}
+
+.accordion-item {
+    border-style: none; /* var(--ot-border-style); */
+    border-left-style: none;
+    border-right-style: none;
+}
+
+.accordion-body {
+    background-color: var(--ot-accordion-bg-color);
 }
 
 .accordion-button {
-    color: #c8d4b5;
-    font-size: 1.5rem;
+    border-width: var(--ot-border-width);
+    border-color: var(--ot-highlight-color);
+    border-left-style: var(--ot-border-style);
+    border-right-style: var(--ot-border-style);
+    border-bottom-style: none;
+    border-top-style: var(--ot-border-style);
+}
+
+.accordion-button:not(.collapsed) {
+    border-bottom-style: var(--ot-border-style);
+}
+
+.accordion-item:first-of-type .accordion-header .accordion-button {
+    border-top-style: var(--ot-border-style);
+    border-radius: var(--ot-border-radius) var(--ot-border-radius) 0 0;
+}
+
+accordion-item:last-of-type .accordion-header .accordion-button:not(.collapsed) {
+    border-radius: 0;
+}
+
+.accordion-item:last-of-type .accordion-header .accordion-button.collapsed {
+    border-bottom-style: var(--ot-border-style);
+    border-radius: 0 0 var(--ot-border-radius) var(--ot-border-radius);
 }
 
 .accordion-button::after {
@@ -100,12 +162,20 @@ img {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23c8d4b5'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+h1.accordion-header .accordion-button {
+    font-size: 1.5rem;
+}
+
 .card {
     margin-top: 1rem!important;
     margin-bottom: 1rem!important;
     margin-right: 0!important;
     margin-left: 0!important;
-    --bs-card-border-color: rgba(255, 255, 255, 0.8);
+    --bs-card-border-color: var(--ot-highlight-color);
     --bs-card-border-width: thin;
     --bs-card-bg: rbga(0, 0, 0, 0);
 }
@@ -116,13 +186,12 @@ img {
 
 .card-body {
     border-radius: 0px 0px 5px 5px;
-    background-color: rgba(8, 17, 14, 0.8);
-    background-color: rgba(37, 25, 42, 0.3)
+    background-color: var(--ot-card-body-bg-color);
 }
 
 
 .defn .card-header {
-    background-color: #0059b3;
+    background-color: var(--ot-defn-header-bg-color);
 }
 
 .defn h5.card-title::before {
@@ -130,7 +199,7 @@ img {
 }
 
 .eg .card-header {
-    background-color: #00802b;
+    background-color: var(--ot-eg-header-bg-color);
 }
 
 .eg h5.card-title::before {
@@ -138,31 +207,31 @@ img {
 }
 
 .ex .card-header {
-    background-color: #5c0099;
+    background-color: var(--ot-ex-header-bg-color)
 }
 
 .ex h5.card-title::before {
     content: "Exercise"
 }
 
-.lem .card-header {
-    background-color: #800000;
-}
-
-.lem h5.card-title::before {
-    content: "Lemma"
-}
-
 .thm .card-header {
-    background-color: #800000;
+    background-color: var(--ot-thm-header-bg-color);
 }
 
 .thm h5.card-title::before {
     content: "Theorem"
 }
 
+.lem .card-header {
+    background-color: var(--ot-lem-header-bg-color);
+}
+
+.lem h5.card-title::before {
+    content: "Lemma"
+}
+
 .cor .card-header {
-    background-color: #800000;
+    background-color: var(--ot-cor-header-bg-color);
 }
 
 .cor h5.card-title::before {
@@ -170,7 +239,7 @@ img {
 }
 
 .pf .card-header {
-    background-color: #B36205;
+    background-color: var(--ot-pf-header-bg-color);
 }
 
 .pf h5.card-title::before {
